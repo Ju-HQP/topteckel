@@ -77,6 +77,7 @@ class TopTeckel extends FlameGame
 
     // initialise le score à 0
      score.value = 0;
+     
     // ajout du composant Balle
     world.add(Ball(
         difficultyModifier: difficultyModifier,
@@ -134,5 +135,5 @@ class TopTeckel extends FlameGame
   }
 
   @override
-  Color backgroundColor() => const Color.fromARGB(255, 255, 183, 0);
+  Color backgroundColor() => const Color(0xfff2e8cf);
 }
