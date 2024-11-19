@@ -36,4 +36,4 @@ final brickWidth =
 // hauteur des briques
 const brickHeight = gameHeight * 0.03;
 // coefficient de vitesse
-const difficultyModifier = 1.03;   
+const difficultyModifier = 1.20;   

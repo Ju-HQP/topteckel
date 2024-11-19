@@ -31,6 +31,9 @@ class TopTeckel extends FlameGame
 
   final rand = math.Random();
 
+// gestion du score
+  final ValueNotifier<int> score = ValueNotifier(0); 
+
 // Gestion des overlays en fonction de l'état du jeu
   late PlayState _playState;
   PlayState get playState => _playState;
@@ -72,6 +75,8 @@ class TopTeckel extends FlameGame
 
     playState = PlayState.playing;
 
+    // initialise le score à 0
+     score.value = 0;
     // ajout du composant Balle
     world.add(Ball(
         difficultyModifier: difficultyModifier,

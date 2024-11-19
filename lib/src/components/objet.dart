@@ -23,7 +23,9 @@ class Objet extends RectangleComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
-    removeFromParent();
+    removeFromParent(); // efface l'objet brique
+    game.score.value++; // ajoute un point au score
+    
    // fin du jeu car toutes les briques sotn cassées
     if (game.world.children.query<Objet>().length == 1) { // si il n'y a plus de brique
       game.playState = PlayState.won; // met l'état du jeu à victoire
