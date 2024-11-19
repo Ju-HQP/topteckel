@@ -89,8 +89,8 @@ class TopTeckel extends FlameGame
 
     world.add(Dog(
         size: Vector2(batWidth, batHeight),
-        cornerRadius: const Radius.circular(ballRadius / 2),
-        position: Vector2(width / 2, height * 0.95)));
+        // cornerRadius: const Radius.circular(ballRadius / 2),
+        position: Vector2(width / 2, height * 0.85)));
 
     world.addAll([
       // boucle pour générer les briques
@@ -134,5 +134,5 @@ class TopTeckel extends FlameGame
   }
 
   @override
-  Color backgroundColor() => const Color(0xfff2e8cf);
+  Color backgroundColor() => const Color.fromARGB(255, 255, 183, 0);
 }

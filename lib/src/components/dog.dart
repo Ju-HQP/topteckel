@@ -6,32 +6,45 @@ import 'package:flutter/material.dart';
 
 import '../topteckel.dart';
 
-class Dog extends PositionComponent // positionComponent affiche l'objet à l'écran (remplace render)
+class Dog extends SpriteComponent // positionComponent affiche l'objet à l'écran (remplace render)
     with DragCallbacks, HasGameReference<TopTeckel> { // dragCallBacks pour l'interaction de drag
   Dog({
-    required this.cornerRadius,
+    // required this.cornerRadius,
     required super.position,
     required super.size,
   }) : super(
           anchor: Anchor.center,
-          children: [RectangleHitbox()],
+          // children: [RectangleHitbox()],
         );
 
-  final Radius cornerRadius;
+  // final Radius cornerRadius;
 
-  final _paint = Paint()
-    ..color = const Color(0xff1e6091)
-    ..style = PaintingStyle.fill;
+  // final _paint = Paint()
+  //   ..color = const Color(0xff1e6091)
+  //   ..style = PaintingStyle.fill;
 
+  // @override
+  // void render(Canvas canvas) {
+  //   super.render(canvas);
+  //   canvas.drawRRect( // dessin d'un rectangle arrondi
+  //       RRect.fromRectAndRadius(
+  //         Offset.zero & size.toSize(),
+  //         cornerRadius,
+  //       ),
+  //       _paint);
+  // }
   @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-    canvas.drawRRect( // dessin d'un rectangle arrondi
-        RRect.fromRectAndRadius(
-          Offset.zero & size.toSize(),
-          cornerRadius,
-        ),
-        _paint);
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    try {
+      sprite = await game.loadSprite('teckel_default.png');
+      print("Sprite loaded successfully.");
+    } catch (e) {
+      print("Error loading sprite: $e");
+    }
+
+    add(RectangleHitbox());
   }
 
   @override
