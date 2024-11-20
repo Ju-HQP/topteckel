@@ -89,7 +89,7 @@ class TopTeckel extends FlameGame
           ..scale(height / 4)));
 
     world.add(Dog(
-        size: Vector2(batWidth, batHeight),
+        size: Vector2(dogWidth, dogHeight),
         // cornerRadius: const Radius.circular(ballRadius / 2),
         position: Vector2(width / 2, height * 0.85)));
 
@@ -105,7 +105,7 @@ class TopTeckel extends FlameGame
             color: brickColors[i],
           ),
     ]);
-
+print("Dog size: $batWidth x $batHeight");
     // Active le mode debug pour l'ensemble des composants
     // debugMode = true;
   }
