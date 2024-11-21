@@ -15,8 +15,8 @@ class PlayerProfilePage extends StatelessWidget {
           },
         ),
       ),
-      body: Center(
-        child: const Text('Informations du joueur'),
+      body: const Center(
+        child: Text('Informations du joueur'),
       ),
     );
   }

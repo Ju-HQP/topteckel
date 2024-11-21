@@ -12,7 +12,14 @@ class HomePage extends StatelessWidget {
         style: GoogleFonts.belanosima(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Center(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/decor_home.png'),
+            fit: BoxFit.contain, // Ajuste l'image pour couvrir tout l'écran
+          ),
+        ),
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -39,6 +46,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }
