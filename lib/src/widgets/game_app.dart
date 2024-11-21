@@ -26,7 +26,7 @@ class GameApp extends StatelessWidget {
       initialRoute: '/home',
       routes: {
         '/home': (context) => const HomePage(),
-        '/game': (context) => const GamePage(),
+        '/gameTopTeckel': (context) => const GamePage(),
         '/profile': (context) => const PlayerProfilePage(),
         '/settings': (context) => const SettingsPage(),
       },

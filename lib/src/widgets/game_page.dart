@@ -35,13 +35,9 @@ class _GamePageState extends State<GamePage> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xffa9d6e5),
-              Color(0xfff2e8cf),
-            ],
+          image: DecorationImage(
+            image: AssetImage('assets/images/decor_default.png'),
+            fit: BoxFit.cover, // Ajuste l'image pour couvrir tout l'écran
           ),
         ),
         child: SafeArea(

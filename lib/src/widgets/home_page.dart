@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/decor_home.png'),
-            fit: BoxFit.contain, // Ajuste l'image pour couvrir tout l'écran
+            fit: BoxFit.cover, // Ajuste l'image pour couvrir tout l'écran
           ),
         ),
       child: Center(
@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/game');
+                Navigator.pushNamed(context, '/gameTopTeckel');
               },
               child: Text('Lancer une partie',
               style: GoogleFonts.belanosima(fontSize: 15),
