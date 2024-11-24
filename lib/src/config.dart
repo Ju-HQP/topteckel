@@ -21,21 +21,29 @@ const ballRadius = gameWidth * 0.02;
 
 const batWidth = gameWidth * 0.2;
 const batHeight = ballRadius * 2;
-const dogWidth = 200.0 ;
-const dogHeight = 400.0;
+
+// Taille par défaut du chien variable par rapport à la taille de l'écran
+const dogWidth = dogHeight/2 ;
+const dogHeight = gameHeight/6.5;
+
 //distance parcourue par la batte à chaque appui sur les flèches du clavier
 const batStep = gameWidth * 0.05;  
 
 
 // Pour les briques 
 
-// largeur de la brique
-const brickGutter = gameWidth * 0.015;                          // Add from here...
+// espace entre les briques
+const brickGutter = gameWidth * 0.015; 
 // largeur totale des briques
 final brickWidth =
     (gameWidth - (brickGutter * (brickColors.length + 1)))
     / brickColors.length;
 // hauteur des briques
 const brickHeight = gameHeight * 0.03;
+
+// OBJET POSITIF
+
+const goodObjectWidth =  gameWidth*0.075;
+const goodObjectHeight = gameWidth*0.075;
 // coefficient de vitesse
-const difficultyModifier = 1.20;   
+const difficultyModifier = 1.20;
