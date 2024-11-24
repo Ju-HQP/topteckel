@@ -6,6 +6,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:topteckel/src/components/goodObject.dart';
 
 import 'components/components.dart';
 import 'config.dart';
@@ -32,7 +33,7 @@ class TopTeckel extends FlameGame
   final rand = math.Random();
 
 // gestion du score
-  final ValueNotifier<int> score = ValueNotifier(0); 
+  final ValueNotifier<int> score = ValueNotifier(0);
 
 // Gestion des overlays en fonction de l'état du jeu
   late PlayState _playState;
@@ -76,38 +77,55 @@ class TopTeckel extends FlameGame
     playState = PlayState.playing;
 
     // initialise le score à 0
-     score.value = 0;
-     
-    // ajout du composant Balle
-    world.add(Ball(
-        difficultyModifier: difficultyModifier,
-        radius: ballRadius,
-        position: size / 2,
-        // vector et vitesse à revoir
-        velocity: Vector2((rand.nextDouble()) - 0.5 * width, height * 0.2)
-            .normalized()
-          ..scale(height / 4)));
+    score.value = 0;
 
     world.add(Dog(
         size: Vector2(dogWidth, dogHeight),
         // cornerRadius: const Radius.circular(ballRadius / 2),
         position: Vector2(width / 2, height * 0.85)));
+    print("Dog size: $batWidth x $batHeight");
 
-    world.addAll([
+// Pour les briques
+    // world.addAll([
+    //   // boucle pour générer les briques
+    //   for (var i = 0; i < brickColors.length; i++)
+    //     for (var j = 1; j <= 5; j++) // 5 car il y a 5 lignes de briques
+    //       Objet(
+    //         position: Vector2(
+    //           (i + 0.5) * brickWidth + (i + 1) * brickGutter,
+    //           (j + 2.0) * brickHeight + j * brickGutter,
+    //         ),
+    //         color: brickColors[i],
+    //       ),
+    // ]);
+// Pour les objets
+//  Affichage d'une ampoule qui tombe
+
+ world.addAll([
       // boucle pour générer les briques
-      for (var i = 0; i < brickColors.length; i++)
-        for (var j = 1; j <= 5; j++) // 5 car il y a 5 briques par ligne
-          Objet(
-            position: Vector2(
-              (i + 0.5) * brickWidth + (i + 1) * brickGutter,
-              (j + 2.0) * brickHeight + j * brickGutter,
-            ),
-            color: brickColors[i],
-          ),
+      for (var i = 0; i < 4; i++)
+          GoodObject(
+        difficultyModifier: difficultyModifier,
+        position: Vector2(20 + i * (goodObjectWidth + 120),50.0), //écart de base + i *(largeur + ecart entre objets)
+        // vector et vitesse à revoir
+        velocity: Vector2(0, height * 0.2)
+            .normalized()
+          ..scale(height / 4)),
     ]);
-print("Dog size: $batWidth x $batHeight");
+    // boucle de génération
+    // tirage de l'objet aléatoirement avec proba
+    // ça c'est par défaut mais il faudrait le faire en update
+
+    // world.add(GoodObject(
+    //     difficultyModifier: difficultyModifier,
+    //     position: Vector2(50.0, 50.0),
+    //     // vector et vitesse à revoir
+    //     velocity: Vector2(0, height * 0.2)
+    //         .normalized()
+    //       ..scale(height / 4)));
+
     // Active le mode debug pour l'ensemble des composants
-    // debugMode = true;
+    debugMode = true;
   }
 
 // Gestion de l'interaction d'Appui
