@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';               
 
-const brickColors = [                                     
-  Color(0xfff94144),
-  Color(0xfff3722c),
-  Color(0xfff8961e),
-  Color(0xfff9844a),
-  Color(0xfff9c74f),
-  Color(0xff90be6d),
-  Color(0xff43aa8b),
-  Color(0xff4d908e),
-  Color(0xff277da1),
-  Color(0xff577590),
-];
-
 
 const gameWidth = 820.0;
 const gameHeight = 1600.0;
+
+// ------ Espace de jeu
+
+const objectZoneSpawnGap = gameWidth*0.1; // soit 20% de la largeur
+const objectGap = gameWidth*0.1; // 3 x 0.1 soit 30% de la largeur
+
+// d'un objet à un autre
+
+const other = gameWidth*0.225;
+
+// 4 objets donc pour 50% de l'espace de jeu -> 50/4 : 12.5
+
+// OBJET POSITIF 
+
+const goodObjectWidth =  gameWidth*0.125;
+const goodObjectHeight = goodObjectWidth;
 
 const ballRadius = gameWidth * 0.02;
 
@@ -33,17 +36,14 @@ const batStep = gameWidth * 0.05;
 // Pour les briques 
 
 // espace entre les briques
-const brickGutter = gameWidth * 0.015; 
-// largeur totale des briques
-final brickWidth =
-    (gameWidth - (brickGutter * (brickColors.length + 1)))
-    / brickColors.length;
-// hauteur des briques
-const brickHeight = gameHeight * 0.03;
+// const brickGutter = gameWidth * 0.015; 
+// // largeur totale des briques
+// final brickWidth =
+//     (gameWidth - (brickGutter * (brickColors.length + 1)))
+//     / brickColors.length;
+// // hauteur des briques
+// const brickHeight = gameHeight * 0.03;
 
-// OBJET POSITIF
 
-const goodObjectWidth =  gameWidth*0.075;
-const goodObjectHeight = gameWidth*0.075;
 // coefficient de vitesse
 const difficultyModifier = 1.20;

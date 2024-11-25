@@ -106,7 +106,7 @@ class TopTeckel extends FlameGame
       for (var i = 0; i < 4; i++)
           GoodObject(
         difficultyModifier: difficultyModifier,
-        position: Vector2(20 + i * (goodObjectWidth + 120),50.0), //écart de base + i *(largeur + ecart entre objets)
+        position: Vector2(objectZoneSpawnGap + other*i,50.0), //écart de base + i *(largeur + ecart entre objets)
         // vector et vitesse à revoir
         velocity: Vector2(0, height * 0.2)
             .normalized()
