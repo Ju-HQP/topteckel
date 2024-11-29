@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/decor_home2.png'),
+            image: AssetImage('assets/images/decor_home4.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             Positioned(
               top: MediaQuery.of(context).size.height / 2 -
-                  30, // Centrer verticalement
+                  100, // Centrer verticalement
               left: MediaQuery.of(context).size.width / 2 -
                   90, // Centrer horizontalement
               child: Center(
@@ -101,8 +101,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     backgroundColor: const Color.fromARGB(255, 179, 4, 0),
-                    side: BorderSide(
-                      color: const Color.fromARGB(
+                    side: const BorderSide(
+                      color: Color.fromARGB(
                           255, 69, 26, 28), // Couleur de la bordure
                       width: 3, // Épaisseur de la bordure
                     ),
