@@ -15,8 +15,14 @@ class GachaPage extends StatelessWidget {
           },
         ),
       ),
-      body: Center(
-        child: const Text('Jeu gacha'),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/decor_gacha.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        
       ),
     );
   }

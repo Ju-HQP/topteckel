@@ -5,6 +5,7 @@ import 'home_page.dart';
 import 'game_page.dart';
 import 'settings_page.dart';
 import 'gacha_page.dart';
+import 'rank_page.dart';
 import 'player_profile_page.dart';
 
 class GameApp extends StatelessWidget {
@@ -25,6 +26,7 @@ class GameApp extends StatelessWidget {
         '/profile': (context) => const PlayerProfilePage(),
         '/settings': (context) => const SettingsPage(),
         '/gameGacha': (context) => const GachaPage(),
+        '/rank': (context) => const RankPage(),
       },
     );
   }
