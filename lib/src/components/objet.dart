@@ -11,7 +11,7 @@ class Objet extends RectangleComponent
     with CollisionCallbacks, HasGameReference<TopTeckel> {
   Objet({required super.position, required Color color})
       : super(
-          size: Vector2(brickWidth, brickHeight),
+          // size: Vector2(brickWidth, brickHeight),
           anchor: Anchor.center,
           paint: Paint()
             ..color = color

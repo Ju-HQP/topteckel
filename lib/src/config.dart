@@ -6,10 +6,10 @@ const gameHeight = 1600.0;
 
 // ------ Espace de jeu
 
-const objectZoneSpawnGap = gameWidth*0.1; // soit 20% de la largeur
+const objectZoneSpawnGap = gameWidth*0.1625; // soit 20% de la largeur
 const objectGap = gameWidth*0.1; // 3 x 0.1 soit 30% de la largeur
 
-// d'un objet à un autre
+// du centre d'un objet à un autre
 
 const other = gameWidth*0.225;
 
