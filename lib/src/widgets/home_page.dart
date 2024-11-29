@@ -43,6 +43,12 @@ class HomePage extends StatelessWidget {
               },
               child: const Text('Paramètres'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/gameGacha');
+              },
+              child: const Text('Jeu Gacha'),
+            ),
           ],
         ),
       ),
