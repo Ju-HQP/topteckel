@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'home_page.dart';
 import 'game_page.dart';
 import 'settings_page.dart';
+import 'gacha_page.dart';
+import 'rank_page.dart';
 import 'player_profile_page.dart';
 
 class GameApp extends StatelessWidget {
@@ -23,6 +25,8 @@ class GameApp extends StatelessWidget {
         '/gameTopTeckel': (context) => const GamePage(),
         '/profile': (context) => const PlayerProfilePage(),
         '/settings': (context) => const SettingsPage(),
+        '/gameGacha': (context) => const GachaPage(),
+        '/rank': (context) => const RankPage(),
       },
     );
   }
