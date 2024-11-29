@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -41,43 +43,68 @@ class GoodObject
     add(CircleHitbox());
   }
 
-// update est la méthode utilsiée à chaque frame du jeu, on met à jour la position dans cette fonction
+// update est la méthode utilisée à chaque frame du jeu, on met à jour la position dans cette fonction
   @override
   void update(double dt) {
     super.update(dt);
+    // if (game.score.value == 10){
+    //    velocity.y = velocity.y *1.2;
+    // }
     position += velocity * dt;
-    print(velocity);
+  }
+
+// Fonction prévue plus tard pour la classe object
+  void respawnObject() {
+    double coordX = position.x; // récupère la position de l'objet actuel pour créer le nouvel objet
+    var rand = Random();
+    int aleaTime = rand.nextInt(4) *
+        1000; // durée aléatoire pour le délai entre et 0 et 3sec
+    Future.delayed(Duration(milliseconds: aleaTime), () {
+      // setState(() {
+      //   // Here you can write your code for open new view
+      // });
+      // Créer un nouvel objet positif
+      game.world.add(
+        GoodObject(
+            difficultyModifier: difficultyModifier,
+            position: Vector2(coordX, spawnHeightObjects),
+            // vector et vitesse à revoir
+            velocity: Vector2(0, 400)),
+      );
+      print("Coord X : ");
+      print(coordX);
+    });
   }
 
   // fonction pour gérer les collisions
-  @override // Add from here...
+  @override
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollisionStart(
-        intersectionPoints, other); // other représente l'objet en collision
-    if (other is PlayArea) {
-      if (intersectionPoints.first.x >= game.width) {
-        velocity.x = -velocity.x;
-      } else if (intersectionPoints.first.y >= game.height) { // Quand la balle tombe
+    var collisionWith = other; // collisionWith représente l'objet en collision
+    super.onCollisionStart(intersectionPoints,
+        collisionWith); 
+    if (collisionWith is PlayArea) {
+              // Quand l'objet tombe
+      if (intersectionPoints.first.y >= game.height) {
         // RemoveEffect permet de retirer l'objet du jeu, après l'avoir laissé quitter l'espace de jeu visible
         add(RemoveEffect(
             delay: 0.35,
             onComplete: () {
-              // game.playState = PlayState.gameOver;
-                  game.score.value--; // ajoute un point au score
+              game.score.value--; // enlève un point au score
+              respawnObject();
             }));
       }
-    } else if (other is Dog) {
+    } else if (collisionWith is Dog) {
       // collision avec le chien
       add(RemoveEffect(
-          delay: 0.02,
+          delay: 0.01,
           onComplete: () {
-                game.score.value++; // ajoute un point au score
+            game.score.value++; // ajoute un point au score
+            respawnObject();
           }));
     }
-    // velocity.setFrom(velocity * difficultyModifier);
     else {
-      debugPrint('collision with $other');
+      print('collision with $collisionWith');
     }
   }
 }

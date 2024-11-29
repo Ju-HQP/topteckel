@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
@@ -56,7 +57,7 @@ class TopTeckel extends FlameGame
   FutureOr<void> onLoad() async {
     super.onLoad();
 
-    // place le viseur en haut à gauche (au centre par défaut)
+    // place le viseur en haut à gauche (au centre par défaut) pour définir les coordonnées
     camera.viewfinder.anchor = Anchor.topLeft;
 
 // world de Flame représente l'univers du jeu
@@ -101,28 +102,19 @@ class TopTeckel extends FlameGame
 // Pour les objets
 //  Affichage d'une ampoule qui tombe
 
- world.addAll([
+// Coordonnées objet spawn : 133.25 - 317.75 - 502.25 - 686.75s
+    world.addAll([
       // boucle pour générer les briques
       for (var i = 0; i < 4; i++)
-          GoodObject(
-        difficultyModifier: difficultyModifier,
-        position: Vector2(objectZoneSpawnGap + other*i,50.0), //écart de base + i *(largeur + ecart entre objets)
-        // vector et vitesse à revoir
-        velocity: Vector2(0, height * 0.2)
-            .normalized()
-          ..scale(height / 4)),
+        GoodObject(
+            difficultyModifier: difficultyModifier,
+            position: Vector2(objectZoneSpawnGap + other * i, spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
+            // vector et vitesse à revoir
+            velocity: Vector2(0, height * 0.2).normalized()..scale(height / 4)),
     ]);
     // boucle de génération
     // tirage de l'objet aléatoirement avec proba
     // ça c'est par défaut mais il faudrait le faire en update
-
-    // world.add(GoodObject(
-    //     difficultyModifier: difficultyModifier,
-    //     position: Vector2(50.0, 50.0),
-    //     // vector et vitesse à revoir
-    //     velocity: Vector2(0, height * 0.2)
-    //         .normalized()
-    //       ..scale(height / 4)));
 
     // Active le mode debug pour l'ensemble des composants
     debugMode = true;
@@ -154,4 +146,24 @@ class TopTeckel extends FlameGame
 
   @override
   Color backgroundColor() => const Color(0xfff2e8cf);
+
+
+  // @override
+  // void update(double dt) {
+  //   super.update(dt);
+  //   // Boucle pour chaque objet positif
+  //   world.children.whereType<GoodObject>().forEach((objet) {
+  //     if (objet.position.y >= height) {
+  //       var rand = Random();
+  //       int aleaTime = rand.nextInt(2)*1000; // durée aléatoire pour le délai
+  //       Future.delayed(Duration(milliseconds: aleaTime), () {
+  //         // setState(() {
+  //         //   // Here you can write your code for open new view
+  //         // });
+  //         print("Tombé");
+  //         objet.position.y = 50.0; // on remet la hauteur de l'objet
+  //       });
+  //     }
+  //   });
+  // }
 }
