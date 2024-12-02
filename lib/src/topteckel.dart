@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -107,11 +105,12 @@ class TopTeckel extends FlameGame
       // boucle pour générer les briques
       for (var i = 0; i < 4; i++)
         GoodObject(
-            difficultyModifier: difficultyModifier,
-            position: Vector2(objectZoneSpawnGap + other * i, spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
+            position: Vector2(objectZoneSpawnGap + other * i,
+                spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
             // vector et vitesse à revoir
             velocity: Vector2(0, height * 0.2).normalized()..scale(height / 4)),
     ]);
+
     // boucle de génération
     // tirage de l'objet aléatoirement avec proba
     // ça c'est par défaut mais il faudrait le faire en update
@@ -147,23 +146,17 @@ class TopTeckel extends FlameGame
   @override
   Color backgroundColor() => const Color(0xfff2e8cf);
 
-
-  // @override
-  // void update(double dt) {
-  //   super.update(dt);
-  //   // Boucle pour chaque objet positif
-  //   world.children.whereType<GoodObject>().forEach((objet) {
-  //     if (objet.position.y >= height) {
-  //       var rand = Random();
-  //       int aleaTime = rand.nextInt(2)*1000; // durée aléatoire pour le délai
-  //       Future.delayed(Duration(milliseconds: aleaTime), () {
-  //         // setState(() {
-  //         //   // Here you can write your code for open new view
-  //         // });
-  //         print("Tombé");
-  //         objet.position.y = 50.0; // on remet la hauteur de l'objet
-  //       });
-  //     }
-  //   });
-  // }
+  @override
+  void update(double dt) {
+    super.update(dt);
+    // Boucle pour chaque objet positif
+    world.children.whereType<GoodObject>().forEach((objet) {
+      for (int unPalier in paliersDeScore) {
+        if (score.value >= unPalier && !paliersAtteints.contains(unPalier)) {
+          objet.addSpeed();
+          paliersAtteints.add(unPalier);
+        }
+      }
+    });
+  }
 }

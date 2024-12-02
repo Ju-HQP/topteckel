@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flutter/material.dart';
 
 import 'package:topteckel/src/config.dart';
 import '../topteckel.dart';
@@ -19,14 +18,17 @@ class GoodObject
   GoodObject({
     required this.velocity,
     required super.position,
-    required this.difficultyModifier,
   }) : super(
           size: Vector2(goodObjectWidth, goodObjectHeight),
           anchor: Anchor.center,
         );
   // velocity => object Vector2 pour que cela corresponde à vitesse et direction
   final Vector2 velocity;
-  final double difficultyModifier;
+  bool speedAjoutee = false;
+
+   void addSpeed() {
+    velocity.y *= 1.5; // Augmente la vitesse de 50%, ajustez comme nécessaire
+  }
 
   @override
   Future<void> onLoad() async {
@@ -43,14 +45,18 @@ class GoodObject
     add(CircleHitbox());
   }
 
+  
+
 // update est la méthode utilisée à chaque frame du jeu, on met à jour la position dans cette fonction
   @override
   void update(double dt) {
     super.update(dt);
-    // if (game.score.value == 10){
-    //    velocity.y = velocity.y *1.2;
-    // }
     position += velocity * dt;
+
+    if (game.score.value >= 10 && !speedAjoutee) {
+      addSpeed();
+      speedAjoutee = true; // Marquer l'événement comme effectué
+    }
   }
 
 // Fonction prévue plus tard pour la classe object
@@ -66,7 +72,6 @@ class GoodObject
       // Créer un nouvel objet positif
       game.world.add(
         GoodObject(
-            difficultyModifier: difficultyModifier,
             position: Vector2(coordX, spawnHeightObjects),
             // vector et vitesse à revoir
             velocity: Vector2(0, 400)),
@@ -75,6 +80,7 @@ class GoodObject
       print(coordX);
     });
   }
+
 
   // fonction pour gérer les collisions
   @override
