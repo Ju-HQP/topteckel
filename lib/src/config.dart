@@ -35,4 +35,7 @@ const dogHeight = gameHeight/6.5;
 const batStep = gameWidth * 0.05;  
 
 // coefficient de vitesse
-const difficultyModifier = 1.20;
+const coeffVitesse = 1.20;
+
+final List<int> paliersDeScore = [10, 30, 50, 100];
+Set<int> paliersAtteints = {}; //Set permet de ne faire l'exécution qu'une fois
