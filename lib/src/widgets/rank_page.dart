@@ -15,8 +15,14 @@ class RankPage extends StatelessWidget {
           },
         ),
       ),
-      body: Center(
-        child: const Text('Classement'),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/decor_home.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        
       ),
     );
   }

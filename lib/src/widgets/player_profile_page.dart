@@ -7,7 +7,7 @@ class PlayerProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil du joueur'),
+        title: const Text('Profil'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -15,8 +15,14 @@ class PlayerProfilePage extends StatelessWidget {
           },
         ),
       ),
-      body: const Center(
-        child: Text('Informations du joueur'),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/decor_home.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        
       ),
     );
   }

@@ -15,8 +15,14 @@ class SettingsPage extends StatelessWidget {
           },
         ),
       ),
-      body: Center(
-        child: const Text('Réglages du jeu'),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/decor_home.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        
       ),
     );
   }
