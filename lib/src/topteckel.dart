@@ -151,9 +151,12 @@ class TopTeckel extends FlameGame
     super.update(dt);
     // Boucle pour chaque objet positif
     world.children.whereType<GoodObject>().forEach((objet) {
+      // Augmentation de la vitesse en fonction du palier passé
       for (int unPalier in paliersDeScore) {
         if (score.value >= unPalier && !paliersAtteints.contains(unPalier)) {
-          objet.addSpeed();
+          vitesseJeu = Vector2(vitesseJeu.x, vitesseJeu.y*coeffVitesse);
+          objet.velocity = vitesseJeu;
+          delai -= 0.75;
           paliersAtteints.add(unPalier);
         }
       }

@@ -1,3 +1,4 @@
+import 'package:flame/components.dart';
 import 'package:flutter/material.dart';               
 
 
@@ -35,7 +36,9 @@ const dogHeight = gameHeight/6.5;
 const batStep = gameWidth * 0.05;  
 
 // coefficient de vitesse
-const coeffVitesse = 1.20;
-
-final List<int> paliersDeScore = [10, 30, 50, 100];
+const coeffVitesse = 1.50;
+var vitesseJeu = Vector2(0.0, 400.0);
+// délai de respawn (par défaut 3 secondes)
+double delai = 3;
+final List<int> paliersDeScore = [5,10,20,30,50];
 Set<int> paliersAtteints = {}; //Set permet de ne faire l'exécution qu'une fois
