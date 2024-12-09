@@ -36,9 +36,9 @@ const dogHeight = gameHeight/6.5;
 const batStep = gameWidth * 0.05;  
 
 // coefficient de vitesse
-const coeffVitesse = 1.50;
-var vitesseJeu = Vector2(0.0, 400.0);
+const coeffVitesse = 1.15;
+var vitesseJeu = Vector2(0.0, 500.0);
 // délai de respawn (par défaut 3 secondes)
 double delai = 3;
-final List<int> paliersDeScore = [5,10,20,30,50];
+final List<int> paliersDeScore = [25,50,100,200,300,400,500];
 Set<int> paliersAtteints = {}; //Set permet de ne faire l'exécution qu'une fois

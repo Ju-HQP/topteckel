@@ -101,15 +101,32 @@ class TopTeckel extends FlameGame
 //  Affichage d'une ampoule qui tombe
 
 // Coordonnées objet spawn : 133.25 - 317.75 - 502.25 - 686.75s
-    world.addAll([
-      // boucle pour générer les briques
-      for (var i = 0; i < 4; i++)
-        GoodObject(
-            position: Vector2(objectZoneSpawnGap + other * i,
-                spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
-            // vector et vitesse à revoir
-            velocity: Vector2(0, height * 0.2).normalized()..scale(height / 4)),
-    ]);
+
+// Random().nextDouble() * 256; // Value is >= 0.0 and < 256.0.
+    for (var i = 0; i < 4; i++) {
+      var rand = math.Random();
+      double aleaTime = (rand.nextDouble() * 2) *
+          1000; // durée aléatoire pour le délai entre et 0 et 1 seconde
+      Future.delayed(Duration(milliseconds: aleaTime.toInt()), () {
+        world.add(
+          GoodObject(
+              position: Vector2(objectZoneSpawnGap + other * i,
+                  spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
+              // vector et vitesse à revoir
+              velocity: Vector2(0, height * 0.2).normalized()
+                ..scale(height / 4)),
+        );
+      });
+    }
+    // world.addAll([
+    //   for (var i = 0; i < 4; i++)
+    //     GoodObject(
+    //         position: Vector2(objectZoneSpawnGap + other * i,
+    //             spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
+    //         // vector et vitesse à revoir
+    //         velocity: Vector2(0, height * 0.2).normalized()
+    //           ..scale(height / 4)),
+    // ]);
 
     // boucle de génération
     // tirage de l'objet aléatoirement avec proba
@@ -154,7 +171,7 @@ class TopTeckel extends FlameGame
       // Augmentation de la vitesse en fonction du palier passé
       for (int unPalier in paliersDeScore) {
         if (score.value >= unPalier && !paliersAtteints.contains(unPalier)) {
-          vitesseJeu = Vector2(vitesseJeu.x, vitesseJeu.y*coeffVitesse);
+          vitesseJeu = Vector2(vitesseJeu.x, vitesseJeu.y * coeffVitesse);
           objet.velocity = vitesseJeu;
           delai -= 0.75;
           paliersAtteints.add(unPalier);

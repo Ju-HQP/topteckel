@@ -63,7 +63,8 @@ class GoodObject
     print(delai);
     double coordX = position.x; // récupère la position de l'objet actuel pour créer le nouvel objet
     var rand = Random();
-    double aleaTime = (rand.nextDouble() * delai+1) * 1000; // durée aléatoire pour le délai entre et 0 et delai
+    // Random().nextDouble() * 256; // Value is >= 0.0 and < 256.0.
+    double aleaTime = (rand.nextDouble() * (delai+1)) * 1000; // durée aléatoire pour le délai >0 et <= 3
     Future.delayed(Duration(milliseconds: aleaTime.toInt()), () {
       // setState(() {
       //   // Here you can write your code for open new view
