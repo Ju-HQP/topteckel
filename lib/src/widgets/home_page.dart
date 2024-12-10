@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/decor_home5.png'),
+            image: AssetImage('assets/images/decor_default2.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     );
                   },
                   child: ElevatedButton(
-                    onPressed: () {}, // Géré par GestureDetector
+                    onPressed: () {Navigator.pushNamed(context, '/gameTopTeckel');}, // Géré par GestureDetector
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 35, vertical: 25),
