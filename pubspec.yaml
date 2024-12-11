@@ -10,14 +10,17 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.0
+  sqflite: ^2.0.3
   flame: ^1.21.0
   google_fonts: ^6.2.1
   flutter_launcher_icons: ^0.14.1
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  sqflite_common_ffi: ^2.0.0
 
 flutter_icons:
   android: true
