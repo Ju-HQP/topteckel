@@ -6,7 +6,7 @@ import 'package:flame/effects.dart';
 import '../topteckel.dart';
 import 'play_area.dart'; // pour les collisions avec le mur
 import 'dog.dart'; //pour les collisions avec la balle
-import 'objet.dart';
+import 'object.dart';
 
 class Ball extends CircleComponent
 with CollisionCallbacks, HasGameReference<TopTeckel> { // pour les collisions

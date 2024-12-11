@@ -3,7 +3,6 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../topteckel.dart';
-import '../config.dart';
 import 'ball.dart';
 import 'dog.dart';
 

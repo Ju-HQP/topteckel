@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -103,15 +101,33 @@ class TopTeckel extends FlameGame
 //  Affichage d'une ampoule qui tombe
 
 // Coordonnées objet spawn : 133.25 - 317.75 - 502.25 - 686.75s
-    world.addAll([
-      // boucle pour générer les briques
-      for (var i = 0; i < 4; i++)
-        GoodObject(
-            difficultyModifier: difficultyModifier,
-            position: Vector2(objectZoneSpawnGap + other * i, spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
-            // vector et vitesse à revoir
-            velocity: Vector2(0, height * 0.2).normalized()..scale(height / 4)),
-    ]);
+
+// Random().nextDouble() * 256; // Value is >= 0.0 and < 256.0.
+    for (var i = 0; i < 4; i++) {
+      var rand = math.Random();
+      double aleaTime = (rand.nextDouble() * 2) *
+          1000; // durée aléatoire pour le délai entre et 0 et 1 seconde
+      Future.delayed(Duration(milliseconds: aleaTime.toInt()), () {
+        world.add(
+          GoodObject(
+              position: Vector2(objectZoneSpawnGap + other * i,
+                  spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
+              // vector et vitesse à revoir
+              velocity: Vector2(0, height * 0.2).normalized()
+                ..scale(height / 4)),
+        );
+      });
+    }
+    // world.addAll([
+    //   for (var i = 0; i < 4; i++)
+    //     GoodObject(
+    //         position: Vector2(objectZoneSpawnGap + other * i,
+    //             spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
+    //         // vector et vitesse à revoir
+    //         velocity: Vector2(0, height * 0.2).normalized()
+    //           ..scale(height / 4)),
+    // ]);
+
     // boucle de génération
     // tirage de l'objet aléatoirement avec proba
     // ça c'est par défaut mais il faudrait le faire en update
@@ -147,23 +163,21 @@ class TopTeckel extends FlameGame
   @override
   Color backgroundColor() => const Color(0xfff2e8cf);
 
-
-  // @override
-  // void update(double dt) {
-  //   super.update(dt);
-  //   // Boucle pour chaque objet positif
-  //   world.children.whereType<GoodObject>().forEach((objet) {
-  //     if (objet.position.y >= height) {
-  //       var rand = Random();
-  //       int aleaTime = rand.nextInt(2)*1000; // durée aléatoire pour le délai
-  //       Future.delayed(Duration(milliseconds: aleaTime), () {
-  //         // setState(() {
-  //         //   // Here you can write your code for open new view
-  //         // });
-  //         print("Tombé");
-  //         objet.position.y = 50.0; // on remet la hauteur de l'objet
-  //       });
-  //     }
-  //   });
-  // }
+  @override
+  void update(double dt) {
+    super.update(dt);
+    // Boucle pour chaque objet positif
+    world.children.whereType<GoodObject>().forEach((objet) {
+      // Augmentation de la vitesse en fonction du palier passé
+      for (int unPalier in paliersDeScore) {
+        if (score.value >= unPalier && !paliersAtteints.contains(unPalier)) {
+          vitesseJeu = Vector2(vitesseJeu.x, vitesseJeu.y * coeffVitesse);
+          objet.velocity = vitesseJeu;
+          delai -= 0.4; // Calcul de diminution -> 4 secondes de base jusqu'à max 1 sec donc 3/7 = 0.42
+          print(delai);
+          paliersAtteints.add(unPalier);
+        }
+      }
+    });
+  }
 }
