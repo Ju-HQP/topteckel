@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topteckel/models/database/dao.dart';
+import 'package:topteckel/models/user.dart';
 
 class PlayerProfilePage extends StatelessWidget {
   const PlayerProfilePage({super.key});
@@ -38,6 +40,32 @@ class PlayerProfilePage extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
+
+        child: FutureBuilder(
+  future: Dao.listUsers(),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (snapshot.hasError) {
+      return Center(child: Text('Erreur : ${snapshot.error}'));
+    } else if (snapshot.hasData) {
+      final users = snapshot.data as List<User>;
+      return ListView.builder(
+        itemCount: users.length,
+        itemBuilder: (context, index) {
+          final user = users[index];
+          return ListTile(
+            title: Text(user.pseudoUser ?? 'Utilisateur inconnu'),
+            subtitle: Text('Score : ${user.scoreGame ?? 0}'),
+          );
+        },
+      );
+    } else {
+      return const Center(child: Text('Aucun utilisateur trouvé.'));
+    }
+  },
+)
+
       ),
     );
   }

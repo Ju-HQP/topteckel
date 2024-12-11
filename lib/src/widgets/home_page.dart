@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Positioned(
               top: 20, // Position verticale identique à celle des icônes
               left: MediaQuery.of(context).size.width / 2 -
-                  110, // Centrer horizontalement
+                  115, // Centrer horizontalement
               child: Image.asset(
                 'assets/images/logo_topteckel.png',
                 width: 250, // Taille de l'image (ajustez selon vos besoins)
