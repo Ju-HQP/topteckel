@@ -18,7 +18,7 @@ import 'src/widgets/game_app.dart';
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Dao.database;
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Dao.database;
   runApp(const GameApp());
 }
