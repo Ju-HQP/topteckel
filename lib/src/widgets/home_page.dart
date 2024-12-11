@@ -15,7 +15,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   // Map pour gérer l'état des tailles de chaque icône
   final Map<String, AnimationController> _controllers = {};
-
+  late AnimationController _buttonController;
+  
   @override
   void initState() {
     super.initState();
@@ -36,11 +37,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 100),
     );
+
+    // AnimationController pour le bouton
+    _buttonController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
   }
 
   @override
   void dispose() {
     _controllers.forEach((key, controller) => controller.dispose());
+    _buttonController.dispose();
     super.dispose();
   }
 
@@ -50,7 +58,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/decor_home4.png'),
+            image: AssetImage('assets/images/decor_default2.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -62,6 +70,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               imagePath: 'assets/images/icon_profile.png',
               key: 'profile',
               position: Alignment.topLeft, // Haut gauche
+            ),
+            Positioned(
+              top: 20, // Position verticale identique à celle des icônes
+              left: MediaQuery.of(context).size.width / 2 -
+                  115, // Centrer horizontalement
+              child: Image.asset(
+                'assets/images/logo_topteckel.png',
+                width: 250, // Taille de l'image (ajustez selon vos besoins)
+                height: 250,
+              ),
             ),
             _buildAnimatedIcon(
               context,
@@ -85,37 +103,64 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               position: Alignment.bottomRight, // Bas droite
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height / 2 -
-                  100, // Centrer verticalement
-              left: MediaQuery.of(context).size.width / 2 -
-                  90, // Centrer horizontalement
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
+              top: MediaQuery.of(context).size.height / 2 - 100,
+              left: MediaQuery.of(context).size.width / 2 - 100,
+              child: GestureDetector(
+                onTapDown: (_) {
+                  _buttonController.forward(); // Démarre l'animation
+                },
+                onTapUp: (_) {
+                  Future.delayed(const Duration(milliseconds: 200), () {
+                    _buttonController.reverse(); // Revenir à l'état initial
                     Navigator.pushNamed(context, '/gameTopTeckel');
+                  });
+                },
+                onTapCancel: () {
+                  _buttonController.reverse();
+                },
+                child: AnimatedBuilder(
+                  animation: _buttonController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: 1.0 + (_buttonController.value * 0.2),
+                      child: child,
+                    );
                   },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 25),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                  child: ElevatedButton(
+                    onPressed: () {Navigator.pushNamed(context, '/gameTopTeckel');}, // Géré par GestureDetector
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 35, vertical: 25),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 179, 4, 0),
+                      side: const BorderSide(
+                        color: Color.fromARGB(
+                            255, 69, 26, 28), // Couleur de la bordure
+                        width: 3, // Épaisseur de la bordure
+                      ),
                     ),
-                    backgroundColor: const Color.fromARGB(255, 179, 4, 0),
-                    side: const BorderSide(
-                      color: Color.fromARGB(
-                          255, 69, 26, 28), // Couleur de la bordure
-                      width: 3, // Épaisseur de la bordure
-                    ),
-                  ),
-                  child: Text(
-                    'Nouvelle partie',
-                    style: GoogleFonts.belanosima(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                    child: Text(
+                      'Nouvelle partie',
+                      style: GoogleFonts.belanosima(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
+              ),
+            ),
+            Positioned(
+              bottom: 20, // Position verticale identique à celle des icônes
+              left: MediaQuery.of(context).size.width / 2 -
+                  80, // Centrer horizontalement
+              child: Image.asset(
+                'assets/images/teckel_default.png',
+                width: 150, // Taille de l'image (ajustez selon vos besoins)
+                height: 250,
               ),
             ),
           ],
