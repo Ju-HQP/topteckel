@@ -173,7 +173,8 @@ class TopTeckel extends FlameGame
         if (score.value >= unPalier && !paliersAtteints.contains(unPalier)) {
           vitesseJeu = Vector2(vitesseJeu.x, vitesseJeu.y * coeffVitesse);
           objet.velocity = vitesseJeu;
-          delai -= 0.75;
+          delai -= 0.4; // Calcul de diminution -> 4 secondes de base jusqu'à max 1 sec donc 3/7 = 0.42
+          print(delai);
           paliersAtteints.add(unPalier);
         }
       }

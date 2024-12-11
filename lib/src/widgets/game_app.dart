@@ -1,12 +1,6 @@
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 
-import '../topteckel.dart';
-import '../config.dart';
-import 'overlay_screen.dart'; 
-import 'score_card.dart';
 import 'home_page.dart';
 import 'game_page.dart';
 import 'settings_page.dart';

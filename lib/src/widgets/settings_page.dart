@@ -15,8 +15,8 @@ class SettingsPage extends StatelessWidget {
           },
         ),
       ),
-      body: Center(
-        child: const Text('Réglages du jeu'),
+      body: const Center(
+        child: Text('Réglages du jeu'),
       ),
     );
   }

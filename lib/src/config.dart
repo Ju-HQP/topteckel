@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';               
 
 
 const gameWidth = 820.0;
@@ -37,7 +36,7 @@ const batStep = gameWidth * 0.05;
 
 // coefficient de vitesse
 const coeffVitesse = 1.15;
-var vitesseJeu = Vector2(0.0, 500.0);
+var vitesseJeu = Vector2(0.0, 450.0);
 // délai de respawn (par défaut 3 secondes)
 double delai = 3;
 final List<int> paliersDeScore = [25,50,100,200,300,400,500];
