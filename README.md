@@ -1,3 +1,8 @@
 # topteckel
 Contenu et fichiers de l'application mobile "TopTeckel"
-pouit
+
+# Lancement du Jeu
+
+## Pour vérifier que tout fonctionne 
+
+flutter doctor
