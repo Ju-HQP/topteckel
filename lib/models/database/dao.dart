@@ -58,14 +58,21 @@ class Dao {
     print("Database tables created.");
   }
 
+  static Future<void> clearDatabase() async {
+  final db = await database; // Obtenez votre base de données
+  await db.delete('user');  // Remplacez 'users' par le nom de votre table
+  print("Database cleared.");
+}
+
   static Future<List<User>> listUsers() async {
     final db = await database;
 
+    print("Fetching users...");
     final maps = await db.query(
       "user",
       columns: ["*"],
     );
-
+    print("Users retrieved: $maps");
     if (maps.isNotEmpty) {
       return maps.map((e) => User.fromJson(e)).toList();
     } else {
@@ -98,6 +105,17 @@ class Dao {
       where: 'id_user = ?',
       whereArgs: [id],
     );
+  }
+
+  // Vérifie si un utilisateur existe déjà dans la base de données
+  static Future<bool> userExists() async {
+    final db = await database;
+    final result = await db.query(
+      "user",
+      columns: ["id_user"],
+      limit: 1,
+    );
+    return result.isNotEmpty;
   }
 
   static Future<List<Question>> listQuestions() async {

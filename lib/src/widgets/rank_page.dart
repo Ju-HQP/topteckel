@@ -14,6 +14,7 @@ class RankPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
         foregroundColor: const Color.fromARGB(255, 255, 255, 255),
         backgroundColor: const Color.fromARGB(255, 179, 4, 0),
         leading: IconButton(

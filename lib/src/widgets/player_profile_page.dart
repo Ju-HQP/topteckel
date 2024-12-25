@@ -16,6 +16,7 @@ class PlayerProfilePage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
         foregroundColor: const Color.fromARGB(255, 255, 255, 255),
         backgroundColor: const Color.fromARGB(255, 179, 4, 0),
         leading: IconButton(
@@ -56,7 +57,10 @@ class PlayerProfilePage extends StatelessWidget {
           final user = users[index];
           return ListTile(
             title: Text(user.pseudoUser ?? 'Utilisateur inconnu'),
-            subtitle: Text('Score : ${user.scoreGame ?? 0}'),
+            subtitle: Text(
+    'Score : ${user.scoreGame?.toString() ?? 'Non défini'}\n'
+    'Tickets : ${user.totalTicketsGame?.toString() ?? 'Non défini'}',
+  ),
           );
         },
       );

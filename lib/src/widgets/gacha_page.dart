@@ -14,6 +14,7 @@ class GachaPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
         foregroundColor: const Color.fromARGB(255, 255, 255, 255),
         backgroundColor: const Color.fromARGB(255, 179, 4, 0),
         leading: IconButton(
@@ -34,7 +35,7 @@ class GachaPage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/decor_gacha.png'),
+            image: AssetImage('assets/images/decor_gacha2.png'),
             fit: BoxFit.cover,
           ),
         ),
