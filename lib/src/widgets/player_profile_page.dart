@@ -58,9 +58,9 @@ class PlayerProfilePage extends StatelessWidget {
           return ListTile(
             title: Text(user.pseudoUser ?? 'Utilisateur inconnu'),
             subtitle: Text(
-    'Score : ${user.scoreGame?.toString() ?? 'Non défini'}\n'
-    'Tickets : ${user.totalTicketsGame?.toString() ?? 'Non défini'}',
-  ),
+            'Score : ${user.scoreGame?.toString() ?? 'Non défini'}\n'
+            'Tickets : ${user.totalTicketsGame?.toString() ?? 'Non défini'}',
+            ),
           );
         },
       );

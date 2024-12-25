@@ -72,13 +72,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               position: Alignment.topLeft, // Haut gauche
             ),
             Positioned(
-              top: 20, // Position verticale identique à celle des icônes
+              top: MediaQuery.of(context).size.width / 2 -
+              170, // Position verticale identique à celle des icônes
               left: MediaQuery.of(context).size.width / 2 -
-                  115, // Centrer horizontalement
+              140, // Centrer horizontalement
               child: Image.asset(
                 'assets/images/logo_topteckel.png',
-                width: 250, // Taille de l'image (ajustez selon vos besoins)
-                height: 250,
+                width: 300, // Taille de l'image (ajustez selon vos besoins)
+                height: 300,
               ),
             ),
             _buildAnimatedIcon(
@@ -103,8 +104,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               position: Alignment.bottomRight, // Bas droite
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height / 2 - 100,
-              left: MediaQuery.of(context).size.width / 2 - 100,
+              top: MediaQuery.of(context).size.height / 2 - 60,
+              left: MediaQuery.of(context).size.width / 2 - 120,
               child: GestureDetector(
                 onTapDown: (_) {
                   _buttonController.forward(); // Démarre l'animation
@@ -130,7 +131,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     onPressed: () {Navigator.pushNamed(context, '/gameTopTeckel');}, // Géré par GestureDetector
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 35, vertical: 25),
+                          horizontal: 40, vertical: 25),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -144,7 +145,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     child: Text(
                       'Nouvelle partie',
                       style: GoogleFonts.belanosima(
-                        fontSize: 17,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -187,7 +188,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ? 20
           : null,
       top: position == Alignment.topLeft || position == Alignment.topRight
-          ? 20
+          ? 40
           : null,
       bottom:
           position == Alignment.bottomLeft || position == Alignment.bottomRight
@@ -220,8 +221,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           },
           child: Image.asset(
             imagePath,
-            width: 60,
-            height: 60,
+            width: 70,
+            height: 70,
           ),
         ),
       ),
