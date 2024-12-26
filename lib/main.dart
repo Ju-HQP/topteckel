@@ -13,10 +13,11 @@ import 'src/widgets/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await Dao.clearDatabase();
   await Dao.database;
-//Vérifier si un utilisateur existe dans la base de données
-//final userExists2 = await Dao.userExists();
-
+  //Vérifie si un utilisateur existe dans la base de données
+  bool userExists = await Dao.userExists();
+  // bool userExists = false;
 //if (!userExists2) {
 //  final user = await Dao.createUser(User(
 //  pseudoUser: 'TestUser',
@@ -29,22 +30,5 @@ void main() async {
 //  print("User inserted: ${user.toJson()}");
 //}
 
-  runApp(const GameApp());
-  //   runApp(const MyApp());
+  runApp(GameApp(userExists: userExists));
 }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         useMaterial3: true,
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const SplashScreen(),
-//     );
-//   }
-// }

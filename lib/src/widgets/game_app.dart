@@ -8,11 +8,13 @@ import 'player_profile_page.dart';
 import 'signup_page.dart';
 import 'waiting_page.dart';
 import 'splash_screen.dart';
-
+import 'package:topteckel/models/user.dart';
 
 class GameApp extends StatelessWidget {
   // final bool userExists;
-  const GameApp({super.key});
+  final bool userExists;
+  // final User user;
+  const GameApp({super.key, required this.userExists});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,26 @@ class GameApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         primarySwatch: Colors.blue,
+        primaryColor: const Color.fromARGB(255, 69, 26, 28),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Color.fromARGB(255, 69, 26, 28), width: 2.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Color.fromARGB(255, 69, 26, 28), width: 2.0),
+          ),
+          labelStyle: TextStyle(
+            fontSize: 18,
+            color: Color.fromARGB(255, 69, 26, 28),
+          ),
+        ),
       ),
       // initialRoute: userExists ? '/home' : '/signUp',
-      initialRoute: '/home',
+      initialRoute: '/loading',
       routes: {
+        '/loading': (context) => WaitingPage(userExists: userExists),
         '/home': (context) => const HomePage(),
         '/gameTopTeckel': (context) => const GamePage(),
         '/profile': (context) => const PlayerProfilePage(),
@@ -48,7 +66,8 @@ class BackgroundPage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/decor_default.png'), // Ton image ici
+            image:
+                AssetImage('assets/images/decor_default.png'), // Ton image ici
             fit: BoxFit.cover,
           ),
         ),

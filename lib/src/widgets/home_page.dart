@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topteckel/models/user.dart';
 
 class HomePage extends StatefulWidget {
+  // final User user;
   const HomePage({super.key});
+  
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -159,7 +162,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               left: MediaQuery.of(context).size.width / 2 -
                   80, // Centrer horizontalement
               child: Image.asset(
-                'assets/images/teckel_default.png',
+                "assets/images/teckel_1.png",
                 width: 150, // Taille de l'image (ajustez selon vos besoins)
                 height: 250,
               ),

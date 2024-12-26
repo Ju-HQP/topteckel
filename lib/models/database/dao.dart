@@ -40,7 +40,6 @@ class Dao {
       CREATE TABLE user (
         id_user INTEGER PRIMARY KEY AUTOINCREMENT,
         pseudo_user VARCHAR(255) NOT NULL,
-        password_user VARCHAR(255) NOT NULL,
         date_game DATETIME,
         score_game INTEGER,
         total_tickets_game INTEGER,
@@ -132,4 +131,33 @@ class Dao {
       return [];
     }
   }
+
+  // static Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+  // if (oldVersion < 2) { // Version 2 avec modification de la table
+  //   // Créer une nouvelle table sans le champ `password_user`
+  //   await db.execute('''
+  //     CREATE TABLE user_new (
+  //       id_user INTEGER PRIMARY KEY AUTOINCREMENT,
+  //       pseudo_user VARCHAR(255) NOT NULL,
+  //       date_game DATETIME,
+  //       score_game INTEGER,
+  //       total_tickets_game INTEGER,
+  //       color_dog INTEGER
+  //     )
+  //   ''');
+
+  //   // Copier les anciennes données dans la nouvelle table
+  //   await db.execute('''
+  //     INSERT INTO user_new (id_user, pseudo_user, date_game, score_game, total_tickets_game, color_dog)
+  //     SELECT id_user, pseudo_user, date_game, score_game, total_tickets_game, color_dog
+  //     FROM user
+  //   ''');
+
+  //   // Supprimer l'ancienne table
+  //   await db.execute('DROP TABLE user');
+
+  //   // Renommer la nouvelle table
+  //   await db.execute('ALTER TABLE user_new RENAME TO user');
+  // }
+// }
 }

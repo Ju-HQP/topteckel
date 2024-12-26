@@ -6,6 +6,7 @@ import 'package:topteckel/src/widgets/home_page.dart';
 import 'package:topteckel/src/widgets/game_app.dart';
 
 class SignUpPage extends StatefulWidget {
+  // final User user;
   const SignUpPage({super.key});
 
   @override
@@ -16,6 +17,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
   final TextEditingController _pseudoController = TextEditingController();
   late AnimationController _buttonController;
   int _colorDog = 1; // Valeur par défaut
+  bool _isPseudoValid = true;
 
   @override
   void dispose() {
@@ -36,10 +38,22 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
 
   // Fonction pour créer un utilisateur
   void _createUser() async {
+    if (_pseudoController.text.isEmpty) {
+      setState(() {
+        _isPseudoValid = false; // Afficher le message d'erreur
+      });
+    // Afficher un message d'erreur si le champ est vide
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Le pseudo est obligatoire !'),
+        backgroundColor: Colors.red,
+      ),
+    );
+    return; // Arrêter la création si le pseudo est vide
+  }
+
     final newUser = User(
       pseudoUser: _pseudoController.text,
-      passwordUser:
-          'password', // Ajouter un mot de passe par défaut ou demandez-le à l'utilisateur
       dateGame: DateTime.now(),
       scoreGame: 0,
       totalTicketsGame: 0,
@@ -87,90 +101,209 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
             ),
           ),
           // Contenu au centre de la page
-          Center(
+          Align(
+            alignment: Alignment.topCenter,
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(1.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Image.asset(
+                    'assets/images/logo_topteckel.png',
+                    width: 300, // Taille de l'image
+                    height: 300,
+                  ),
+
+                  const SizedBox(height: 10),
                   // Champ de texte pour le pseudo
-                  TextField(
-                    controller: _pseudoController,
-                    decoration: const InputDecoration(
-                      labelText: 'Pseudo',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  // Liste déroulante pour la couleur
-                  DropdownButtonFormField<int>(
-                    value: _colorDog,
-                    decoration: const InputDecoration(
-                      labelText: 'Choisir une couleur',
-                      border: OutlineInputBorder(),
-                    ),
-                    items: const [
-                      DropdownMenuItem(value: 1, child: Text('Couleur 1')),
-                      DropdownMenuItem(value: 2, child: Text('Couleur 2')),
-                      DropdownMenuItem(value: 3, child: Text('Couleur 3')),
-                      DropdownMenuItem(value: 4, child: Text('Couleur 4')),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _colorDog = value ?? 1;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  // Bouton rouge personnalisé
-
-                  ElevatedButton(
-                    onPressed: () async {
-                      // Animation de l'élément du bouton
-                      await _buttonController.forward(); // Démarre l'animation
-                      await Future.delayed(const Duration(milliseconds: 200));
-                      _buttonController.reverse(); // Revenir à l'état initial
-
-                      // Création de l'utilisateur
-                      _createUser(); // Crée l'utilisateur et navigue vers HomePage
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 25),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      backgroundColor: const Color.fromARGB(255, 179, 4, 0),
-                      side: const BorderSide(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal:
+                            20.0), // Ajoute 20 pixels à gauche et à droite
+                    child: TextField(
+                      cursorColor: const Color.fromARGB(255, 69, 26, 28),
+                      selectionControls: materialTextSelectionControls,
+                      controller: _pseudoController,
+                      style: const TextStyle(
                         color: Color.fromARGB(255, 69, 26, 28),
-                        width: 3, // Épaisseur de la bordure
+                        fontSize: 18,
                       ),
-                    ),
-                    child: AnimatedBuilder(
-                      animation: _buttonController,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          scale: 1.0 +
-                              (_buttonController.value *
-                                  0.2), // Animation de la taille
-                          child: child,
-                        );
-                      },
-                      child: Text(
-                        'Créer un profil',
-                        style: GoogleFonts.belanosima(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 69, 26, 28),
+                                width: 2.0)),
+                        labelText: 'Pseudo',
+                        labelStyle: const TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 69, 26, 28),
+                        ),
+                        errorText: !_isPseudoValid
+                        ? 'Ce champ est obligatoire'
+                        : null, // Message d'erreur dynamique
+                        fillColor: Colors.white,
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 69, 26, 28),
+                              width: 2.5),
                         ),
                       ),
                     ),
                   ),
-                  // ElevatedButton(
-                  //             onPressed: _createUser,
-                  //             child: const Text('Créer le profil'),
-                  //           ),
+                  const SizedBox(height: 20),
+                  // Liste déroulante pour la couleur
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal:
+                            20.0), // Ajoute 20 pixels à gauche et à droite
+                    child: DropdownButtonFormField<int>(
+                      value: _colorDog,
+                      dropdownColor: const Color.fromARGB(255, 180, 231, 255),
+                      icon: const Icon(
+                        Icons.arrow_drop_down, // Icône personnalisée
+                        color: Color.fromARGB(
+                            255, 69, 26, 28), // Couleur de la flèche
+                      ),
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        labelText: 'Choisir une couleur',
+                        labelStyle: TextStyle(
+                          color: Color.fromARGB(
+                              255, 69, 26, 28), // Couleur du label
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 69, 26, 28),
+                                width: 2.0)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 69, 26, 28),
+                              width: 2.5), // Bordure au focus
+                        ),
+                      ),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Color.fromARGB(
+                            255, 69, 26, 28), // Couleur du texte sélectionné
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                            value: 1,
+                            child: Text(
+                              'Couleur 1',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 69, 26, 28),
+                              ),
+                            )),
+                        DropdownMenuItem(
+                            value: 2,
+                            child: Text(
+                              'Couleur 2',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 69, 26, 28),
+                              ),
+                            )),
+                        DropdownMenuItem(
+                            value: 3,
+                            child: Text(
+                              'Couleur 3',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 69, 26, 28),
+                              ),
+                            )),
+                        DropdownMenuItem(
+                            value: 4,
+                            child: Text(
+                              'Couleur 4',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 69, 26, 28),
+                              ),
+                            )),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _colorDog = value ?? 1;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Bouton rouge personnalisé
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        // Animation au toucher
+                        onTapDown: (_) {
+                          _buttonController.forward(); // Démarre l'animation
+                        },
+                        onTapUp: (_) async {
+                          // Ajoute un léger délai pour laisser l'animation se jouer
+                          await Future.delayed(
+                              const Duration(milliseconds: 200));
+                          _buttonController
+                              .reverse(); // Revenir à l'état initial
+
+                          // Création de l'utilisateur après l'animation
+                          _createUser();
+                        },
+                        onTapCancel: () {
+                          _buttonController
+                              .reverse(); // Annule l'animation si le toucher est interrompu
+                        },
+
+                        // Animation sur tout le bloc
+                        child: AnimatedBuilder(
+                          animation: _buttonController,
+                          builder: (context, child) {
+                            return Transform.scale(
+                              scale: 1.0 + (_buttonController.value * 0.2),
+                              child: child,
+                            );
+                          },
+                          child: SizedBox(
+                            // Ajout du conteneur avec fond
+                            width: 240,
+                            child:Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 20),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(
+                                  255, 179, 4, 0), // Couleur de fond
+                              borderRadius:
+                                  BorderRadius.circular(12), // Coins arrondis
+                              border: Border.all(
+                                // Bordure
+                                color: const Color.fromARGB(255, 69, 26, 28),
+                                width: 3,
+                              ),
+                            ),
+                            // Bouton stylisé
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Créer un profil',
+                              style: GoogleFonts.belanosima(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

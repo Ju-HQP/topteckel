@@ -1,9 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WaitingPage extends StatelessWidget {
-  const WaitingPage({super.key});
+class WaitingPage extends StatefulWidget {
+  final bool userExists;
+  const WaitingPage({super.key, required this.userExists});
+  @override
+  State<WaitingPage> createState() => _WaitingPageState();
+}
 
+class _WaitingPageState extends State<WaitingPage> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToNextPage();
+  }
+
+  void _navigateToNextPage() async {
+    await Future.delayed(const Duration(seconds: 2)); // Simulation de chargement
+
+    if (widget.userExists) {
+      Navigator.pushReplacementNamed(context, '/home'); // Va vers HomePage
+    } else {
+      Navigator.pushReplacementNamed(context, '/signUp'); // Va vers SignUpPage
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
