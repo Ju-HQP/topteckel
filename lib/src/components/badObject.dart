@@ -9,13 +9,13 @@ import '../topteckel.dart';
 import 'play_area.dart'; // pour les collisions avec le mur
 import 'dog.dart'; //pour les collisions avec la balle
 
-class GoodObject
+class BadObject
     extends SpriteComponent // positionComponent affiche l'objet à l'écran (remplace render)
     with
         CollisionCallbacks,
         HasGameReference<TopTeckel> {
   // dragCallBacks pour l'interaction de drag
-  GoodObject({
+  BadObject({
     required this.velocity,
     required super.position,
   }) : super(
@@ -24,7 +24,8 @@ class GoodObject
         );
   // velocity => object Vector2 pour que cela corresponde à vitesse et direction
   Vector2 velocity;
-  
+  bool speedAjoutee = false;
+
    void addSpeed() {
      print("Vitesse avant");
     print(velocity);
@@ -38,7 +39,7 @@ class GoodObject
     await super.onLoad();
 
     try {
-      sprite = await game.loadSprite('object_good.png'); //loadSprite va direct dans assets/images
+      sprite = await game.loadSprite('object_bad.png'); //loadSprite va direct dans assets/images
       // size = sprite!.srcSize;
       print("Sprite loaded successfully. Size: $size.");
     } catch (e) {
@@ -50,12 +51,12 @@ class GoodObject
 
   
 
-// // update est la méthode utilisée à chaque frame du jeu, on met à jour la position dans cette fonction
-//   @override
-//   void update(double dt) {
-//     super.update(dt);
-//     position += velocity * dt;
-//   }
+// update est la méthode utilisée à chaque frame du jeu, on met à jour la position dans cette fonction
+  @override
+  void update(double dt) {
+    super.update(dt);
+    position += velocity * dt;
+  }
 
 // Fonction prévue plus tard pour la classe object
   void respawnObject() {
@@ -70,7 +71,7 @@ class GoodObject
       // });
       // Créer un nouvel objet positif
       game.world.add(
-        GoodObject(
+        BadObject(
             position: Vector2(coordX, spawnHeightObjects),
             // vector et vitesse à revoir
             velocity: vitesseJeu),

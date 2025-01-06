@@ -17,8 +17,8 @@ const other = gameWidth*0.225;
 
 // OBJET POSITIF 
 
-const goodObjectWidth =  gameWidth*0.125;
-const goodObjectHeight = goodObjectWidth;
+const objectWidth =  gameWidth*0.125;
+const objectHeight = objectWidth;
 
 const spawnHeightObjects = 50.0;
 
