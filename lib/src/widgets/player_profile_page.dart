@@ -112,19 +112,59 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
       items: const [
         DropdownMenuItem<int>(
           value: 1,
-          child: Text('Couleur 1'),
+          child: Row(
+        children: [
+          Image(
+            image: AssetImage('assets/images/icon-color-teckel_1.png'),
+            width: 30,
+            height: 30,
+          ),
+          SizedBox(width: 10), // Espacement entre l'image et le texte
+          Text('Couleur 1'),
+        ],
+      ),
         ),
         DropdownMenuItem<int>(
           value: 2,
-          child: Text('Couleur 2'),
+          child: Row(
+        children: [
+          Image(
+            image: AssetImage('assets/images/icon-color-teckel_2.png'),
+            width: 30,
+            height: 30,
+          ),
+          SizedBox(width: 10), // Espacement entre l'image et le texte
+          Text('Couleur 2'),
+        ],
+      ),
         ),
         DropdownMenuItem<int>(
           value: 3,
-          child: Text('Couleur 3'),
+          child: Row(
+        children: [
+          Image(
+            image: AssetImage('assets/images/icon-color-teckel_3.png'),
+            width: 30,
+            height: 30,
+          ),
+          SizedBox(width: 10), // Espacement entre l'image et le texte
+          Text('Couleur 3'),
+        ],
+      ),
         ),
         DropdownMenuItem<int>(
           value: 4,
-          child: Text('Couleur 4'),
+          child: Row(
+        children: [
+          Image(
+            image: AssetImage('assets/images/icon-color-teckel_4.png'),
+            width: 30,
+            height: 30,
+          ),
+          SizedBox(width: 10), // Espacement entre l'image et le texte
+          Text('Couleur 4'),
+        ],
+      ),
         ),
       ],
     ),
@@ -303,11 +343,45 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          'Score : ${user.scoreGame?.toString() ?? 'Non défini'}\n'
-                          'Tickets : ${user.totalTicketsGame?.toString() ?? 'Non défini'}\n'
-                          'Couleur du Dog : ${user.colorDog?.toString() ?? 'Non défini'}',
-                        ),
+                        Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Image.asset(
+      'assets/images/icon-score-topteckel.png', // Remplacez par le chemin de votre icône
+      width: 48, // Taille de l'image
+      height: 48,
+    ),
+    const SizedBox(width: 8), // Espace entre l'image et le texte
+    Text(
+      'Score : ${user.scoreGame?.toString() ?? 'Non défini'}',
+      style: GoogleFonts.belanosima(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: const Color.fromARGB(255, 69, 26, 28),
+      ),
+    ),
+  ],
+),
+const SizedBox(height: 10),
+Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Image.asset(
+      'assets/images/icon-game-gacha.png', // Remplacez par le chemin de votre icône
+      width: 48,
+      height: 48,
+    ),
+    const SizedBox(width: 8),
+    Text(
+      'Tickets : ${user.totalTicketsGame?.toString() ?? 'Non défini'}',
+      style: GoogleFonts.belanosima(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: const Color.fromARGB(255, 69, 26, 28),
+      ),
+    ),
+  ],
+),
                         const SizedBox(height: 20),
                         Positioned(
               bottom: 20, // Position verticale identique à celle des icônes
