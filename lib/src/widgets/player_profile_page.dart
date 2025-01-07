@@ -98,10 +98,11 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                   ),
                 ),
 
-                Row(
-  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
   children: [
-    const Text('Couleur du teckel : ', style: TextStyle(fontSize: 18)),
+    const Text('Couleur du Teckel : ', style: TextStyle(fontSize: 18)),
+    const SizedBox(height: 10),
     DropdownButton<int>(
       value: _selectedColorDog,
       onChanged: (int? newValue) async {
