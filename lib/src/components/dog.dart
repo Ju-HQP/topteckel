@@ -39,9 +39,9 @@ class Dog extends SpriteComponent // positionComponent affiche l'objet à l'écr
     try {
       sprite = await game.loadSprite('teckel_default.png');
       // size = sprite!.srcSize;
-      print("Sprite loaded successfully. Size: $size.");
+       print("Sprite Objet Négatif. Size: $size.");
     } catch (e) {
-      print("Error loading sprite: $e");
+      print("Error loading Bad Object sprite: $e");
     }
 
     add(RectangleHitbox());

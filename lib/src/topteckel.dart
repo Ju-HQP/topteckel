@@ -5,7 +5,6 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:topteckel/src/components/goodObject.dart';
 
 import 'components/components.dart';
 import 'config.dart';
@@ -69,9 +68,11 @@ class TopTeckel extends FlameGame
 // si le jeu est déjà en cours la fonction ne fait rien
     if (playState == PlayState.playing) return;
 
-    world.removeAll(world.children.query<Ball>());
     world.removeAll(world.children.query<Dog>());
-    world.removeAll(world.children.query<Objet>());
+    world.removeAll(world.children.query<GoodObject>());
+    world.removeAll(world.children.query<BadObject>());
+    world.removeAll(world.children.query<QuestionObject>());
+
 
     playState = PlayState.playing;
 
@@ -109,11 +110,10 @@ class TopTeckel extends FlameGame
           1000; // durée aléatoire pour le délai entre et 0 et 1 seconde
       Future.delayed(Duration(milliseconds: aleaTime.toInt()), () {
         world.add(
-          GoodObject(
-              position: Vector2(objectZoneSpawnGap + other * i,
+          GoodObject(Vector2(objectZoneSpawnGap + other * i,
                   spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
               // vector et vitesse à revoir
-              velocity: Vector2(0, height * 0.2).normalized()
+               Vector2(0, height * 0.2).normalized()
                 ..scale(height / 4)),
         );
       });
