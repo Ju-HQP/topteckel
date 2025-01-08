@@ -398,61 +398,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Expanded(
-                                child: GestureDetector(
-                                  onTapDown: (_) {
-                                    _buttonController2.forward();
-                                  },
-                                  onTapUp: (_) async {
-                                    await Future.delayed(
-                                        const Duration(milliseconds: 200));
-                                    _buttonController2.reverse();
-                                    _deleteAccount();
-                                  },
-                                  onTapCancel: () {
-                                    _buttonController2.reverse();
-                                  },
-                                  child: AnimatedBuilder(
-                                    animation: _buttonController2,
-                                    builder: (context, child) {
-                                      return Transform.scale(
-                                        scale: 1.0 +
-                                            (_buttonController2.value * 0.2),
-                                        child: child,
-                                      );
-                                    },
-                                    child: SizedBox(
-                                      width: 150,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 15),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          border: Border.all(
-                                              color: const Color.fromARGB(
-                                                  255, 69, 26, 28),
-                                              width: 3),
-                                        ),
-                                        alignment: Alignment
-                                            .center, // Centrer le texte à l'intérieur du bouton
-                                        child: Center(
-                                          child: Text(
-                                            'Fenetre question',
-                                            style: GoogleFonts.belanosima(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: const Color.fromARGB(
-                                                  255, 179, 4, 0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                        
                         Positioned(
                           bottom:
                               20, // Position verticale identique à celle des icônes
