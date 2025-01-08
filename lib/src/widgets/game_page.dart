@@ -4,6 +4,9 @@ import '../topteckel.dart';
 import '../config.dart';
 import 'overlay_screen.dart';
 import 'score_card.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:topteckel/models/database/dao.dart';
+import 'package:topteckel/models/user.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -25,12 +28,28 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Jeu TopTeckel'),
+        title: Text(
+          'Jeu TopTeckel',
+          style: GoogleFonts.belanosima(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 179, 4, 0),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
+        ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(3.0), // Hauteur de la bordure
+          child: Container(
+            color:
+                const Color.fromARGB(255, 69, 26, 28), // Couleur de la bordure
+            height: 3.0, // Épaisseur de la bordure
+          ),
         ),
       ),
       body: Container(
@@ -40,7 +59,7 @@ class _GamePageState extends State<GamePage> {
             fit: BoxFit.cover, // Ajuste l'image pour couvrir tout l'écran
           ),
         ),
-        child: SafeArea(
+        // child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Center(
@@ -79,7 +98,7 @@ class _GamePageState extends State<GamePage> {
               ),
             ),
           ),
-        ),
+        // ),
       ),
     );
   }

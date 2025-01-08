@@ -44,7 +44,8 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
     if (users.isNotEmpty) {
       setState(() {
         _user = users[0];
-        _selectedColorDog = _user.colorDog; // Charger le premier utilisateur (on suppose qu'il y en a un)
+        _selectedColorDog = _user
+            .colorDog; // Charger le premier utilisateur (on suppose qu'il y en a un)
       });
     }
   }
@@ -97,39 +98,92 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                     ),
                   ),
                 ),
-
-                Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    const Text('Couleur du teckel : ', style: TextStyle(fontSize: 18)),
-    DropdownButton<int>(
-      value: _selectedColorDog,
-      onChanged: (int? newValue) async {
-        setState(() {
-          _selectedColorDog = newValue;
-        });
-      },
-      items: const [
-        DropdownMenuItem<int>(
-          value: 1,
-          child: Text('Couleur 1'),
-        ),
-        DropdownMenuItem<int>(
-          value: 2,
-          child: Text('Couleur 2'),
-        ),
-        DropdownMenuItem<int>(
-          value: 3,
-          child: Text('Couleur 3'),
-        ),
-        DropdownMenuItem<int>(
-          value: 4,
-          child: Text('Couleur 4'),
-        ),
-      ],
-    ),
-  ],
-)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Couleur du Teckel : ',
+                        style: TextStyle(fontSize: 18)),
+                    const SizedBox(height: 10),
+                    DropdownButton<int>(
+                      value: _selectedColorDog,
+                      onChanged: (int? newValue) async {
+                        setState(() {
+                          _selectedColorDog = newValue;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem<int>(
+                          value: 1,
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/icon-color-teckel_1.png'),
+                                width: 30,
+                                height: 30,
+                              ),
+                              SizedBox(
+                                  width:
+                                      10), // Espacement entre l'image et le texte
+                              Text('Couleur 1'),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 2,
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/icon-color-teckel_2.png'),
+                                width: 30,
+                                height: 30,
+                              ),
+                              SizedBox(
+                                  width:
+                                      10), // Espacement entre l'image et le texte
+                              Text('Couleur 2'),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 3,
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/icon-color-teckel_3.png'),
+                                width: 30,
+                                height: 30,
+                              ),
+                              SizedBox(
+                                  width:
+                                      10), // Espacement entre l'image et le texte
+                              Text('Couleur 3'),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 4,
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/icon-color-teckel_4.png'),
+                                width: 30,
+                                height: 30,
+                              ),
+                              SizedBox(
+                                  width:
+                                      10), // Espacement entre l'image et le texte
+                              Text('Couleur 4'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
               ],
             ),
           ),
@@ -166,10 +220,10 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                 await Dao.updateUser(_user);
                 _loadUserData();
                 setState(() {
-    // Mets à jour les données de l'utilisateur et rafraîchis l'interface
-    _user.pseudoUser = pseudoController.text;
-    _user.colorDog = _selectedColorDog;
-  });
+                  // Mets à jour les données de l'utilisateur et rafraîchis l'interface
+                  _user.pseudoUser = pseudoController.text;
+                  _user.colorDog = _selectedColorDog;
+                });
                 Navigator.of(context).pop();
               },
               child: Text("Enregistrer",
@@ -303,22 +357,114 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          'Score : ${user.scoreGame?.toString() ?? 'Non défini'}\n'
-                          'Tickets : ${user.totalTicketsGame?.toString() ?? 'Non défini'}\n'
-                          'Couleur du Dog : ${user.colorDog?.toString() ?? 'Non défini'}',
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/icon-score-topteckel.png', // Remplacez par le chemin de votre icône
+                              width: 48, // Taille de l'image
+                              height: 48,
+                            ),
+                            const SizedBox(
+                                width: 8), // Espace entre l'image et le texte
+                            Text(
+                              user.scoreGame?.toString() ?? 'Non défini',
+                              style: GoogleFonts.belanosima(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromARGB(255, 69, 26, 28),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/icon-game-gacha.png', // Remplacez par le chemin de votre icône
+                              width: 48,
+                              height: 48,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              user.totalTicketsGame?.toString() ?? 'Non défini',
+                              style: GoogleFonts.belanosima(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromARGB(255, 69, 26, 28),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 20),
+                        Expanded(
+                                child: GestureDetector(
+                                  onTapDown: (_) {
+                                    _buttonController2.forward();
+                                  },
+                                  onTapUp: (_) async {
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 200));
+                                    _buttonController2.reverse();
+                                    _deleteAccount();
+                                  },
+                                  onTapCancel: () {
+                                    _buttonController2.reverse();
+                                  },
+                                  child: AnimatedBuilder(
+                                    animation: _buttonController2,
+                                    builder: (context, child) {
+                                      return Transform.scale(
+                                        scale: 1.0 +
+                                            (_buttonController2.value * 0.2),
+                                        child: child,
+                                      );
+                                    },
+                                    child: SizedBox(
+                                      width: 150,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                              color: const Color.fromARGB(
+                                                  255, 69, 26, 28),
+                                              width: 3),
+                                        ),
+                                        alignment: Alignment
+                                            .center, // Centrer le texte à l'intérieur du bouton
+                                        child: Center(
+                                          child: Text(
+                                            'Fenetre question',
+                                            style: GoogleFonts.belanosima(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: const Color.fromARGB(
+                                                  255, 179, 4, 0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                         Positioned(
-              bottom: 20, // Position verticale identique à celle des icônes
-              left: MediaQuery.of(context).size.width / 2 -
-                  80, // Centrer horizontalement
-              child: Image.asset(
-                _user.getDogImage(),
-                width: 150, // Taille de l'image (ajustez selon vos besoins)
-                height: 250,
-              ),
-            ),
+                          bottom:
+                              20, // Position verticale identique à celle des icônes
+                          left: MediaQuery.of(context).size.width / 2 -
+                              80, // Centrer horizontalement
+                          child: Image.asset(
+                            _user.getDogImage(),
+                            width:
+                                150, // Taille de l'image (ajustez selon vos besoins)
+                            height: 250,
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Row(
