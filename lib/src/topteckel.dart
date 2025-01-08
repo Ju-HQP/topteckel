@@ -110,11 +110,10 @@ class TopTeckel extends FlameGame
           1000; // durée aléatoire pour le délai entre et 0 et 1 seconde
       Future.delayed(Duration(milliseconds: aleaTime.toInt()), () {
         world.add(
-          GoodObject(
-              position: Vector2(objectZoneSpawnGap + other * i,
+          GoodObject(Vector2(objectZoneSpawnGap + other * i,
                   spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
               // vector et vitesse à revoir
-              velocity: Vector2(0, height * 0.2).normalized()
+               Vector2(0, height * 0.2).normalized()
                 ..scale(height / 4)),
         );
       });
