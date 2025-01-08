@@ -71,7 +71,7 @@ class TopTeckel extends FlameGame
     world.removeAll(world.children.query<Dog>());
     world.removeAll(world.children.query<GoodObject>());
     world.removeAll(world.children.query<BadObject>());
-    // world.removeAll(world.children.query<QuestionObject>());
+    world.removeAll(world.children.query<QuestionObject>());
 
 
     playState = PlayState.playing;

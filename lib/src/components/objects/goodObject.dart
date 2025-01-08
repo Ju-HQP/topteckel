@@ -2,8 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
-import 'play_area.dart'; // pour les collisions avec le mur
-import 'dog.dart'; //pour les collisions avec la balle
+import '../components.dart';
 import 'object.dart';
 
 class GoodObject

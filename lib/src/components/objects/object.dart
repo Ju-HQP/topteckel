@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-import 'components.dart';
-import '../config.dart';
+import '../components.dart';
+import '../../config.dart';
 
-import '../topteckel.dart';
+import '../../topteckel.dart';
 
 // La classe Objet globale : regroupe les caractéristiques de vitesse (velocity), de dimensions et de positionnement de l'objet.
 // Les classes spécifiques aux objets gère le sprite et les points attribués.
