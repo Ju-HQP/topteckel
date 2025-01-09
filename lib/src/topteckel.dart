@@ -161,7 +161,7 @@ class TopTeckel extends FlameGame
   }
 
   @override
-  Color backgroundColor() => const Color(0xfff2e8cf);
+  // Color backgroundColor() => const Color(0xfff2e8cf);
 
   @override
   void update(double dt) {
