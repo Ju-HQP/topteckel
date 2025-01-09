@@ -192,42 +192,74 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                             255, 69, 26, 28), // Couleur du texte sélectionné
                       ),
                       items: const [
-                        DropdownMenuItem(
-                            value: 1,
-                            child: Text(
-                              'Couleur 1',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromARGB(255, 69, 26, 28),
+                        DropdownMenuItem<int>(
+                          value: 1,
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/icon-color-teckel_1.png'),
+                                width: 30,
+                                height: 30,
                               ),
-                            )),
-                        DropdownMenuItem(
-                            value: 2,
-                            child: Text(
-                              'Couleur 2',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromARGB(255, 69, 26, 28),
+                              SizedBox(
+                                  width:
+                                      10), // Espacement entre l'image et le texte
+                              Text('Couleur 1'),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 2,
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/icon-color-teckel_2.png'),
+                                width: 30,
+                                height: 30,
                               ),
-                            )),
-                        DropdownMenuItem(
-                            value: 3,
-                            child: Text(
-                              'Couleur 3',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromARGB(255, 69, 26, 28),
+                              SizedBox(
+                                  width:
+                                      10), // Espacement entre l'image et le texte
+                              Text('Couleur 2'),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 3,
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/icon-color-teckel_3.png'),
+                                width: 30,
+                                height: 30,
                               ),
-                            )),
-                        DropdownMenuItem(
-                            value: 4,
-                            child: Text(
-                              'Couleur 4',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromARGB(255, 69, 26, 28),
+                              SizedBox(
+                                  width:
+                                      10), // Espacement entre l'image et le texte
+                              Text('Couleur 3'),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 4,
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                    'assets/images/icon-color-teckel_4.png'),
+                                width: 30,
+                                height: 30,
                               ),
-                            )),
+                              SizedBox(
+                                  width:
+                                      10), // Espacement entre l'image et le texte
+                              Text('Couleur 4'),
+                            ],
+                          ),
+                        ),
                       ],
                       onChanged: (value) {
                         setState(() {

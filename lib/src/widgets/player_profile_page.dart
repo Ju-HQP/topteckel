@@ -16,6 +16,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
   late AnimationController _buttonController2;
   bool _isPseudoValid = true;
   int? _selectedColorDog;
+  int _colorDog = 1; // Valeur par défaut
 
   @override
   void dispose() {
@@ -44,8 +45,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
     if (users.isNotEmpty) {
       setState(() {
         _user = users[0];
-        _selectedColorDog = _user
-            .colorDog; // Charger le premier utilisateur (on suppose qu'il y en a un)
+        _colorDog = _user.colorDog!; // Charger le premier utilisateur (on suppose qu'il y en a un)
       });
     }
   }
@@ -76,6 +76,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                     color: Color.fromARGB(255, 69, 26, 28),
                     fontSize: 18,
                   ),
+                  
                   controller: pseudoController,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
@@ -98,22 +99,44 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Couleur du Teckel",
-                        style: GoogleFonts.belanosima(
-                          fontSize: 18,
-                          color: const Color.fromARGB(255, 69, 26, 28),
-                        )),
-                    const SizedBox(height: 10),
-                    DropdownButton<int>(
-                      value: _selectedColorDog,
-                      onChanged: (int? newValue) async {
-                        setState(() {
-                          _selectedColorDog = newValue;
-                        });
-                      },
+                const SizedBox(height: 20),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal:
+                            0.0), // Ajoute 20 pixels à gauche et à droite
+                    child: DropdownButtonFormField<int>(
+                      value: _colorDog,
+                      icon: const Icon(
+                        Icons.arrow_drop_down, // Icône personnalisée
+                        color: Color.fromARGB(
+                            255, 69, 26, 28), // Couleur de la flèche
+                      ),
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        labelText: 'Couleur du Teckel',
+                        labelStyle: TextStyle(
+                          color: Color.fromARGB(
+                              255, 69, 26, 28),
+                          fontSize: 18, // Couleur du label
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 69, 26, 28),
+                                width: 2.0)),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 69, 26, 28),
+                              width: 2.5), // Bordure au focus
+                        ),
+                      ),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Color.fromARGB(
+                            255, 69, 26, 28), // Couleur du texte sélectionné
+                      ),
                       items: const [
                         DropdownMenuItem<int>(
                           value: 1,
@@ -184,10 +207,13 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                           ),
                         ),
                       ],
+                      onChanged: (value) {
+                        setState(() {
+                          _colorDog = value ?? 1;
+                        });
+                      },
                     ),
-                
-                  ],
-                )
+                  ),
               ],
             ),
           ),
@@ -220,13 +246,13 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                   );
                   return; // Arrêter la création si le pseudo est vide
                 }
-                _user.colorDog = _selectedColorDog;
+                _user.colorDog = _colorDog;
                 await Dao.updateUser(_user);
                 _loadUserData();
                 setState(() {
                   // Mets à jour les données de l'utilisateur et rafraîchis l'interface
                   _user.pseudoUser = pseudoController.text;
-                  _user.colorDog = _selectedColorDog;
+                  _user.colorDog = _colorDog;
                 });
                 Navigator.of(context).pop();
               },
@@ -323,10 +349,11 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
           ),
         ),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
+      body: SafeArea(
+        child:Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/decor_home.png'),
             fit: BoxFit.cover,
@@ -415,10 +442,14 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                             height: 250,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                        const SizedBox(height: 100),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Expanded(
                                 child: GestureDetector(
@@ -534,6 +565,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                                 ),
                               ),
                             ],
+                            ),
                           ),
                         ),
                       ]),
@@ -544,6 +576,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
             },
           ),
         ),
+      ),
       ),
     );
   }
