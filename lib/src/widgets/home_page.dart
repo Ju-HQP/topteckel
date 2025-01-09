@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topteckel/models/user.dart';
+import 'package:topteckel/models/database/dao.dart';
 
 class HomePage extends StatefulWidget {
   // final User user;
@@ -15,11 +16,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   static const _iconSizeSmall = 60.0;
   static const _iconSizeLarge = 70.0;
   static const _animationDuration = Duration(milliseconds: 100);
+  
 
   // Map pour gérer l'état des tailles de chaque icône
   final Map<String, AnimationController> _controllers = {};
   late AnimationController _buttonController;
-  
+  late User _user;
+  int? _selectedColorDog;
+
+  @override
+  void dispose() {
+    _controllers.forEach((key, controller) => controller.dispose());
+    _buttonController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -46,15 +57,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 100),
     );
+    _loadUserData();
   }
 
-  @override
-  void dispose() {
-    _controllers.forEach((key, controller) => controller.dispose());
-    _buttonController.dispose();
-    super.dispose();
-  }
+  
 
+  
+  // Charger les données de l'utilisateur
+  _loadUserData() async {
+    final users = await Dao.listUsers();
+    if (users.isNotEmpty) {
+      setState(() {
+        _user = users[0];
+        _selectedColorDog = _user
+            .colorDog; // Charger le premier utilisateur (on suppose qu'il y en a un)
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,7 +181,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               left: MediaQuery.of(context).size.width / 2 -
                   80, // Centrer horizontalement
               child: Image.asset(
-                "assets/images/teckel_1.png",
+                _user.getDogImage(),
                 width: 150, // Taille de l'image (ajustez selon vos besoins)
                 height: 250,
               ),

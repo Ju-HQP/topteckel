@@ -101,8 +101,11 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Couleur du Teckel : ',
-                        style: TextStyle(fontSize: 18)),
+                    Text("Couleur du Teckel",
+                        style: GoogleFonts.belanosima(
+                          fontSize: 18,
+                          color: const Color.fromARGB(255, 69, 26, 28),
+                        )),
                     const SizedBox(height: 10),
                     DropdownButton<int>(
                       value: _selectedColorDog,
@@ -182,6 +185,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                         ),
                       ],
                     ),
+                
                   ],
                 )
               ],
@@ -307,7 +311,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, '/home');
           },
         ),
         bottom: PreferredSize(
