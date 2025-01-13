@@ -27,31 +27,32 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Jeu TopTeckel',
-      //     style: GoogleFonts.belanosima(
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //   ),
-      //   centerTitle: true,
-      //   foregroundColor: const Color.fromARGB(255, 255, 255, 255),
-      //   backgroundColor: const Color.fromARGB(255, 179, 4, 0),
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back),
-      //     onPressed: () {
-      //       Navigator.pop(context);
-      //     },
-      //   ),
-      //   bottom: PreferredSize(
-      //     preferredSize: const Size.fromHeight(3.0), // Hauteur de la bordure
-      //     child: Container(
-      //       color:
-      //           const Color.fromARGB(255, 69, 26, 28), // Couleur de la bordure
-      //       height: 3.0, // Épaisseur de la bordure
-      //     ),
-      //   ),
-      // ),
+      appBar: AppBar(
+        title: Text(
+          'Jeu TopTeckel',
+          style: GoogleFonts.belanosima(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 179, 4, 0),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(7.0), // Hauteur de la bordure
+          child: Container(
+            color:
+                const Color.fromARGB(255, 69, 26, 28), // Couleur de la bordure
+            height: 7.0, // Épaisseur de la bordure
+          ),
+        ),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -60,19 +61,13 @@ class _GamePageState extends State<GamePage> {
           ),
         ),
         // child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
             child: Center(
               child: Column(
                 children: [ // affichage du score
-                  ScoreCard(score: game.score),
                   Expanded(
-                    child: FittedBox(
-                      child: SizedBox(
-                        width: gameWidth,
-                        height: gameHeight,
                         child: GameWidget(
                           game: game,
+                          backgroundBuilder: (context) => Container(color: Colors.transparent),
                           overlayBuilderMap: {
                             PlayState.welcome.name: (context, game) =>
                                 const OverlayScreen(
@@ -91,12 +86,9 @@ class _GamePageState extends State<GamePage> {
                                 ),
                           },
                         ),
-                      ),
                     ),
-                  ),
                 ],
               ),
-            ),
           ),
         // ),
       ),

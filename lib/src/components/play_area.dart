@@ -9,7 +9,7 @@ import '../topteckel.dart';
 class PlayArea extends RectangleComponent with HasGameReference<TopTeckel> {
   PlayArea()
       : super(
-          paint: Paint()..color = const Color(0x00000000),
+          paint: Paint()..color = const Color.fromARGB(255, 255, 251, 0),
         children: [RectangleHitbox()], // pour l'ajout de collisions
         );
 

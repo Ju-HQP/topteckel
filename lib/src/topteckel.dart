@@ -5,6 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 
 import 'components/components.dart';
 import 'config.dart';
@@ -53,7 +54,7 @@ class TopTeckel extends FlameGame
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
-
+    print("Largeur3 : ${size.x}, Hauteur : ${size.y}");
     // place le viseur en haut à gauche (au centre par défaut) pour définir les coordonnées
     camera.viewfinder.anchor = Anchor.topLeft;
 

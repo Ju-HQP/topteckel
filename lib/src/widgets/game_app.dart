@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:topteckel/src/config.dart';
 import 'home_page.dart';
 import 'game_page.dart';
 import 'settings_page.dart';
@@ -18,6 +19,8 @@ class GameApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    gameWidth = MediaQuery.of(context).size.width;
+    gameHeight = MediaQuery.of(context).size.height;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
