@@ -54,12 +54,12 @@ class _GamePageState extends State<GamePage> {
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/decor_default.png'),
-            fit: BoxFit.cover, // Ajuste l'image pour couvrir tout l'écran
-          ),
-        ),
+        // decoration: const BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage('assets/images/decor_default.png'),
+        //     fit: BoxFit.cover, // Ajuste l'image pour couvrir tout l'écran
+        //   ),
+        // ),
         // child: SafeArea(
             child: Center(
               child: Column(

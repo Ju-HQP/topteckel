@@ -36,7 +36,7 @@ var batStep = gameWidth * 0.05;
 
 // coefficient de vitesse
 const coeffVitesse = 1.15;
-var vitesseJeu = Vector2(0.0, 450.0);
+var vitesseJeu = Vector2(0.0, 200.0);
 // délai de respawn (par défaut 3 secondes)
 double delai = 3;
 final List<int> paliersDeScore = [25,50,100,200,300,400,500];
