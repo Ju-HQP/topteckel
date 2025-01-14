@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topteckel/models/database/dao.dart';
+import 'package:topteckel/models/question.dart';
 import 'package:topteckel/models/user.dart';
 
 class PlayerProfilePage extends StatefulWidget {
@@ -14,14 +17,16 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
   late User _user;
   late AnimationController _buttonController1;
   late AnimationController _buttonController2;
+  late AnimationController _buttonController3;
   bool _isPseudoValid = true;
-  int? _selectedColorDog;
+  // int? _selectedColorDog;
   int _colorDog = 1; // Valeur par défaut
 
   @override
   void dispose() {
     _buttonController1.dispose();
     _buttonController2.dispose();
+    _buttonController3.dispose();
     super.dispose();
   }
 
@@ -33,6 +38,10 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
       duration: const Duration(milliseconds: 100),
     );
     _buttonController2 = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
+    _buttonController3 = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 100),
     );
@@ -50,6 +59,21 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
     }
   }
 
+  List<String> shuffleResponses(String goodResponse, List<String> badResponses) {
+  final responses = [goodResponse, ...badResponses];
+  responses.shuffle();
+  return responses;
+}
+
+Future<Question> getRandomQuestion() async {
+  final questions = await Dao.listQuestions();
+  if (questions.isNotEmpty) {
+    return questions[Random().nextInt(questions.length)];
+  } else {
+    throw Exception("No questions available");
+  }
+}
+
   // Afficher un formulaire de modification pour l'utilisateur
   _showEditDialog() {
     final pseudoController = TextEditingController(text: _user.pseudoUser);
@@ -58,6 +82,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
       builder: (context) {
         return AlertDialog(
           title: Text("Modifier ton profil",
+              textAlign: TextAlign.center,
               style: GoogleFonts.belanosima(
                 fontWeight: FontWeight.bold,
                 color: const Color.fromARGB(255, 179, 4, 0),
@@ -278,6 +303,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
           backgroundColor: const Color.fromARGB(255, 179, 4, 0),
           title: Text(
             "Supprimer mon compte",
+            textAlign: TextAlign.center,
             style: GoogleFonts.belanosima(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -350,233 +376,343 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
         ),
       ),
       body: SafeArea(
-        child:Container(
+        child: Container(
           width: double.infinity,
           height: double.infinity,
           decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/decor_home.png'),
-            fit: BoxFit.cover,
+            image: DecorationImage(
+              image: AssetImage('assets/images/decor_home.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SingleChildScrollView(
-          child: FutureBuilder(
-            future: Dao.listUsers(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Erreur : ${snapshot.error}'));
-              } else if (snapshot.hasData) {
-                final users = snapshot.data as List<User>;
-                if (users.isEmpty) {
-                  return const Center(child: Text('Aucun utilisateur trouvé.'));
-                }
-                final user = users[
-                    0]; // Ici, on suppose qu'il n'y a qu'un seul utilisateur
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          user.pseudoUser ?? 'Utilisateur inconnu',
-                          style: GoogleFonts.belanosima(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: const Color.fromARGB(255, 69, 26, 28),
+          child: SingleChildScrollView(
+            child: FutureBuilder(
+              future: Dao.listUsers(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Erreur : ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  final users = snapshot.data as List<User>;
+                  if (users.isEmpty) {
+                    return const Center(
+                        child: Text('Aucun utilisateur trouvé.'));
+                  }
+                  final user = users[
+                      0]; // Ici, on suppose qu'il n'y a qu'un seul utilisateur
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            user.pseudoUser ?? 'Utilisateur inconnu',
+                            style: GoogleFonts.belanosima(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: const Color.fromARGB(255, 69, 26, 28),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/icon-score-topteckel.png', // Remplacez par le chemin de votre icône
-                              width: 48, // Taille de l'image
-                              height: 48,
-                            ),
-                            const SizedBox(
-                                width: 8), // Espace entre l'image et le texte
-                            Text(
-                              user.scoreGame?.toString() ?? 'Non défini',
-                              style: GoogleFonts.belanosima(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 69, 26, 28),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/icon-game-gacha.png', // Remplacez par le chemin de votre icône
-                              width: 48,
-                              height: 48,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              user.totalTicketsGame?.toString() ?? 'Non défini',
-                              style: GoogleFonts.belanosima(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: const Color.fromARGB(255, 69, 26, 28),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        
-                        Positioned(
-                          bottom:
-                              20, // Position verticale identique à celle des icônes
-                          left: MediaQuery.of(context).size.width / 2 -
-                              80, // Centrer horizontalement
-                          child: Image.asset(
-                            _user.getDogImage(),
-                            width:
-                                150, // Taille de l'image (ajustez selon vos besoins)
-                            height: 250,
-                          ),
-                        ),
-                        const SizedBox(height: 100),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: GestureDetector(
-                                  onTapDown: (_) {
-                                    _buttonController1.forward();
-                                  },
-                                  onTapUp: (_) async {
-                                    await Future.delayed(
-                                        const Duration(milliseconds: 200));
-                                    _buttonController1.reverse();
-                                    _showEditDialog();
-                                  },
-                                  onTapCancel: () {
-                                    _buttonController1.reverse();
-                                  },
-                                  child: AnimatedBuilder(
-                                    animation: _buttonController1,
-                                    builder: (context, child) {
-                                      return Transform.scale(
-                                        scale: 1.0 +
-                                            (_buttonController1.value * 0.2),
-                                        child: child,
-                                      );
-                                    },
-                                    child: SizedBox(
-                                      width: 150,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 15),
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                              255, 179, 4, 0),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          border: Border.all(
-                                              color: const Color.fromARGB(
-                                                  255, 69, 26, 28),
-                                              width: 3),
-                                        ),
-                                        alignment: Alignment
-                                            .center, // Centrer le texte à l'intérieur du bouton
-                                        child: Center(
-                                          child: Text(
-                                            'Modifier mon profil',
-                                            style: GoogleFonts.belanosima(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                              Image.asset(
+                                'assets/images/icon-score-topteckel.png', // Remplacez par le chemin de votre icône
+                                width: 48, // Taille de l'image
+                                height: 48,
                               ),
                               const SizedBox(
-                                  width:
-                                      20), // Ajouter un espace entre les boutons
-                              Expanded(
-                                child: GestureDetector(
-                                  onTapDown: (_) {
-                                    _buttonController2.forward();
-                                  },
-                                  onTapUp: (_) async {
-                                    await Future.delayed(
-                                        const Duration(milliseconds: 200));
-                                    _buttonController2.reverse();
-                                    _deleteAccount();
-                                  },
-                                  onTapCancel: () {
-                                    _buttonController2.reverse();
-                                  },
-                                  child: AnimatedBuilder(
-                                    animation: _buttonController2,
-                                    builder: (context, child) {
-                                      return Transform.scale(
-                                        scale: 1.0 +
-                                            (_buttonController2.value * 0.2),
-                                        child: child,
-                                      );
-                                    },
-                                    child: SizedBox(
-                                      width: 150,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 15),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          border: Border.all(
-                                              color: const Color.fromARGB(
-                                                  255, 69, 26, 28),
-                                              width: 3),
-                                        ),
-                                        alignment: Alignment
-                                            .center, // Centrer le texte à l'intérieur du bouton
-                                        child: Center(
-                                          child: Text(
-                                            'Supprimer mon compte',
-                                            style: GoogleFonts.belanosima(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: const Color.fromARGB(
-                                                  255, 179, 4, 0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  width: 8), // Espace entre l'image et le texte
+                              Text(
+                                user.scoreGame?.toString() ?? 'Non défini',
+                                style: GoogleFonts.belanosima(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color.fromARGB(255, 69, 26, 28),
                                 ),
                               ),
                             ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon-game-gacha.png', // Remplacez par le chemin de votre icône
+                                width: 48,
+                                height: 48,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                user.totalTicketsGame?.toString() ??
+                                    'Non défini',
+                                style: GoogleFonts.belanosima(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color.fromARGB(255, 69, 26, 28),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Positioned(
+                            bottom:
+                                20, // Position verticale identique à celle des icônes
+                            left: MediaQuery.of(context).size.width / 2 -
+                                80, // Centrer horizontalement
+                            child: Image.asset(
+                              _user.getDogImage(),
+                              width:
+                                  150, // Taille de l'image (ajustez selon vos besoins)
+                              height: 250,
                             ),
                           ),
-                        ),
-                      ]),
-                );
-              } else {
-                return const Center(child: Text('Aucun utilisateur trouvé.'));
-              }
-            },
+                          const SizedBox(height: 100),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final question = await getRandomQuestion();
+                              bool isAnswered = false;
+                              String? selectedResponse;
+
+                              // Mélanger les réponses une seule fois
+                              final shuffledResponses = shuffleResponses(
+                                question.goodResponseQuestion!,
+                                question.badResponsesQuestion!,
+                              );
+
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return StatefulBuilder(
+                                    builder: (context, setState) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0), // BorderRadius de la fenêtre
+              ),
+                                        title:
+                                            Text(question.titleQuestion ?? "",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.belanosima(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                            color: const Color.fromARGB(255, 69, 26, 28),
+                                            ),
+                                          ),
+                                            
+                                        content: Wrap(
+                                          spacing: 8.0,
+                                          runSpacing: 4.0,
+                                          alignment: WrapAlignment.center,
+                                          // mainAxisSize: MainAxisSize.min,
+                                          children: shuffledResponses.map(
+                                                (response) {
+                                                  final isCorrect = response == question.goodResponseQuestion;
+                                                  final isSelected = response == selectedResponse;
+                                                  return ElevatedButton(
+                                                  onPressed: isAnswered
+                                                      ? null
+                                                      : () {
+                                                          setState(() {
+                                                            selectedResponse =
+                                                                response;
+                                                            isAnswered = true;
+                                                          });
+                                                          // Mise à jour du score si la réponse est correcte
+                                                          // if (response == question.goodResponseQuestion) {
+                                                          //   user.scoreGame = (user.scoreGame ?? 0) + 1;
+                                                          //   Dao.updateUser(user); // Mise à jour dans la DB
+                                                          // }
+                                                          if (isCorrect) {
+                                                            user.scoreGame = (user.scoreGame ?? 0) + 1;
+                                                            Dao.updateUser(user); // Mise à jour dans la DB
+                                                          }
+                                                          // Fermer la boîte de dialogue après un délai
+                                                          Future.delayed(
+                                                              const Duration(seconds: 3), () {
+                                                            Navigator.of(context).pop();
+                                                            // setState(() {}); // Actualiser la vue
+                                                          });
+                                                        },
+                                                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                      (states) {
+                        if (isAnswered) {
+                          if (isSelected) {
+                            return isCorrect ? Colors.green : Colors.red;
+                          } else if (isCorrect) {
+                            return Colors.green;
+                          } else {
+                            return Colors.grey;
+                          }
+                        }
+                        return Colors.white; // Couleur par défaut
+                      },
+                    ),
+                    side: WidgetStateProperty.resolveWith<BorderSide>(
+                      (states) {
+                        return isSelected
+                            ? BorderSide(
+                                color: isCorrect ? const Color.fromARGB(255, 33, 100, 35) : const Color.fromARGB(255, 163, 34, 25),
+                                width: 3.0,
+                              )
+                            : const BorderSide(color: Color.fromARGB(255, 69, 26, 28), width: 3);
+                            
+                      },
+                    ),
+                  ),
+                                                  child: Text(response, style: const TextStyle(fontSize: 16,color: Color.fromARGB(255, 69, 26, 28))),
+                                                );
+                                                },
+                                          ).toList(),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            child: const Text("Fenetre question"),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTapDown: (_) {
+                                        _buttonController1.forward();
+                                      },
+                                      onTapUp: (_) async {
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 200));
+                                        _buttonController1.reverse();
+                                        _showEditDialog();
+                                      },
+                                      onTapCancel: () {
+                                        _buttonController1.reverse();
+                                      },
+                                      child: AnimatedBuilder(
+                                        animation: _buttonController1,
+                                        builder: (context, child) {
+                                          return Transform.scale(
+                                            scale: 1.0 +
+                                                (_buttonController1.value *
+                                                    0.2),
+                                            child: child,
+                                          );
+                                        },
+                                        child: SizedBox(
+                                          width: 150,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 15),
+                                            decoration: BoxDecoration(
+                                              color: const Color.fromARGB(
+                                                  255, 179, 4, 0),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  color: const Color.fromARGB(
+                                                      255, 69, 26, 28),
+                                                  width: 3),
+                                            ),
+                                            alignment: Alignment
+                                                .center, // Centrer le texte à l'intérieur du bouton
+                                            child: Center(
+                                              child: Text(
+                                                'Modifier mon profil',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.belanosima(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      width:
+                                          20), // Ajouter un espace entre les boutons
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTapDown: (_) {
+                                        _buttonController2.forward();
+                                      },
+                                      onTapUp: (_) async {
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 200));
+                                        _buttonController2.reverse();
+                                        _deleteAccount();
+                                      },
+                                      onTapCancel: () {
+                                        _buttonController2.reverse();
+                                      },
+                                      child: AnimatedBuilder(
+                                        animation: _buttonController2,
+                                        builder: (context, child) {
+                                          return Transform.scale(
+                                            scale: 1.0 +
+                                                (_buttonController2.value *
+                                                    0.2),
+                                            child: child,
+                                          );
+                                        },
+                                        child: SizedBox(
+                                          width: 150,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 15),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  color: const Color.fromARGB(
+                                                      255, 69, 26, 28),
+                                                  width: 3),
+                                            ),
+                                            alignment: Alignment
+                                                .center, // Centrer le texte à l'intérieur du bouton
+                                            child: Center(
+                                              child: Text(
+                                                'Supprimer mon compte',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.belanosima(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: const Color.fromARGB(
+                                                      255, 179, 4, 0), 
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ]),
+                  );
+                } else {
+                  return const Center(child: Text('Aucun utilisateur trouvé.'));
+                }
+              },
+            ),
           ),
         ),
-      ),
       ),
     );
   }

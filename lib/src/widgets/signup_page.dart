@@ -56,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
       pseudoUser: _pseudoController.text,
       dateGame: DateTime.now(),
       scoreGame: 0,
-      totalTicketsGame: 0,
+      totalTicketsGame: 3,
       colorDog: _colorDog,
     );
     await Dao.createUser(newUser);
@@ -269,20 +269,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                     ),
                   ),
                   const SizedBox(height: 20),
-                        
-                  // Positioned(
-                    //   bottom:
-                    //       20, // Position verticale identique à celle des icônes
-                    //   left: MediaQuery.of(context).size.width / 2 -
-                    //       80, // Centrer horizontalement
-                    //   child: Image.asset(
-                    //     _user.getDogImage(),
-                    //     width:
-                    //         150, // Taille de l'image (ajustez selon vos besoins)
-                    //     height: 250,
-                    //   ),
-                  // ),
-                  
+                
                   // Bouton rouge personnalisé
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),

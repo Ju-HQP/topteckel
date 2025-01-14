@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:topteckel/models/user.dart';
@@ -129,6 +131,43 @@ class Dao {
       return maps.map((e) => Question.fromJson(e)).toList();
     } else {
       return [];
+    }
+  }
+
+  static Future<void> populateQuestionsIfEmpty() async {
+    final db = await database;
+
+    final count = Sqflite.firstIntValue(
+      await db.rawQuery("SELECT COUNT(*) FROM question"),
+    );
+
+    if (count == 0) {
+      List<Question> initialQuestions = [
+        Question(
+          titleQuestion: "Quelle est la capitale de la France ?",
+          goodResponseQuestion: "Paris",
+          badResponsesQuestion: ["Lyon", "Marseille", "Bordeaux"],
+        ),
+        Question(
+          titleQuestion:
+              "Quelle est la plus grande planète du système solaire ?",
+          goodResponseQuestion: "Jupiter",
+          badResponsesQuestion: ["Saturne", "Mars", "Terre"],
+        ),
+      ];
+
+      for (var question in initialQuestions) {
+        await db.insert("question", question.toJson());
+      }
+    }
+  }
+
+  Future<Question> getRandomQuestion() async {
+    final questions = await Dao.listQuestions();
+    if (questions.isNotEmpty) {
+      return questions[Random().nextInt(questions.length)];
+    } else {
+      throw Exception("No questions available");
     }
   }
 
