@@ -5,3 +5,4 @@ export 'dog.dart';
 export 'objects/badObject.dart';
 export 'objects/goodObject.dart';
 export 'objects/questionObject.dart';
+export 'dynamicBackground.dart';

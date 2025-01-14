@@ -43,36 +43,31 @@ class _GamePageState extends State<GamePage> {
             Navigator.pop(context);
           },
         ),
+        
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(3.0), // Hauteur de la bordure
+          preferredSize: const Size.fromHeight(7.0), // Hauteur de la bordure
           child: Container(
             color:
                 const Color.fromARGB(255, 69, 26, 28), // Couleur de la bordure
-            height: 3.0, // Épaisseur de la bordure
+            height: 7.0, // Épaisseur de la bordure
           ),
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/decor_default.png'),
-            fit: BoxFit.cover, // Ajuste l'image pour couvrir tout l'écran
-          ),
-        ),
+        // decoration: const BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage('assets/images/decor_default.png'),
+        //     fit: BoxFit.cover, // Ajuste l'image pour couvrir tout l'écran
+        //   ),
+        // ),
         // child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
             child: Center(
               child: Column(
-                children: [
-                  ScoreCard(score: game.score),
+                children: [ // affichage du score
                   Expanded(
-                    child: FittedBox(
-                      child: SizedBox(
-                        width: gameWidth,
-                        height: gameHeight,
                         child: GameWidget(
                           game: game,
+                          backgroundBuilder: (context) => Container(color: Colors.transparent),
                           overlayBuilderMap: {
                             PlayState.welcome.name: (context, game) =>
                                 const OverlayScreen(
@@ -91,12 +86,9 @@ class _GamePageState extends State<GamePage> {
                                 ),
                           },
                         ),
-                      ),
                     ),
-                  ),
                 ],
               ),
-            ),
           ),
         // ),
       ),

@@ -5,6 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 
 import 'components/components.dart';
 import 'config.dart';
@@ -20,13 +21,13 @@ class TopTeckel extends FlameGame
   TopTeckel()
       : super(
           camera: CameraComponent.withFixedResolution(
-            width: gameWidth,
-            height: gameHeight,
+            width: 412,
+            height: 753,
           ),
         );
 
-  double get width => size.x;
-  double get height => size.y;
+  double get width => 412;
+  double get height => 753;
 
   final rand = math.Random();
 
@@ -53,10 +54,11 @@ class TopTeckel extends FlameGame
   @override
   FutureOr<void> onLoad() async {
     super.onLoad();
-
     // place le viseur en haut à gauche (au centre par défaut) pour définir les coordonnées
     camera.viewfinder.anchor = Anchor.topLeft;
 
+    final dynamicBackground = DynamicBackground();
+    add(dynamicBackground);
 // world de Flame représente l'univers du jeu
     world.add(PlayArea());
 
@@ -72,7 +74,6 @@ class TopTeckel extends FlameGame
     world.removeAll(world.children.query<GoodObject>());
     world.removeAll(world.children.query<BadObject>());
     world.removeAll(world.children.query<QuestionObject>());
-
 
     playState = PlayState.playing;
 
@@ -110,11 +111,11 @@ class TopTeckel extends FlameGame
           1000; // durée aléatoire pour le délai entre et 0 et 1 seconde
       Future.delayed(Duration(milliseconds: aleaTime.toInt()), () {
         world.add(
-          GoodObject(Vector2(objectZoneSpawnGap + other * i,
+          GoodObject(
+              Vector2(objectZoneSpawnGap + other * i,
                   spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
               // vector et vitesse à revoir
-               Vector2(0, height * 0.2).normalized()
-                ..scale(height / 4)),
+              Vector2(0, height * 0.2).normalized()..scale(height / 4)),
         );
       });
     }
@@ -161,20 +162,18 @@ class TopTeckel extends FlameGame
   }
 
   @override
-  Color backgroundColor() => const Color(0xfff2e8cf);
-
-  @override
   void update(double dt) {
     super.update(dt);
     // Boucle pour chaque objet positif
     world.children.whereType<GoodObject>().forEach((objet) {
+      print("Vitesse des objets : ${objet.velocity}");
       // Augmentation de la vitesse en fonction du palier passé
       for (int unPalier in paliersDeScore) {
         if (score.value >= unPalier && !paliersAtteints.contains(unPalier)) {
           vitesseJeu = Vector2(vitesseJeu.x, vitesseJeu.y * coeffVitesse);
           objet.velocity = vitesseJeu;
-          delai -= 0.4; // Calcul de diminution -> 4 secondes de base jusqu'à max 1 sec donc 3/7 = 0.42
-          print(delai);
+          delai -=
+              0.4; // Calcul de diminution -> 4 secondes de base jusqu'à max 1 sec donc 3/7 = 0.42
           paliersAtteints.add(unPalier);
         }
       }
