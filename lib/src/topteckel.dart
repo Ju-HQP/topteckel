@@ -6,6 +6,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
+import 'package:topteckel/models/database/dao.dart';
+import 'package:topteckel/models/user.dart';
 
 import 'components/components.dart';
 import 'config.dart';
@@ -34,6 +36,7 @@ class TopTeckel extends FlameGame
 // gestion du score
   final ValueNotifier<int> score = ValueNotifier(0);
 
+  // late User _user;
 // Gestion des overlays en fonction de l'état du jeu
   late PlayState _playState;
   PlayState get playState => _playState;
@@ -65,6 +68,7 @@ class TopTeckel extends FlameGame
     world.add(PlayArea());
 
     playState = PlayState.welcome;
+    // _loadUserData();
   }
 
 // l'affichage du gameplay ne se fait plus au lancement (onLoad) mais avec l'état du jeu et la fonction start
@@ -130,6 +134,18 @@ class TopTeckel extends FlameGame
     super.onTap();
     startGame();
   }
+
+  // Charger les données de l'utilisateur
+  // _loadUserData() async {
+  //   final users = await Dao.listUsers();
+  //   if (users.isNotEmpty) {
+  //     setState(() {
+  //       _user = users[0];
+  //       _selectedColorDog = _user
+  //           .colorDog; // Charger le premier utilisateur (on suppose qu'il y en a un)
+  //     });
+  //   }
+  // }
 
   @override
   KeyEventResult onKeyEvent(

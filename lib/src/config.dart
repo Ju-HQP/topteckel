@@ -29,7 +29,8 @@ var batHeight = ballRadius * 2;
 
 // Taille par défaut du chien variable par rapport à la taille de l'écran
 var dogWidth = dogHeight/2 ;
-var dogHeight = gameHeight/6.5;
+// var dogHeight = gameHeight/6.5;
+var dogHeight = gameHeight/4;
 
 //distance parcourue par la batte à chaque appui sur les flèches du clavier
 var batStep = gameWidth * 0.05;  
