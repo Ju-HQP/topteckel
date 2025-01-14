@@ -4,7 +4,7 @@ import '../topteckel.dart';
 
 class DynamicBackground extends Component with HasGameReference<TopTeckel> {
   List<String> backgrounds = [
-    'decor_home4.png',
+    'decor_default.png',
   ];
   int currentIndex = 0;
   late SpriteComponent sprite;
