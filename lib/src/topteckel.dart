@@ -57,9 +57,11 @@ class TopTeckel extends FlameGame
     // place le viseur en haut à gauche (au centre par défaut) pour définir les coordonnées
     camera.viewfinder.anchor = Anchor.topLeft;
 
+    // Gestion de l'arrière-plan
     final dynamicBackground = DynamicBackground();
     add(dynamicBackground);
-// world de Flame représente l'univers du jeu
+
+    // world de Flame représente l'univers du jeu
     world.add(PlayArea());
 
     playState = PlayState.welcome;
@@ -86,22 +88,7 @@ class TopTeckel extends FlameGame
         position: Vector2(width / 2, height * 0.85)));
     print("Dog size: $batWidth x $batHeight");
 
-// Pour les briques
-    // world.addAll([
-    //   // boucle pour générer les briques
-    //   for (var i = 0; i < brickColors.length; i++)
-    //     for (var j = 1; j <= 5; j++) // 5 car il y a 5 lignes de briques
-    //       Objet(
-    //         position: Vector2(
-    //           (i + 0.5) * brickWidth + (i + 1) * brickGutter,
-    //           (j + 2.0) * brickHeight + j * brickGutter,
-    //         ),
-    //         color: brickColors[i],
-    //       ),
-    // ]);
 // Pour les objets
-//  Affichage d'une ampoule qui tombe
-
 // Coordonnées objet spawn : 133.25 - 317.75 - 502.25 - 686.75s
 
 // Random().nextDouble() * 256; // Value is >= 0.0 and < 256.0.
@@ -166,7 +153,6 @@ class TopTeckel extends FlameGame
     super.update(dt);
     // Boucle pour chaque objet positif
     world.children.whereType<GoodObject>().forEach((objet) {
-      print("Vitesse des objets : ${objet.velocity}");
       // Augmentation de la vitesse en fonction du palier passé
       for (int unPalier in paliersDeScore) {
         if (score.value >= unPalier && !paliersAtteints.contains(unPalier)) {
