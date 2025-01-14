@@ -347,6 +347,60 @@ Future<Question> getRandomQuestion() async {
     );
   }
 
+  //A AJOUTER DANS TOPTECKEL
+  // Supprimer le compte de l'utilisateur
+  _quitGame() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text(
+            "Quitter la partie",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.belanosima(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 179, 4, 0),
+            ),
+          ),
+          content: const Text(
+              "Es-tu sûr de vouloir quitter la partie ? (Les points et tickets quue tu as accumulé ne seront pas enregistré.)",
+              style: TextStyle(color: Color.fromARGB(255, 179, 4, 0))),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Annuler",
+                  style: GoogleFonts.belanosima(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 179, 4, 0),
+                  )),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                // Rediriger l'utilisateur vers une autre page (par exemple, la page d'accueil)
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+              child: Text(
+                "Quitter la partie",
+                style: GoogleFonts.belanosima(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 179, 4, 0),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  //
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -576,6 +630,10 @@ Future<Question> getRandomQuestion() async {
                             },
                             child: const Text("Fenetre question"),
                           ),
+                          ElevatedButton(
+  onPressed: _quitGame, // Appelle la méthode _quitGame directement
+  child: const Text("Quitter la partie"),
+),
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
