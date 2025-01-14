@@ -484,6 +484,7 @@ Future<Question> getRandomQuestion() async {
 
                               showDialog(
                                 context: context,
+                                barrierDismissible:false, //Pour pas que on ferme la fenetre hors le contenu
                                 builder: (context) {
                                   return StatefulBuilder(
                                     builder: (context, setState) {
