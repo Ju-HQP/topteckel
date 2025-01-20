@@ -29,14 +29,14 @@ class _GamePageState extends State<GamePage> {
     // tickets = game.tickets.value;
   }
 
+// suppression totale du jeu (cette classe ne sera plus rebuild)
   @override
-void dispose() {
-  game.pauseGame();
-  super.dispose();
-}
+  void dispose() {
+    game.pauseGame();
+    super.dispose();
+  }
 
-
-  // quitter la partie
+  // Fenêtre -> Quitter la partie
   _quitGame() async {
     showDialog(
       context: context,
@@ -58,6 +58,7 @@ void dispose() {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                game.resumeGame();
               },
               child: Text("Annuler",
                   style: GoogleFonts.belanosima(
@@ -69,6 +70,7 @@ void dispose() {
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
+                game.onRemove();
                 // Rediriger l'utilisateur vers une autre page (par exemple, la page d'accueil)
                 Navigator.pushReplacementNamed(context, '/home');
               },
@@ -106,60 +108,63 @@ void dispose() {
             mainAxisSize: MainAxisSize.min,
             children: [
               Column(
-  mainAxisSize: MainAxisSize.min,
-  crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-    Row(
-      mainAxisAlignment: MainAxisAlignment.center, // Centrer le contenu
-      children: [
-        Image.asset(
-          'assets/images/icon-score-topteckel.png',
-          width: 36,
-          height: 36,
-        ),
-        const SizedBox(width: 8),
-        Text(
-          "Score obtenu : ${(game.score.value)}",
-          style: GoogleFonts.belanosima(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 69, 26, 28),
-          ),
-        ),
-      ],
-    ),
-    const SizedBox(height: 16), // Espacement entre les lignes
-    Row(
-      mainAxisAlignment: MainAxisAlignment.center, // Centrer le contenu
-      children: [
-        Image.asset(
-          'assets/images/icon-game-gacha.png',
-          width: 36,
-          height: 36,
-        ),
-        const SizedBox(width: 8),
-        Text(
-          "Tickets obtenus : ${(game.tickets.value)}",
-          style: GoogleFonts.belanosima(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 69, 26, 28),
-          ),
-        ),
-      ],
-    ),
-  ],
-),
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Centrer le contenu
+                    children: [
+                      Image.asset(
+                        'assets/images/icon-score-topteckel.png',
+                        width: 36,
+                        height: 36,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "Score obtenu : ${(game.score.value)}",
+                        style: GoogleFonts.belanosima(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(255, 69, 26, 28),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16), // Espacement entre les lignes
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Centrer le contenu
+                    children: [
+                      Image.asset(
+                        'assets/images/icon-game-gacha.png',
+                        width: 36,
+                        height: 36,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "Tickets obtenus : ${(game.tickets.value)}",
+                        style: GoogleFonts.belanosima(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(255, 69, 26, 28),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  
-                  
                   TextButton(
                     onPressed: () {
                       game.updateUserStatsOnGameOver;
-                      Navigator.pushReplacementNamed(context, '/home'); // Revenir à l'accueil
+                      game.playState = PlayState.welcome;
+                      game.onRemove();
+                      Navigator.pushReplacementNamed(
+                          context, '/home'); // Revenir à l'accueil
                     },
                     child: Text(
                       "Retour à l'accueil",
@@ -196,167 +201,173 @@ void dispose() {
   }
 
   void _showQuestionDialog() {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Question'),
-        content: const Text('Quelle est la couleur du ciel ?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Mauvaise réponse
-              Navigator.of(context).pop();
-              setState(() {
-                game.isPaused = false; // Reprendre le jeu
-              });
-            },
-            child: const Text('Rouge'),
-          ),
-          TextButton(
-            onPressed: () {
-              // Bonne réponse
-              game.tickets.value += 1;
-              Navigator.of(context).pop();
-              setState(() {
-                game.isPaused = false; // Reprendre le jeu
-              });
-            },
-            child: const Text('Bleu'),
-          ),
-        ],
-      );
-    },
-  );
-}
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Question'),
+          content: const Text('Quelle est la couleur du ciel ?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Mauvaise réponse
+                Navigator.of(context).pop();
+                setState(() {
+                  game.isPaused = false; // Reprendre le jeu
+                });
+              },
+              child: const Text('Rouge'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Bonne réponse
+                game.tickets.value += 1;
+                Navigator.of(context).pop();
+                setState(() {
+                  game.isPaused = false; // Reprendre le jeu
+                });
+              },
+              child: const Text('Bleu'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-  //   game.addListener(() {
-  //   if (game.isPaused && game.playState == PlayState.playing) {
-  //     _showQuestionDialog();
-  //   }
-  // });
+    //   game.addListener(() {
+    //   if (game.isPaused && game.playState == PlayState.playing) {
+    //     _showQuestionDialog();
+    //   }
+    // });
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Jeu TopTeckel',
-          style: GoogleFonts.belanosima(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
-        backgroundColor: const Color.fromARGB(255, 179, 4, 0),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            _quitGame();
-          },
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(7.0), // Hauteur de la bordure
-          child: Container(
-            color:
-                const Color.fromARGB(255, 69, 26, 28), // Couleur de la bordure
-            height: 7.0, // Épaisseur de la bordure
-          ),
-        ),
-      ),
-      body: SafeArea(
-  child: Stack(
-    children: [
-
-      
-      // Jeu
-      Positioned.fill(
-        child: GameWidget(
-          game: game,
-          backgroundBuilder: (context) => Container(color: Colors.transparent),
-          overlayBuilderMap: {
-            PlayState.welcome.name: (context, game) => const OverlayScreen(
-              title: "Tape l'écran pour jouer",
-              subtitle: 'Utilise ton doigt',
+        appBar: AppBar(
+          title: Text(
+            'Jeu TopTeckel',
+            style: GoogleFonts.belanosima(
+              fontWeight: FontWeight.bold,
             ),
-            PlayState.gameOver.name: (context, game) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                _showGameOverDialog();
-              });
-              return const SizedBox.shrink();
+          ),
+          centerTitle: true,
+          foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 179, 4, 0),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              _quitGame();
+              game.pauseGame();
             },
-          },
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(7.0), // Hauteur de la bordure
+            child: Container(
+              color: const Color.fromARGB(
+                  255, 69, 26, 28), // Couleur de la bordure
+              height: 7.0, // Épaisseur de la bordure
+            ),
+          ),
         ),
-      ),
-      // Score, Vies, Tickets
-      Positioned(
-        top: 10, // Positionnement en haut
-        left: 0,
-        right: 0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-
-            // Score
-            ValueListenableBuilder<int>(
-              valueListenable: game.score,
-              builder: (context, score, child) {
-                return Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/icon-score-topteckel.png',
-                      width: 26,
-                      height: 26,
+        body: SafeArea(
+            child: Stack(children: [
+          // Jeu
+          Positioned.fill(
+            child: GameWidget(
+              game: game,
+              backgroundBuilder: (context) =>
+                  Container(color: Colors.transparent),
+              overlayBuilderMap: {
+                PlayState.welcome.name: (context, game) => const OverlayScreen(
+                      title: "Tape l'écran pour jouer",
+                      subtitle: 'Utilise ton doigt',
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Score: $score',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 69, 26, 28)),
-                    ),
-                  ],
-                );
+                PlayState.gameOver.name: (context, game) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _showGameOverDialog();
+                  });
+                  return const SizedBox.shrink();
+                },
               },
             ),
-            // Tickets
-            ValueListenableBuilder<int>(
-              valueListenable: game.tickets,
-              builder: (context, tickets, child) {
-                return Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/icon-game-gacha.png',
-                      width: 26,
-                      height: 26,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Tickets: $tickets',
-                      style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18, color: Color.fromARGB(255, 69, 26, 28)),
-                    ),
-                  ],
-                );
-              },
+          ),
+          // Score, Vies, Tickets
+          Positioned(
+            top: 10, // Positionnement en haut
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Score
+                ValueListenableBuilder<int>(
+                  valueListenable: game.score,
+                  builder: (context, score, child) {
+                    return Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/icon-score-topteckel.png',
+                          width: 26,
+                          height: 26,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Score: $score',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Color.fromARGB(255, 69, 26, 28)),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                // Tickets
+                ValueListenableBuilder<int>(
+                  valueListenable: game.tickets,
+                  builder: (context, tickets, child) {
+                    return Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/icon-game-gacha.png',
+                          width: 26,
+                          height: 26,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Tickets: $tickets',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Color.fromARGB(255, 69, 26, 28)),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                // Vies
+                ValueListenableBuilder<int>(
+                  valueListenable: game.lives,
+                  builder: (context, lives, child) {
+                    return Row(
+                      children: [
+                        const Icon(Icons.favorite,
+                            size: 26, color: Color.fromARGB(255, 179, 4, 0)),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Vies: $lives',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Color.fromARGB(255, 69, 26, 28)),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
-            // Vies
-            ValueListenableBuilder<int>(
-              valueListenable: game.lives,
-              builder: (context, lives, child) {
-                return Row(
-                  children: [
-                    const Icon(Icons.favorite, size: 26, color: Color.fromARGB(255, 179, 4, 0)),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Vies: $lives',
-                      style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18, color: Color.fromARGB(255, 69, 26, 28)),
-                    ),
-                  ],
-                );
-              },
-            ),
-            
-          ],
-        ),
-      ),
-    ])
-    ));
+          ),
+        ])));
   }
 }

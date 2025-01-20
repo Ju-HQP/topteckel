@@ -31,7 +31,7 @@ var batHeight = ballRadius * 2;
 // var dogWidth = dogHeight/2 ;
 var dogWidth = dogHeight/1.9 ;
 // var dogHeight = gameHeight/6.5;
-var dogHeight = gameHeight/4;
+var dogHeight = gameHeight/6;
 
 //distance parcourue par la batte à chaque appui sur les flèches du clavier
 var batStep = gameWidth * 0.05;  
