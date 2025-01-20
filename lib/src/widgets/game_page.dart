@@ -24,7 +24,7 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    game = TopTeckel();
+    game = TopTeckel(gameContext : context);
     // score = game.score.value;
     // tickets = game.tickets.value;
   }
@@ -200,48 +200,9 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
-  void _showQuestionDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Question'),
-          content: const Text('Quelle est la couleur du ciel ?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Mauvaise réponse
-                Navigator.of(context).pop();
-                setState(() {
-                  game.isPaused = false; // Reprendre le jeu
-                });
-              },
-              child: const Text('Rouge'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Bonne réponse
-                game.tickets.value += 1;
-                Navigator.of(context).pop();
-                setState(() {
-                  game.isPaused = false; // Reprendre le jeu
-                });
-              },
-              child: const Text('Bleu'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    //   game.addListener(() {
-    //   if (game.isPaused && game.playState == PlayState.playing) {
-    //     _showQuestionDialog();
-    //   }
-    // });
+
     return Scaffold(
         appBar: AppBar(
           title: Text(
