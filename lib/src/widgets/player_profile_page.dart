@@ -35,10 +35,10 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
   ];
 
   void selectAccessory(String accessoryKey) {
-  setState(() {
-    _user.accessory = accessoryKey; // Ex. 'hat', 'glasses'
-  });
-}
+    setState(() {
+      _user.accessory = accessoryKey; // Ex. 'hat', 'glasses'
+    });
+  }
 
   @override
   void dispose() {
@@ -72,25 +72,27 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
     if (users.isNotEmpty) {
       setState(() {
         _user = users[0];
-        _colorDog = _user.colorDog!; // Charger le premier utilisateur (on suppose qu'il y en a un)
+        _colorDog = _user
+            .colorDog!; // Charger le premier utilisateur (on suppose qu'il y en a un)
       });
     }
   }
 
-  List<String> shuffleResponses(String goodResponse, List<String> badResponses) {
-  final responses = [goodResponse, ...badResponses];
-  responses.shuffle();
-  return responses;
-}
-
-Future<Question> getRandomQuestion() async {
-  final questions = await Dao.listQuestions();
-  if (questions.isNotEmpty) {
-    return questions[Random().nextInt(questions.length)];
-  } else {
-    throw Exception("No questions available");
+  List<String> shuffleResponses(
+      String goodResponse, List<String> badResponses) {
+    final responses = [goodResponse, ...badResponses];
+    responses.shuffle();
+    return responses;
   }
-}
+
+  Future<Question> getRandomQuestion() async {
+    final questions = await Dao.listQuestions();
+    if (questions.isNotEmpty) {
+      return questions[Random().nextInt(questions.length)];
+    } else {
+      throw Exception("No questions available");
+    }
+  }
 
   // Afficher page de modification pour l'utilisateur
   _showEditDialog() {
@@ -119,7 +121,6 @@ Future<Question> getRandomQuestion() async {
                     color: Color.fromARGB(255, 69, 26, 28),
                     fontSize: 18,
                   ),
-                  
                   controller: pseudoController,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
@@ -144,144 +145,140 @@ Future<Question> getRandomQuestion() async {
                 ),
                 const SizedBox(height: 20),
                 Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal:
-                            0.0), // Ajoute 20 pixels à gauche et à droite
-                    child: DropdownButtonFormField<int>(
-                      value: _colorDog,
-                      icon: const Icon(
-                        Icons.arrow_drop_down, // Icône personnalisée
-                        color: Color.fromARGB(
-                            255, 69, 26, 28), // Couleur de la flèche
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 0.0), // Ajoute 20 pixels à gauche et à droite
+                  child: DropdownButtonFormField<int>(
+                    value: _colorDog,
+                    icon: const Icon(
+                      Icons.arrow_drop_down, // Icône personnalisée
+                      color: Color.fromARGB(
+                          255, 69, 26, 28), // Couleur de la flèche
+                    ),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 10.0),
+                      filled: true,
+                      fillColor: Colors.transparent,
+                      labelText: 'Couleur du Teckel',
+                      labelStyle: TextStyle(
+                        color: Color.fromARGB(255, 69, 26, 28),
+                        fontSize: 18, // Couleur du label
                       ),
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 10.0),
-                        filled: true,
-                        fillColor: Colors.transparent,
-                        labelText: 'Couleur du Teckel',
-                        labelStyle: TextStyle(
-                          color: Color.fromARGB(
-                              255, 69, 26, 28),
-                          fontSize: 18, // Couleur du label
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color.fromARGB(255, 69, 26, 28),
-                                width: 2.0)),
-                        focusedBorder: OutlineInputBorder(
+                      enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromARGB(255, 69, 26, 28),
-                              width: 2.5), // Bordure au focus
+                              width: 2.0)),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 69, 26, 28),
+                            width: 2.5), // Bordure au focus
+                      ),
+                    ),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Color.fromARGB(
+                          255, 69, 26, 28), // Couleur du texte sélectionné
+                    ),
+                    items: const [
+                      DropdownMenuItem<int>(
+                        value: 1,
+                        child: Row(
+                          children: [
+                            Image(
+                              image: AssetImage(
+                                  'assets/images/icon-color-teckel_1.png'),
+                              width: 30,
+                              height: 30,
+                            ),
+                            SizedBox(
+                                width:
+                                    10), // Espacement entre l'image et le texte
+                            Text('Couleur 1'),
+                          ],
                         ),
                       ),
-                      style: const TextStyle(
+                      DropdownMenuItem<int>(
+                        value: 2,
+                        child: Row(
+                          children: [
+                            Image(
+                              image: AssetImage(
+                                  'assets/images/icon-color-teckel_2.png'),
+                              width: 30,
+                              height: 30,
+                            ),
+                            SizedBox(
+                                width:
+                                    10), // Espacement entre l'image et le texte
+                            Text('Couleur 2'),
+                          ],
+                        ),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: 3,
+                        child: Row(
+                          children: [
+                            Image(
+                              image: AssetImage(
+                                  'assets/images/icon-color-teckel_3.png'),
+                              width: 30,
+                              height: 30,
+                            ),
+                            SizedBox(
+                                width:
+                                    10), // Espacement entre l'image et le texte
+                            Text('Couleur 3'),
+                          ],
+                        ),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: 4,
+                        child: Row(
+                          children: [
+                            Image(
+                              image: AssetImage(
+                                  'assets/images/icon-color-teckel_4.png'),
+                              width: 30,
+                              height: 30,
+                            ),
+                            SizedBox(
+                                width:
+                                    10), // Espacement entre l'image et le texte
+                            Text('Couleur 4'),
+                          ],
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _colorDog = value ?? 1;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  children: [
+                    const Text(
+                      "Personnalisez votre chien :",
+                      style: TextStyle(
                         fontSize: 18,
                         color: Color.fromARGB(
                             255, 69, 26, 28), // Couleur du texte sélectionné
                       ),
-                      items: const [
-                        DropdownMenuItem<int>(
-                          value: 1,
-                          child: Row(
-                            children: [
-                              Image(
-                                image: AssetImage(
-                                    'assets/images/icon-color-teckel_1.png'),
-                                width: 30,
-                                height: 30,
-                              ),
-                              SizedBox(
-                                  width:
-                                      10), // Espacement entre l'image et le texte
-                              Text('Couleur 1'),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem<int>(
-                          value: 2,
-                          child: Row(
-                            children: [
-                              Image(
-                                image: AssetImage(
-                                    'assets/images/icon-color-teckel_2.png'),
-                                width: 30,
-                                height: 30,
-                              ),
-                              SizedBox(
-                                  width:
-                                      10), // Espacement entre l'image et le texte
-                              Text('Couleur 2'),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem<int>(
-                          value: 3,
-                          child: Row(
-                            children: [
-                              Image(
-                                image: AssetImage(
-                                    'assets/images/icon-color-teckel_3.png'),
-                                width: 30,
-                                height: 30,
-                              ),
-                              SizedBox(
-                                  width:
-                                      10), // Espacement entre l'image et le texte
-                              Text('Couleur 3'),
-                            ],
-                          ),
-                        ),
-                        DropdownMenuItem<int>(
-                          value: 4,
-                          child: Row(
-                            children: [
-                              Image(
-                                image: AssetImage(
-                                    'assets/images/icon-color-teckel_4.png'),
-                                width: 30,
-                                height: 30,
-                              ),
-                              SizedBox(
-                                  width:
-                                      10), // Espacement entre l'image et le texte
-                              Text('Couleur 4'),
-                            ],
-                          ),
-                        ),
-                      ],
-                      onChanged: (value) {
+                    ),
+                    const SizedBox(height: 20),
+                    AccessorySelector(
+                      user: _user,
+                      onAccessorySelected: (selectedAccessory) async {
                         setState(() {
-                          _colorDog = value ?? 1;
+                          _user.accessory = selectedAccessory;
                         });
+                        // await Dao.updateUser(_user);
                       },
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  Column(
-  children: [
-    const Text(
-      "Personnalisez votre chien :",
-      style: TextStyle(
-        fontSize: 18,
-        color: Color.fromARGB(
-            255, 69, 26, 28), // Couleur du texte sélectionné
-      ),
-    ),
-    const SizedBox(height: 20),
-    AccessorySelector(
-      user: _user,
-      onAccessorySelected: (selectedAccessory) async {
-          setState(() {
-            _user.accessory = selectedAccessory;
-          });
-          // await Dao.updateUser(_user);
-
-          
-        },
-    ),
-  ],
-),
+                  ],
+                ),
               ],
             ),
           ),
@@ -512,49 +509,57 @@ Future<Question> getRandomQuestion() async {
                           ),
                           const SizedBox(height: 10),
                           Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    // Première Row pour le score
-    Row(
-      children: [
-        Image.asset(
-          'assets/images/icon-score-topteckel.png', // Remplacez par le chemin de votre icône
-          width: 48, // Taille de l'image
-          height: 48,
-        ),
-        const SizedBox(width: 8), // Espace entre l'image et le texte
-        Text(
-          user.scoreGame?.toString() ?? 'Non défini',
-          style: GoogleFonts.belanosima(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 69, 26, 28),
-          ),
-        ),
-      ],
-    ),
-    const SizedBox(width: 20), // Espace entre les deux Row
-    // Deuxième Row pour les tickets
-    Row(
-      children: [
-        Image.asset(
-          'assets/images/icon-game-gacha.png', // Remplacez par le chemin de votre icône
-          width: 48, // Taille de l'image
-          height: 48,
-        ),
-        const SizedBox(width: 8), // Espace entre l'image et le texte
-        Text(
-          user.totalTicketsGame?.toString() ?? 'Non défini',
-          style: GoogleFonts.belanosima(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 69, 26, 28),
-          ),
-        ),
-      ],
-    ),
-  ],
-),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Première Row pour le score
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/icon-score-topteckel.png', // Remplacez par le chemin de votre icône
+                                    width: 48, // Taille de l'image
+                                    height: 48,
+                                  ),
+                                  const SizedBox(
+                                      width:
+                                          8), // Espace entre l'image et le texte
+                                  Text(
+                                    user.scoreGame?.toString() ?? 'Non défini',
+                                    style: GoogleFonts.belanosima(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          const Color.fromARGB(255, 69, 26, 28),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                  width: 20), // Espace entre les deux Row
+                              // Deuxième Row pour les tickets
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/icon-game-gacha.png', // Remplacez par le chemin de votre icône
+                                    width: 48, // Taille de l'image
+                                    height: 48,
+                                  ),
+                                  const SizedBox(
+                                      width:
+                                          8), // Espace entre l'image et le texte
+                                  Text(
+                                    user.totalTicketsGame?.toString() ??
+                                        'Non défini',
+                                    style: GoogleFonts.belanosima(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          const Color.fromARGB(255, 69, 26, 28),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 50),
                           Positioned(
                             bottom:
@@ -566,11 +571,14 @@ Future<Question> getRandomQuestion() async {
                           Column(
                             children: [
                               const SizedBox(height: 20),
-                              Text("Vos accessoires :",style: GoogleFonts.belanosima(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 69, 26, 28),
-          ),),
+                              Text(
+                                "Vos accessoires :",
+                                style: GoogleFonts.belanosima(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color.fromARGB(255, 69, 26, 28),
+                                ),
+                              ),
                               Wrap(
                                 spacing: 8.0,
                                 runSpacing: 4.0,
@@ -597,7 +605,6 @@ Future<Question> getRandomQuestion() async {
                               // }),
                             ],
                           ),
-
                           const SizedBox(height: 50),
                           ElevatedButton(
                             onPressed: () async {
@@ -613,88 +620,127 @@ Future<Question> getRandomQuestion() async {
 
                               showDialog(
                                 context: context,
-                                barrierDismissible:false, //Pour pas que on ferme la fenetre hors le contenu
+                                barrierDismissible:
+                                    false, //Pour pas que on ferme la fenetre hors le contenu
                                 builder: (context) {
                                   return StatefulBuilder(
                                     builder: (context, setState) {
                                       return AlertDialog(
                                         shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0), // BorderRadius de la fenêtre
-              ),
-                                        title:
-                                            Text(question.titleQuestion ?? "",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.belanosima(
+                                          borderRadius: BorderRadius.circular(
+                                              20.0), // BorderRadius de la fenêtre
+                                        ),
+                                        title: Text(
+                                          question.titleQuestion ?? "",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.belanosima(
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
-                                            color: const Color.fromARGB(255, 69, 26, 28),
-                                            ),
+                                            color: const Color.fromARGB(
+                                                255, 69, 26, 28),
                                           ),
-                                            
+                                        ),
                                         content: Wrap(
                                           spacing: 8.0,
                                           runSpacing: 4.0,
                                           alignment: WrapAlignment.center,
                                           // mainAxisSize: MainAxisSize.min,
                                           children: shuffledResponses.map(
-                                                (response) {
-                                                  final isCorrect = response == question.goodResponseQuestion;
-                                                  final isSelected = response == selectedResponse;
-                                                  return ElevatedButton(
-                                                  onPressed: isAnswered
-                                                      ? null
-                                                      : () {
-                                                          setState(() {
-                                                            selectedResponse =
-                                                                response;
-                                                            isAnswered = true;
-                                                          });
-                                                          // Mise à jour du score si la réponse est correcte
-                                                          // if (response == question.goodResponseQuestion) {
-                                                          //   user.scoreGame = (user.scoreGame ?? 0) + 1;
-                                                          //   Dao.updateUser(user); // Mise à jour dans la DB
-                                                          // }
-                                                          if (isCorrect) {
-                                                            user.scoreGame = (user.scoreGame ?? 0) + 1;
-                                                            Dao.updateUser(user); // Mise à jour dans la DB
-                                                          }
-                                                          // Fermer la boîte de dialogue après un délai
-                                                          Future.delayed(
-                                                              const Duration(seconds: 3), () {
-                                                            Navigator.of(context).pop();
-                                                            // setState(() {}); // Actualiser la vue
-                                                          });
-                                                        },
-                                                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                      (states) {
-                        if (isAnswered) {
-                          if (isSelected) {
-                            return isCorrect ? Colors.green : Colors.red;
-                          } else if (isCorrect) {
-                            return Colors.green;
-                          } else {
-                            return Colors.grey;
-                          }
-                        }
-                        return Colors.white; // Couleur par défaut
-                      },
-                    ),
-                    side: WidgetStateProperty.resolveWith<BorderSide>(
-                      (states) {
-                        return isSelected
-                            ? BorderSide(
-                                color: isCorrect ? const Color.fromARGB(255, 33, 100, 35) : const Color.fromARGB(255, 163, 34, 25),
-                                width: 3.0,
-                              )
-                            : const BorderSide(color: Color.fromARGB(255, 69, 26, 28), width: 3);
-                            
-                      },
-                    ),
-                  ),
-                                                  child: Text(response, style: const TextStyle(fontSize: 16,color: Color.fromARGB(255, 69, 26, 28))),
-                                                );
-                                                },
+                                            (response) {
+                                              final isCorrect = response ==
+                                                  question.goodResponseQuestion;
+                                              final isSelected =
+                                                  response == selectedResponse;
+                                              return ElevatedButton(
+                                                onPressed: isAnswered
+                                                    ? null
+                                                    : () {
+                                                        setState(() {
+                                                          selectedResponse =
+                                                              response;
+                                                          isAnswered = true;
+                                                        });
+                                                        // Mise à jour du score si la réponse est correcte
+                                                        // if (response == question.goodResponseQuestion) {
+                                                        //   user.scoreGame = (user.scoreGame ?? 0) + 1;
+                                                        //   Dao.updateUser(user); // Mise à jour dans la DB
+                                                        // }
+                                                        if (isCorrect) {
+                                                          user.scoreGame =
+                                                              (user.scoreGame ??
+                                                                      0) +
+                                                                  1;
+                                                          Dao.updateUser(
+                                                              user); // Mise à jour dans la DB
+                                                        }
+                                                        // Fermer la boîte de dialogue après un délai
+                                                        Future.delayed(
+                                                            const Duration(
+                                                                seconds: 3),
+                                                            () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          // setState(() {}); // Actualiser la vue
+                                                        });
+                                                      },
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      WidgetStateProperty
+                                                          .resolveWith<Color>(
+                                                    (states) {
+                                                      if (isAnswered) {
+                                                        if (isSelected) {
+                                                          return isCorrect
+                                                              ? Colors.green
+                                                              : Colors.red;
+                                                        } else if (isCorrect) {
+                                                          return Colors.green;
+                                                        } else {
+                                                          return Colors.grey;
+                                                        }
+                                                      }
+                                                      return Colors
+                                                          .white; // Couleur par défaut
+                                                    },
+                                                  ),
+                                                  side: WidgetStateProperty
+                                                      .resolveWith<BorderSide>(
+                                                    (states) {
+                                                      return isSelected
+                                                          ? BorderSide(
+                                                              color: isCorrect
+                                                                  ? const Color
+                                                                      .fromARGB(
+                                                                      255,
+                                                                      33,
+                                                                      100,
+                                                                      35)
+                                                                  : const Color
+                                                                      .fromARGB(
+                                                                      255,
+                                                                      163,
+                                                                      34,
+                                                                      25),
+                                                              width: 3.0,
+                                                            )
+                                                          : const BorderSide(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      69,
+                                                                      26,
+                                                                      28),
+                                                              width: 3);
+                                                    },
+                                                  ),
+                                                ),
+                                                child: Text(response,
+                                                    style: const TextStyle(
+                                                        fontSize: 16,
+                                                        color: Color.fromARGB(
+                                                            255, 69, 26, 28))),
+                                              );
+                                            },
                                           ).toList(),
                                         ),
                                       );
@@ -703,12 +749,8 @@ Future<Question> getRandomQuestion() async {
                                 },
                               );
                             },
-                            child: const Text("Fenetre question"),
+                            child: const Text("Fenêtre question"),
                           ),
-                          ElevatedButton(
-  onPressed: _quitGame, // Appelle la méthode _quitGame directement
-  child: const Text("Quitter la partie"),
-),
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
@@ -825,7 +867,7 @@ Future<Question> getRandomQuestion() async {
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold,
                                                   color: const Color.fromARGB(
-                                                      255, 179, 4, 0), 
+                                                      255, 179, 4, 0),
                                                 ),
                                               ),
                                             ),

@@ -52,9 +52,7 @@ class QuestionObject
             game.score.value++; // ajoute un point au score
             respawnObject();
           }));
-    }
-    else {
-      print('collision with $collisionWith');
+      game.pauseGame();
     }
   }
 }
