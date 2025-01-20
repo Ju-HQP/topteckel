@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:topteckel/models/database/dao.dart';
 import 'package:topteckel/models/question.dart';
 import 'package:topteckel/models/user.dart';
+import 'package:topteckel/src/components/accessoryProperties.dart';
+import 'package:topteckel/src/components/accessorySelector.dart';
+import 'package:topteckel/src/components/buildDogWithAccessory.dart';
 
 class PlayerProfilePage extends StatefulWidget {
   const PlayerProfilePage({super.key});
@@ -19,8 +22,23 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
   late AnimationController _buttonController2;
   late AnimationController _buttonController3;
   bool _isPseudoValid = true;
-  // int? _selectedColorDog;
   int _colorDog = 1; // Valeur par défaut
+
+  late List<String> accessories = [
+    'assets/images/accessory_default.png',
+    'assets/images/accessory_1.png',
+    'assets/images/accessory_2_1.png',
+    'assets/images/accessory_2_2.png',
+    'assets/images/accessory_2_3.png',
+    'assets/images/accessory_3.png',
+    'assets/images/accessory_4.png',
+  ];
+
+  void selectAccessory(String accessoryKey) {
+  setState(() {
+    _user.accessory = accessoryKey; // Ex. 'hat', 'glasses'
+  });
+}
 
   @override
   void dispose() {
@@ -74,14 +92,14 @@ Future<Question> getRandomQuestion() async {
   }
 }
 
-  // Afficher un formulaire de modification pour l'utilisateur
+  // Afficher page de modification pour l'utilisateur
   _showEditDialog() {
     final pseudoController = TextEditingController(text: _user.pseudoUser);
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Modifier ton profil",
+          title: Text("Modifier mon profil",
               textAlign: TextAlign.center,
               style: GoogleFonts.belanosima(
                 fontWeight: FontWeight.bold,
@@ -239,6 +257,31 @@ Future<Question> getRandomQuestion() async {
                       },
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  Column(
+  children: [
+    const Text(
+      "Personnalisez votre chien :",
+      style: TextStyle(
+        fontSize: 18,
+        color: Color.fromARGB(
+            255, 69, 26, 28), // Couleur du texte sélectionné
+      ),
+    ),
+    const SizedBox(height: 20),
+    AccessorySelector(
+      user: _user,
+      onAccessorySelected: (selectedAccessory) async {
+          setState(() {
+            _user.accessory = selectedAccessory;
+          });
+          // await Dao.updateUser(_user);
+
+          
+        },
+    ),
+  ],
+),
               ],
             ),
           ),
@@ -348,7 +391,6 @@ Future<Question> getRandomQuestion() async {
   }
 
   //A AJOUTER DANS TOPTECKEL
-  // Supprimer le compte de l'utilisateur
   _quitGame() async {
     showDialog(
       context: context,
@@ -470,60 +512,93 @@ Future<Question> getRandomQuestion() async {
                           ),
                           const SizedBox(height: 10),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/icon-score-topteckel.png', // Remplacez par le chemin de votre icône
-                                width: 48, // Taille de l'image
-                                height: 48,
-                              ),
-                              const SizedBox(
-                                  width: 8), // Espace entre l'image et le texte
-                              Text(
-                                user.scoreGame?.toString() ?? 'Non défini',
-                                style: GoogleFonts.belanosima(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color.fromARGB(255, 69, 26, 28),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/icon-game-gacha.png', // Remplacez par le chemin de votre icône
-                                width: 48,
-                                height: 48,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                user.totalTicketsGame?.toString() ??
-                                    'Non défini',
-                                style: GoogleFonts.belanosima(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color.fromARGB(255, 69, 26, 28),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    // Première Row pour le score
+    Row(
+      children: [
+        Image.asset(
+          'assets/images/icon-score-topteckel.png', // Remplacez par le chemin de votre icône
+          width: 48, // Taille de l'image
+          height: 48,
+        ),
+        const SizedBox(width: 8), // Espace entre l'image et le texte
+        Text(
+          user.scoreGame?.toString() ?? 'Non défini',
+          style: GoogleFonts.belanosima(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: const Color.fromARGB(255, 69, 26, 28),
+          ),
+        ),
+      ],
+    ),
+    const SizedBox(width: 20), // Espace entre les deux Row
+    // Deuxième Row pour les tickets
+    Row(
+      children: [
+        Image.asset(
+          'assets/images/icon-game-gacha.png', // Remplacez par le chemin de votre icône
+          width: 48, // Taille de l'image
+          height: 48,
+        ),
+        const SizedBox(width: 8), // Espace entre l'image et le texte
+        Text(
+          user.totalTicketsGame?.toString() ?? 'Non défini',
+          style: GoogleFonts.belanosima(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: const Color.fromARGB(255, 69, 26, 28),
+          ),
+        ),
+      ],
+    ),
+  ],
+),
+                          const SizedBox(height: 50),
                           Positioned(
                             bottom:
                                 20, // Position verticale identique à celle des icônes
                             left: MediaQuery.of(context).size.width / 2 -
                                 80, // Centrer horizontalement
-                            child: Image.asset(
-                              _user.getDogImage(),
-                              width:
-                                  150, // Taille de l'image (ajustez selon vos besoins)
-                              height: 250,
-                            ),
+                            child: buildDogWithAccessory(user, 150, 250),
                           ),
-                          const SizedBox(height: 100),
+                          Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              Text("Vos accessoires :",style: GoogleFonts.belanosima(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: const Color.fromARGB(255, 69, 26, 28),
+          ),),
+                              Wrap(
+                                spacing: 8.0,
+                                runSpacing: 4.0,
+                                alignment: WrapAlignment.center,
+                                children: user.accessoriesList.map(
+                                  (accessory) {
+                                    // Ajoute le chemin de base avant le nom du fichier
+                                    String imagePath =
+                                        'assets/images/$accessory.png';
+                                    return Image.asset(
+                                      imagePath, // Utilisation du chemin complet
+                                      width: 70,
+                                      height: 70,
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                              // ...accessories.map((accessory) {
+                              //   return Image.asset(
+                              //       accessory,
+                              //       width: 70,
+                              //       height: 70,
+                              //   );
+                              // }),
+                            ],
+                          ),
+
+                          const SizedBox(height: 50),
                           ElevatedButton(
                             onPressed: () async {
                               final question = await getRandomQuestion();

@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:topteckel/src/topteckel.dart';
 
 import '../components.dart';
 import 'object.dart';
@@ -43,12 +44,14 @@ class BadObject
               respawnObject();
             }));
       }
-    } else if (collisionWith is Dog) {
+    } else 
+    if (collisionWith is DogWithAccessory) {
       // collision avec le chien
       add(RemoveEffect(
           delay: 0.0,
           onComplete: () {
-            game.score.value -= 10; // à terme : enlève une vie
+            // game.score.value -= 10; // à terme : enlève une vie
+            game.lostLife();
             respawnObject();
           }));
     }

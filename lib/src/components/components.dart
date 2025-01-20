@@ -2,6 +2,7 @@
 
 export 'play_area.dart';
 export 'dog.dart';
+export 'dogWithAccessory.dart';
 export 'objects/badObject.dart';
 export 'objects/goodObject.dart';
 export 'objects/questionObject.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topteckel/models/user.dart';
 import 'package:topteckel/models/database/dao.dart';
+import 'package:topteckel/src/components/buildDogWithAccessory.dart';
 
 class HomePage extends StatefulWidget {
   // final User user;
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     // Initialisation des AnimationControllers pour chaque icône
-    _controllers['rank'] = AnimationController(
+    _controllers['historical'] = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 100),
     );
@@ -106,9 +107,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             _buildAnimatedIcon(
               context,
-              routeName: '/rank',
-              imagePath: 'assets/images/icon_rank.png',
-              key: 'rank',
+              routeName: '/historical',
+              imagePath: 'assets/images/icon_historical.png',
+              key: 'historical',
               position: Alignment.topRight, // Haut droite
             ),
             _buildAnimatedIcon(
@@ -180,11 +181,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               bottom: 20, // Position verticale identique à celle des icônes
               left: MediaQuery.of(context).size.width / 2 -
                   80, // Centrer horizontalement
-              child: Image.asset(
-                _user.getDogImage(),
-                width: 150, // Taille de l'image (ajustez selon vos besoins)
-                height: 250,
-              ),
+              child: buildDogWithAccessory(_user, 150, 250),
             ),
           ],
         ),

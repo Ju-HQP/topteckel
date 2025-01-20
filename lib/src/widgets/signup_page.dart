@@ -58,6 +58,8 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
       scoreGame: 0,
       totalTicketsGame: 3,
       colorDog: _colorDog,
+      accessory: 'chapeau-TopTeckel',
+      accessoriesList: ["chapeau-TopTeckel"],
     );
     await Dao.createUser(newUser);
     // Navigator.pushReplacementNamed(context, '/home');

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RankPage extends StatelessWidget {
-  const RankPage({super.key});
+class HistoricalPage extends StatelessWidget {
+  const HistoricalPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Classement', 
+          'Historique', 
           style: GoogleFonts.belanosima(
             fontWeight: FontWeight.bold,
           ),

@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:topteckel/src/topteckel.dart';
 
 import '../components.dart';
 import 'object.dart';
@@ -35,21 +36,24 @@ class GoodObject
     super.onCollisionStart(intersectionPoints, collisionWith);
     if (collisionWith is PlayArea) {
       // Quand l'objet tombe
+
       if (intersectionPoints.first.y >= game.height) {
         // RemoveEffect permet de retirer l'objet du jeu, après l'avoir laissé quitter l'espace de jeu visible
         add(RemoveEffect(
             delay: 0.0,
             onComplete: () {
-              game.score.value--; // enlève un point au score
+              // game.score.value--; // enlève un point au score
               respawnObject();
             }));
       }
-    } else if (collisionWith is Dog) {
+
+    } else 
+    if (collisionWith is DogWithAccessory) {
       // collision avec le chien
       add(RemoveEffect(
           delay: 0.0,
           onComplete: () {
-            game.score.value++; // ajoute un point au score
+            game.increaseScore(); // ajoute un point au score
             respawnObject();
           }));
     } else {

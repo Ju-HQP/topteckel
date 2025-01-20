@@ -4,7 +4,7 @@ import 'home_page.dart';
 import 'game_page.dart';
 import 'settings_page.dart';
 import 'gacha_page.dart';
-import 'rank_page.dart';
+import 'historical_page.dart';
 import 'player_profile_page.dart';
 import 'signup_page.dart';
 import 'waiting_page.dart';
@@ -51,7 +51,7 @@ class GameApp extends StatelessWidget {
         '/profile': (context) => const PlayerProfilePage(),
         '/settings': (context) => const SettingsPage(),
         '/gameGacha': (context) => const GachaPage(),
-        '/rank': (context) => const RankPage(),
+        '/historical': (context) => const HistoricalPage(),
         '/signUp': (context) => const SignUpPage(),
       },
     );

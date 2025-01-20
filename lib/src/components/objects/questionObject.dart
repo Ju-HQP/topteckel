@@ -44,7 +44,7 @@ class QuestionObject
               respawnObject();
             }));
       }
-    } else if (collisionWith is Dog) {
+    } else if (collisionWith is DogWithAccessory) {
       // collision avec le chien
       add(RemoveEffect(
           delay: 0.0,
