@@ -81,7 +81,7 @@ class _SettingsPageState extends State<SettingsPage>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(
-                  '1. Chaque joueur choisit une option : Pierre, Feuille ou Ciseaux.',
+                  "1. Chaque joueur choisit une option : Pierre, Feuille ou Ciseaux.",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
@@ -93,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(
-                  '2. Les règles de base : Pierre bat Ciseaux, Ciseaux battent Feuille, Feuille bat Pierre.',
+                  "2. Les règles de base : Pierre bat Ciseaux, Ciseaux battent Feuille, Feuille bat Pierre.",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
@@ -105,7 +105,7 @@ class _SettingsPageState extends State<SettingsPage>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(
-                  '3. Le gagnant marque un point. En cas d’égalité, rejouez.',
+                  "3. Le gagnant marque un point. En cas d'égalité, rejouez.",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
