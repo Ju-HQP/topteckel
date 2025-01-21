@@ -15,7 +15,7 @@ class Dao {
   //La reférence de notre base de données
   static Database? _database;
 
-  //Un getter qui renvoie l'objet de base de donnée.
+  //Un getter qui renvoie l'objet de base de donnée
   //Si la base n'existe pas _initDB la créé
   static Future<Database> get database async {
     if (_database != null) return _database!;
@@ -24,15 +24,13 @@ class Dao {
     return _database!;
   }
 
-  //_initDB initialise notre base de données.
+  //_initDB initialise notre base de données
   static Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    print("Database path: $path");  // Pour vérifier le chemin de la base de données
-    //openDatabase ouvre notre base de données située à l'emplacement "path"
-    //si la base n'existe pas openDatabase exécute _createDB
-    // return await openDatabase(path, version: 2, onUpgrade: _onUpgrade,);
+    //si déjà initialisé la base de données, on commente la ligne ci-dessous, décommente l'autre on fait flutter run, puis l'inverse, puis ça a mit à jour
+    // return await openDatabase(path, version: 2, onUpgrade: _onUpgrade);
     return await openDatabase(path, version: 1, onCreate: _createDB);
 
 }
@@ -66,12 +64,14 @@ class Dao {
     
   }
 
+  //Nettoie la base de données
   static Future<void> clearDatabase() async {
-  final db = await database; // Obtenez votre base de données
-  await db.delete('user');  // Remplacez 'users' par le nom de votre table
+  final db = await database;
+  await db.delete('user'); 
   print("Database cleared.");
 }
 
+  //Liste tous les utilisateurs de la base de données
   static Future<List<User>> listUsers() async {
     final db = await database;
 
@@ -81,34 +81,36 @@ class Dao {
       columns: ["*"],
     );
     print("Users retrieved: $maps");
- if (maps.isNotEmpty) {
-    return maps.map((e) {
-      final user = User.fromJson(e);
+    if (maps.isNotEmpty) {
+      return maps.map((e) {
+        final user = User.fromJson(e);
 
-      // Vérifie si accessoriesList est une String avant de tenter de décoder
-      var accessoriesListJson = e["accessoriesList"];
+        // Vérifie si accessoriesList est une String avant de tenter de décoder
+        var accessoriesListJson = e["accessoriesList"];
 
-      if (accessoriesListJson is String&& accessoriesListJson.isNotEmpty) {
-        try {
-          // Tentative de décodage du JSON
-          user.accessoriesList = jsonDecode(accessoriesListJson).cast<String>();
-        } catch (err) {
-          print("Erreur lors du décodage de accessoriesList : $err");
-          user.accessoriesList = []; // Valeur par défaut en cas d'erreur
+        if (accessoriesListJson is String && accessoriesListJson.isNotEmpty) {
+          try {
+            //décodage du JSON
+            user.accessoriesList =
+                jsonDecode(accessoriesListJson).cast<String>();
+          } catch (err) {
+            print("Erreur lors du décodage de accessoriesList : $err");
+            user.accessoriesList = []; // Valeur par défaut en cas d'erreur
+          }
+        } else {
+          // Si l'élément n'est pas une chaîne, ou est nul
+          print("accessoriesList n'est pas une chaîne: $accessoriesListJson");
+          user.accessoriesList = []; // Valeur par défaut
         }
-      } else {
-        // Si l'élément n'est pas une chaîne, ou est nul
-        print("accessoriesList n'est pas une chaîne: $accessoriesListJson");
-        user.accessoriesList = []; // Valeur par défaut
-      }
 
-      return user;
-    }).toList();
-  } else {
-    return [];
-  }
+        return user;
+      }).toList();
+    } else {
+      return [];
+    }
   }
 
+  //Met à jour un utilisateur
   static Future<int> updateUser(User user) async {
   final db = await database;
   final data = Map<String, dynamic>.from(user.toJson())
@@ -131,7 +133,7 @@ class Dao {
     whereArgs: [user.idUser],
   );
 }
-
+  //Créer un nouvel utilisateur
   static Future<User> createUser(User user) async {
     final db = await database;
     final idNew = await db.insert("user", {
@@ -142,6 +144,7 @@ class Dao {
     return user;
   }
 
+  //Supprime un utilisateur
   static Future<int> deleteUser(int id) async {
     final db = await database;
     return await db.delete(
@@ -162,6 +165,7 @@ class Dao {
     return result.isNotEmpty;
   }
 
+  //Liste toutes les questions de la base de données
   static Future<List<Question>> listQuestions() async {
     final db = await database;
 
@@ -177,14 +181,10 @@ class Dao {
     }
   }
 
-  static Future<void> populateQuestionsIfEmpty() async {
+  //Remplit la table Question de toutes les questions
+  static Future<void> populateQuestions() async {
     final db = await database;
 
-    final count = Sqflite.firstIntValue(
-      await db.rawQuery("SELECT COUNT(*) FROM question"),
-    );
-
-    if (count == 0) {
       List<Question> initialQuestions = [
         Question(
           titleQuestion: "Quelle est la capitale de la France ?",
@@ -197,14 +197,63 @@ class Dao {
           goodResponseQuestion: "Jupiter",
           badResponsesQuestion: ["Saturne", "Mars", "Terre"],
         ),
+        Question(
+          titleQuestion:
+              "Combien de temps dure un match de football sans les prolongations ?",
+          goodResponseQuestion: "90 min",
+          badResponsesQuestion: ["70 min", "80 min", "85 min"],
+        ),
+        Question(
+          titleQuestion:
+              "Quel appareil permet de mesurer la pression atmosphérique ?",
+          goodResponseQuestion: "Baromètre",
+          badResponsesQuestion: ["Gyromètre", "Tensiomètre", "Odomètre"],
+        ),
+        Question(
+          titleQuestion:
+              "Quelle danse est traditionnelle du carnaval de Rio ?",
+          goodResponseQuestion: "Samba",
+          badResponsesQuestion: ["Salsa", "Rumba", "Cha-cha"],
+        ),
+        Question(
+          titleQuestion:
+              "Quel est le numéro du département français dans lequel se trouve la ville de Lyon ?",
+          goodResponseQuestion: "69",
+          badResponsesQuestion: ["42", "58", "72"],
+        ),
+        Question(
+          titleQuestion:
+              "Combien compte-t-on de valeurs dans un système binaire ?",
+          goodResponseQuestion: "2",
+          badResponsesQuestion: ["1", "3", "4"],
+        ),
+        Question(
+          titleQuestion:
+              "Quel est le nom du pirate incarné par Johnny Depp dans la saga “Pirates des Caraïbes” à partir de 2003 ?",
+          goodResponseQuestion: "Jack Sparrow",
+          badResponsesQuestion: ["Jack Peacock", "Jack Macaw", "Jack Parrot"],
+        ),
+        Question(
+          titleQuestion:
+              "Quelle est la signification du sigle économique PIB ?",
+          goodResponseQuestion: "Produit Intérieur Brut",
+          badResponsesQuestion: ["Processus Intérieur Brut", "Production Intérieure Brute", "Pays Intérieur Brut"],
+        ),
+        Question(
+          titleQuestion:
+              "Au temps des dinosaures, quelle était la hauteur moyenne d'un T-Rex adulte ?",
+          goodResponseQuestion: "5 m",
+          badResponsesQuestion: ["2 m", "3.5 m", "6.5 m"],
+        ),
       ];
 
       for (var question in initialQuestions) {
         await db.insert("question", question.toJson());
       }
-    }
+    
   }
 
+  //Tire une question aléatoire par rapport à la liste de toutes les questions
   Future<Question> getRandomQuestion() async {
     final questions = await Dao.listQuestions();
     if (questions.isNotEmpty) {
@@ -214,20 +263,12 @@ class Dao {
     }
   }
 
-  // Future<Question> getRandomAccessory() async {
-  //   final accessories = await Dao.listAccessories();
-  //   if (accessories.isNotEmpty) {
-  //     return accessories[Random().nextInt(accessories.length)];
-  //   } else {
-  //     throw Exception("No questions available");
-  //   }
-  // }
-
+  //Fonction qui met à jour la base de données si celle-ci a déjà été initialisé
   static Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
   if (oldVersion < 2) { // Version 2 avec modification de la table
   
-    await db.execute("ALTER TABLE user ADD COLUMN accessoriesList TEXT;");
-    // print("Database upgraded: 'accessory' column added to 'user' table.");
+    // await db.execute("ALTER TABLE user ADD COLUMN accessoriesList TEXT;");
+    
     await db.execute('''
       CREATE TABLE user_new (
         id_user INTEGER PRIMARY KEY AUTOINCREMENT,
