@@ -62,13 +62,12 @@ class _SettingsPageState extends State<SettingsPage>
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
+                Text(
                   'Règles du jeu',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.belanosima(
@@ -77,11 +76,9 @@ class _SettingsPageState extends State<SettingsPage>
                     color: const Color.fromARGB(255, 69, 26, 28),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                  "1. Chaque joueur choisit une option : Pierre, Feuille ou Ciseaux.",
+              const SizedBox(height: 20),
+              Text(
+                  "Le jeu se divise en 2 parties : Le jeu éducatif TopTeckel et le jeu Gacha",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
@@ -89,11 +86,9 @@ class _SettingsPageState extends State<SettingsPage>
                     color: const Color.fromARGB(255, 69, 26, 28),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                  "2. Les règles de base : Pierre bat Ciseaux, Ciseaux battent Feuille, Feuille bat Pierre.",
+              
+              Text(
+                  "1. A l'accueil : vous avez la possibilité de lancer une partie en cliquant sur 'Nouvelle partie'.\nDans la page Jeu TopTeckel : Tapez sur l'écran et lancer la partie.\nAllez le plus loin possible ! Faites grandir votre teckel en prenant les objets positifs qui tombent qui augmente votre score total et répondez bon à des questions de culture générale pour un bonus de points à votre score et remportez des tickets pour jouer au jeu Gacha ! Apprenez tout en vous amusant !",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
@@ -101,11 +96,9 @@ class _SettingsPageState extends State<SettingsPage>
                     color: const Color.fromARGB(255, 69, 26, 28),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                  "3. Le gagnant marque un point. En cas d'égalité, rejouez.",
+              
+              Text(
+                  "2. A la page du jeu Gacha : utilisez la machine Gacha avec un ticket Jeu Gacha en cliquant sur le bouton 'Jouer une partie'.\nRemportez un accessoire au hasard parmi les accessoires disponible dans le jeu !\n",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
@@ -113,11 +106,21 @@ class _SettingsPageState extends State<SettingsPage>
                     color: const Color.fromARGB(255, 69, 26, 28),
                   ),
                 ),
-              ),
+              
+              Text(
+                  "Modifiez votre teckel dans la page Profil en lui changeant la couleur de son pelage et en lui faisant porter vos accessoires gagnés !\n",
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.roboto(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: const Color.fromARGB(255, 69, 26, 28),
+                  ),
+                ),
+              
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 }
