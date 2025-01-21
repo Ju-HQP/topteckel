@@ -5,10 +5,8 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
 import 'package:topteckel/models/database/dao.dart';
 import 'package:topteckel/models/user.dart';
-import 'package:topteckel/src/components/buildDogWithAccessory.dart';
 import 'package:topteckel/src/components/dogWithAccessory.dart';
 
 import 'components/components.dart';
@@ -132,11 +130,8 @@ void stopGameTasks() {
   void gameOver() {
     stopGameTasks();
     updateUserStatsOnGameOver();
+    pauseGame();
     playState = PlayState.gameOver;
-  //  // Nettoyer le monde des objets du jeu
-  //   world.removeAll(world.children.query<GoodObject>());
-  //   world.removeAll(world.children.query<BadObject>());
-  //   world.removeAll(world.children.query<QuestionObject>());
 
   //   // Basculer l'état du jeu
   //   playState = PlayState.gameOver;
@@ -152,8 +147,19 @@ void stopGameTasks() {
   }
 
   void resumeGame() {
-    isPaused = false;
+    playState = PlayState.welcome;
+        Future.delayed(const Duration(milliseconds: 3000), () {
+              playState = PlayState.playing;
+              isPaused = false;
+        });
     // Reprendre les objets ou les animations ici
+  }
+
+  @override
+  void onRemove() {
+    // Optional based on your game needs.
+    removeAll(children);
+    processLifecycleEvents();
   }
 
   // Charger les données de l'utilisateur
@@ -221,19 +227,6 @@ _loadUserData() async {
         );
       });
     }
-    // world.addAll([
-    //   for (var i = 0; i < 4; i++)
-    //     GoodObject(
-    //         position: Vector2(objectZoneSpawnGap + other * i,
-    //             spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
-    //         // vector et vitesse à revoir
-    //         velocity: Vector2(0, height * 0.2).normalized()
-    //           ..scale(height / 4)),
-    // ]);
-
-    // boucle de génération
-    // tirage de l'objet aléatoirement avec proba
-    // ça c'est par défaut mais il faudrait le faire en update
 
     // Active le mode debug pour l'ensemble des composants
     debugMode = true;
