@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
+import 'package:topteckel/src/widgets/countDown_overlay.dart';
 import '../topteckel.dart';
 import '../config.dart';
 import 'overlay_screen.dart';
@@ -24,7 +25,7 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    game = TopTeckel(gameContext : context);
+    game = TopTeckel(gameContext: context);
     // score = game.score.value;
     // tickets = game.tickets.value;
   }
@@ -91,9 +92,11 @@ class _GamePageState extends State<GamePage> {
 
   // Fonction pour afficher la fenêtre de fin de partie
   _showGameOverDialog() {
-    showDialog(
+    if (game.isEnded()) {
+    showDialog(   
       context: context,
       builder: (context) {
+        game.chgEnded();
         return AlertDialog(
           backgroundColor: Colors.white,
           title: Text(
@@ -198,11 +201,11 @@ class _GamePageState extends State<GamePage> {
         );
       },
     );
+    };
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -239,7 +242,8 @@ class _GamePageState extends State<GamePage> {
               backgroundBuilder: (context) =>
                   Container(color: Colors.transparent),
               overlayBuilderMap: {
-                PlayState.welcome.name: (context, game) => const OverlayScreen(
+                PlayState.welcome.name: (context, game) => 
+                const OverlayScreen(
                       title: "Tape l'écran pour jouer",
                       subtitle: 'Utilise ton doigt',
                     ),
@@ -249,6 +253,14 @@ class _GamePageState extends State<GamePage> {
                   });
                   return const SizedBox.shrink();
                 },
+                PlayState.countDown.name: (context, TopTeckel game) {
+                return CountdownOverlay(
+                      onCountdownComplete: () {
+                        // Passez à l'état `playing` après le décompte
+                      game.playState = PlayState.playing;
+                      },
+                    );
+                    }
               },
             ),
           ),

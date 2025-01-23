@@ -55,11 +55,9 @@ class QuestionObject
       add(RemoveEffect(
           delay: 0.0,
           onComplete: () {
-            game.score.value++; // ajoute un point au score
-            respawnObject();
+            game.gameQuestion();
+             respawnObject();
           }));
-      game.pauseGame();
-      showQuestionModal(game.gameContext);
      }
   }
 }

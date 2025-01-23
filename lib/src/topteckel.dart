@@ -10,6 +10,7 @@ import 'package:topteckel/models/database/dao.dart';
 import 'package:topteckel/models/question.dart';
 import 'package:topteckel/models/user.dart';
 import 'package:topteckel/src/components/dogWithAccessory.dart';
+import 'package:topteckel/src/widgets/questionWindow.dart';
 
 import 'components/components.dart';
 import 'config.dart';
@@ -17,7 +18,7 @@ import 'config.dart';
 // Fichier principal de coordination du jeu
 
 // états du jeu
-enum PlayState { welcome, playing, gameOver, won }
+enum PlayState { welcome, playing, countDown, gameOver }
 
 class TopTeckel extends FlameGame
     with HasCollisionDetection, KeyboardEvents, TapDetector {
@@ -33,6 +34,8 @@ class TopTeckel extends FlameGame
   bool isPaused = false;
   late User _user;
   late BuildContext gameContext;
+  // Gérer la fenêtre d'apparition de GameOver
+  bool ended = false;
 
   TopTeckel({required this.gameContext})
       : super(
@@ -55,17 +58,23 @@ class TopTeckel extends FlameGame
 
   set playState(PlayState playState) {
     _playState = playState;
+
+// Permet de ne jamais superposer 2 overlays
+      overlays.clear();
+
     switch (playState) {
       case PlayState.welcome:
+      overlays.add(playState.name);
+      break;
       case PlayState.gameOver:
         overlays.add(
-            playState.name); // Mettre à jour les stats à la fin de la partie
-      case PlayState.won:
+            playState.name);
+            break; // Mettre à jour les stats à la fin de la partie
+      case PlayState.countDown:
         overlays.add(playState.name);
+        break;
       case PlayState.playing:
-        overlays.remove(PlayState.welcome.name);
-        overlays.remove(PlayState.gameOver.name);
-        overlays.remove(PlayState.won.name);
+      break;
     }
   }
 
@@ -90,9 +99,13 @@ class TopTeckel extends FlameGame
   }
 
   // Fonction pour augmenter le score
-  void increaseScore() {
+  void increaseScore([double? value]) {
     if (playState == PlayState.playing) {
-      score.value++;
+      if (value != null) {
+        score.value += value.toInt();
+      } else {
+        score.value++;
+      }
     }
   }
 
@@ -132,17 +145,24 @@ class TopTeckel extends FlameGame
 
   // Fonction de fin de partie
   void gameOver() {
+    ended = true;
     stopGameTasks();
     updateUserStatsOnGameOver();
     pauseGame();
     playState = PlayState.gameOver;
+  }
 
-    //   // Basculer l'état du jeu
-    //   playState = PlayState.gameOver;
-    //   // Sauvegarde du score actuel dans le score total
-    //   // scoreGame += score.value;
-    //   // Réinitialisation du score pour la prochaine partie
-    //   // score.value = 0;
+  void gameQuestion() {
+    pauseGame();
+    showQuestionModal(this);
+  }
+
+  bool isEnded() {
+    return ended;
+  }
+
+  chgEnded() {
+    ended = false;
   }
 
   void pauseGame() {
@@ -151,7 +171,7 @@ class TopTeckel extends FlameGame
   }
 
   void resumeGame() {
-    playState = PlayState.welcome;
+    playState = PlayState.countDown;
     Future.delayed(const Duration(milliseconds: 3000), () {
       playState = PlayState.playing;
       isPaused = false;
@@ -289,5 +309,4 @@ class TopTeckel extends FlameGame
       });
     }
   }
-
 }

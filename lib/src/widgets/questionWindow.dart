@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:topteckel/models/database/dao.dart';
 import 'package:topteckel/models/question.dart';
 
+import '../topteckel.dart';
+
  List<String> shuffleResponses(
       String goodResponse, List<String> badResponses) {
     final responses = [goodResponse, ...badResponses];
@@ -22,7 +24,7 @@ import 'package:topteckel/models/question.dart';
     }
   }
 
-Future<void> showQuestionModal(context) async {
+Future<void> showQuestionModal(TopTeckel game) async {
   final question = await getRandomQuestion();
   bool isAnswered = false;
   String? selectedResponse;
@@ -33,7 +35,7 @@ Future<void> showQuestionModal(context) async {
   );
 
   return showDialog(
-    context: context,
+    context: game.gameContext,
     barrierDismissible: false,
     builder: (context) {
       return StatefulBuilder(
@@ -55,6 +57,7 @@ Future<void> showQuestionModal(context) async {
               spacing: 8.0,
               runSpacing: 4.0,
               alignment: WrapAlignment.center,
+              // Pour chaque réponse
               children: shuffledResponses.map(
                 (response) {
                   final isCorrect = response == question.goodResponseQuestion;
@@ -70,11 +73,12 @@ Future<void> showQuestionModal(context) async {
                             });
 
                             if (isCorrect) {
-                              // Logique de mise à jour du score ici
+                               game.increaseScore(25);
                             }
-
+                          // Disparition de la fenêtre après l'appui
                             Future.delayed(const Duration(seconds: 3), () {
                               Navigator.of(context).pop();
+                              game.resumeGame();
                             });
                           },
                     style: ButtonStyle(
