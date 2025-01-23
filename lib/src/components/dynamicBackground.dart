@@ -73,7 +73,7 @@ class DynamicBackground extends Component with HasGameReference<TopTeckel> {
     //   currentBackgrounds = backgroundsPalierSpace;
     // }
     // Transition à SkyDark uniquement si isInTransition est false
-    if (game.score.value < 10) {
+    if (game.score.value < 20) {
       if (!isInTransition) {
         currentBackgrounds = [
           ...currentBackgrounds,

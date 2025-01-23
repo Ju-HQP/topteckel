@@ -78,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage>
                 ),
               const SizedBox(height: 20),
               Text(
-                  "Le jeu se divise en 2 parties : Le jeu éducatif TopTeckel et le jeu Gacha",
+                  "Le jeu se divise en 2 parties : Le jeu éducatif TopTeckel et le jeu Gacha.",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
@@ -88,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage>
                 ),
               
               Text(
-                  "1. A l'accueil : vous avez la possibilité de lancer une partie en cliquant sur 'Nouvelle partie'.\nDans la page Jeu TopTeckel : Tapez sur l'écran et lancer la partie.\nAllez le plus loin possible ! Faites grandir votre teckel en prenant les objets positifs qui tombent qui augmente votre score total et répondez bon à des questions de culture générale pour un bonus de points à votre score et remportez des tickets pour jouer au jeu Gacha ! Apprenez tout en vous amusant !",
+                  "1. A l'accueil : vous avez la possibilité de lancer une partie en cliquant sur 'Nouvelle partie'.\nDans la page Jeu TopTeckel : Tapez sur l'écran et lancer la partie.\nAllez le plus loin possible ! Faites grandir votre teckel en prenant les objets positifs qui tombent qui augmentent votre score total et répondez bon à des questions de culture générale pour un bonus de points à votre score et remportez des tickets pour jouer au jeu Gacha ! Apprenez tout en vous amusant !",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
@@ -98,7 +98,7 @@ class _SettingsPageState extends State<SettingsPage>
                 ),
               
               Text(
-                  "2. A la page du jeu Gacha : utilisez la machine Gacha avec un ticket Jeu Gacha en cliquant sur le bouton 'Jouer une partie'.\nRemportez un accessoire au hasard parmi les accessoires disponible dans le jeu !\n",
+                  "2. A la page du jeu Gacha : utilisez la machine Gacha avec un ticket Jeu Gacha en cliquant sur le bouton 'Jouer une partie'.\nRemportez un accessoire au hasard parmi les accessoires disponibles dans le jeu !\n",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.roboto(
                     fontSize: 18,
