@@ -4,12 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 class HistoricalPage extends StatelessWidget {
   const HistoricalPage({super.key});
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Historique', 
+          'Historique',
           style: GoogleFonts.belanosima(
             fontWeight: FontWeight.bold,
           ),
@@ -27,18 +27,33 @@ class HistoricalPage extends StatelessWidget {
           preferredSize: const Size.fromHeight(3.0), // Hauteur de la bordure
           child: Container(
             color: const Color.fromARGB(
-                            255, 69, 26, 28), // Couleur de la bordure
+                255, 69, 26, 28), // Couleur de la bordure
             height: 3.0, // Épaisseur de la bordure
           ),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/decor_home.png'),
-            fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/decor_home.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
+          Center(
+            child: Text(
+              'En construction...',
+              style: GoogleFonts.belanosima(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: const Color.fromARGB(255, 69, 26, 28),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
       ),
     );
   }
