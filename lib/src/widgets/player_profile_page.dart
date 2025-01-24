@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:topteckel/models/database/dao.dart';
 import 'package:topteckel/models/question.dart';
 import 'package:topteckel/models/user.dart';
-import 'package:topteckel/src/components/accessoryProperties.dart';
 import 'package:topteckel/src/components/accessorySelector.dart';
 import 'package:topteckel/src/components/buildDogWithAccessory.dart';
 
@@ -274,7 +273,6 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                         setState(() {
                           _user.accessory = selectedAccessory;
                         });
-                        // await Dao.updateUser(_user);
                       },
                     ),
                   ],
@@ -315,7 +313,7 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                 await Dao.updateUser(_user);
                 _loadUserData();
                 setState(() {
-                  // Mets à jour les données de l'utilisateur et rafraîchis l'interface
+                  // Met à jour les données de l'utilisateur et rafraîchis l'interface
                   _user.pseudoUser = pseudoController.text;
                   _user.colorDog = _colorDog;
                 });
@@ -543,13 +541,6 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                                   },
                                 ).toList(),
                               ),
-                              // ...accessories.map((accessory) {
-                              //   return Image.asset(
-                              //       accessory,
-                              //       width: 70,
-                              //       height: 70,
-                              //   );
-                              // }),
                             ],
                           ),
                           const SizedBox(height: 50),
@@ -557,7 +548,6 @@ class _PlayerProfilePageState extends State<PlayerProfilePage>
                             alignment: Alignment.center,
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
-                              // mainAxisAlignment: MainAxisAlignment.center,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

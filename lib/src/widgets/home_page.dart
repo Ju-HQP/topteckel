@@ -7,17 +7,15 @@ import 'package:topteckel/src/components/buildDogWithAccessory.dart';
 class HomePage extends StatefulWidget {
   // final User user;
   const HomePage({super.key});
-  
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  static const _iconSizeSmall = 60.0;
-  static const _iconSizeLarge = 70.0;
-  static const _animationDuration = Duration(milliseconds: 100);
-  
+  // static const _iconSizeSmall = 60.0;
+  // static const _iconSizeLarge = 70.0;
+  // static const _animationDuration = Duration(milliseconds: 100);
 
   // Map pour gérer l'état des tailles de chaque icône
   final Map<String, AnimationController> _controllers = {};
@@ -61,9 +59,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _loadUserData();
   }
 
-  
-
-  
   // Charger les données de l'utilisateur
   _loadUserData() async {
     final users = await Dao.listUsers();
@@ -75,6 +70,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,9 +92,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             Positioned(
               top: MediaQuery.of(context).size.width / 2 -
-              170, // Position verticale identique à celle des icônes
+                  170, // Position verticale identique à celle des icônes
               left: MediaQuery.of(context).size.width / 2 -
-              140, // Centrer horizontalement
+                  140, // Centrer horizontalement
               child: Image.asset(
                 'assets/images/logo_topteckel.png',
                 width: 300, // Taille de l'image (ajustez selon vos besoins)
@@ -151,7 +147,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     );
                   },
                   child: ElevatedButton(
-                    onPressed: () {Navigator.pushNamed(context, '/gameTopTeckel');}, // Géré par GestureDetector
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/gameTopTeckel');
+                    }, // Géré par GestureDetector
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 25),

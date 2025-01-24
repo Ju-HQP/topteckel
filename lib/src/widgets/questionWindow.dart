@@ -7,22 +7,20 @@ import 'package:topteckel/models/question.dart';
 
 import '../topteckel.dart';
 
- List<String> shuffleResponses(
-      String goodResponse, List<String> badResponses) {
-    final responses = [goodResponse, ...badResponses];
-    responses.shuffle();
-    return responses;
-  }
+List<String> shuffleResponses(String goodResponse, List<String> badResponses) {
+  final responses = [goodResponse, ...badResponses];
+  responses.shuffle();
+  return responses;
+}
 
-  Future<Question> getRandomQuestion() async {
-
-    final questions = await Dao.listQuestions();
-    if (questions.isNotEmpty) {
-      return questions[Random().nextInt(questions.length)];
-    } else {
-      throw Exception("No questions available");
-    }
+Future<Question> getRandomQuestion() async {
+  final questions = await Dao.listQuestions();
+  if (questions.isNotEmpty) {
+    return questions[Random().nextInt(questions.length)];
+  } else {
+    throw Exception("No questions available");
   }
+}
 
 Future<void> showQuestionModal(TopTeckel game) async {
   final question = await getRandomQuestion();
@@ -74,9 +72,9 @@ Future<void> showQuestionModal(TopTeckel game) async {
                             // Bonne réponse
                             if (isCorrect) {
                               game.tickets.value++;
-                               game.increaseScore(20);
+                              game.increaseScore(20);
                             }
-                          // Disparition de la fenêtre après l'appui
+                            // Disparition de la fenêtre après l'appui
                             Future.delayed(const Duration(seconds: 3), () {
                               Navigator.of(context).pop();
                               game.resumeGame();

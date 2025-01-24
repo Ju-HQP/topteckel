@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:topteckel/src/widgets/overlay_screen.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class CountdownOverlay extends StatefulWidget {

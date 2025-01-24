@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:topteckel/src/widgets/countDown_overlay.dart';
 import '../topteckel.dart';
-import '../config.dart';
 import 'overlay_screen.dart';
-import 'score_card.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:topteckel/models/database/dao.dart';
-import 'package:topteckel/models/user.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -19,15 +15,10 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   late final TopTeckel game;
 
-  // late int score;
-  // late int tickets;
-
   @override
   void initState() {
     super.initState();
     game = TopTeckel(gameContext: context);
-    // score = game.score.value;
-    // tickets = game.tickets.value;
   }
 
 // suppression totale du jeu (cette classe ne sera plus rebuild)
@@ -93,115 +84,116 @@ class _GamePageState extends State<GamePage> {
   // Fonction pour afficher la fenêtre de fin de partie
   _showGameOverDialog() {
     if (game.isEnded()) {
-    showDialog(   
-      context: context,
-      builder: (context) {
-        game.chgEnded();
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text(
-            'Perdu !',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.belanosima(
-              fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(255, 179, 4, 0),
-            ),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Centrer le contenu
-                    children: [
-                      Image.asset(
-                        'assets/images/icon-score-topteckel.png',
-                        width: 36,
-                        height: 36,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        "Score obtenu : ${(game.score.value)}",
-                        style: GoogleFonts.belanosima(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 69, 26, 28),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16), // Espacement entre les lignes
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Centrer le contenu
-                    children: [
-                      Image.asset(
-                        'assets/images/icon-game-gacha.png',
-                        width: 36,
-                        height: 36,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        "Tickets obtenus : ${(game.tickets.value)}",
-                        style: GoogleFonts.belanosima(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 69, 26, 28),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+      showDialog(
+        context: context,
+        builder: (context) {
+          game.chgEnded();
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            title: Text(
+              'Perdu !',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.belanosima(
+                fontWeight: FontWeight.bold,
+                color: const Color.fromARGB(255, 179, 4, 0),
               ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      game.updateUserStatsOnGameOver;
-                      game.playState = PlayState.welcome;
-                      game.onRemove();
-                      Navigator.pushReplacementNamed(
-                          context, '/home'); // Revenir à l'accueil
-                    },
-                    child: Text(
-                      "Retour à l'accueil",
-                      style: GoogleFonts.belanosima(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 179, 4, 0),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.center, // Centrer le contenu
+                      children: [
+                        Image.asset(
+                          'assets/images/icon-score-topteckel.png',
+                          width: 36,
+                          height: 36,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          "Score obtenu : ${(game.score.value)}",
+                          style: GoogleFonts.belanosima(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 69, 26, 28),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16), // Espacement entre les lignes
+                    Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.center, // Centrer le contenu
+                      children: [
+                        Image.asset(
+                          'assets/images/icon-game-gacha.png',
+                          width: 36,
+                          height: 36,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          "Tickets obtenus : ${(game.tickets.value)}",
+                          style: GoogleFonts.belanosima(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 69, 26, 28),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        game.updateUserStatsOnGameOver;
+                        game.playState = PlayState.welcome;
+                        game.onRemove();
+                        Navigator.pushReplacementNamed(
+                            context, '/home'); // Revenir à l'accueil
+                      },
+                      child: Text(
+                        "Retour à l'accueil",
+                        style: GoogleFonts.belanosima(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(255, 179, 4, 0),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                    onPressed: () {
-                      game.updateUserStatsOnGameOver();
-                      Navigator.of(context).pop(); // Fermer la fenêtre
-                      game.startGame(); // Redémarrer le jeu
-                    },
-                    child: Text(
-                      "Rejouer",
-                      style: GoogleFonts.belanosima(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 179, 4, 0),
+                    const SizedBox(width: 10),
+                    TextButton(
+                      onPressed: () {
+                        game.updateUserStatsOnGameOver();
+                        Navigator.of(context).pop(); // Fermer la fenêtre
+                        game.startGame(); // Redémarrer le jeu
+                      },
+                      child: Text(
+                        "Rejouer",
+                        style: GoogleFonts.belanosima(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(255, 179, 4, 0),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        );
-      },
-    );
-    };
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+      );
+    }
+    ;
   }
 
   @override
@@ -242,8 +234,7 @@ class _GamePageState extends State<GamePage> {
               backgroundBuilder: (context) =>
                   Container(color: Colors.transparent),
               overlayBuilderMap: {
-                PlayState.welcome.name: (context, game) => 
-                const OverlayScreen(
+                PlayState.welcome.name: (context, game) => const OverlayScreen(
                       title: "Tape l'écran pour jouer",
                       subtitle: 'Utilise ton doigt',
                     ),
@@ -254,13 +245,13 @@ class _GamePageState extends State<GamePage> {
                   return const SizedBox.shrink();
                 },
                 PlayState.countDown.name: (context, TopTeckel game) {
-                return CountdownOverlay(
-                      onCountdownComplete: () {
-                        // Passez à l'état `playing` après le décompte
+                  return CountdownOverlay(
+                    onCountdownComplete: () {
+                      // Passez à l'état `playing` après le décompte
                       game.playState = PlayState.playing;
-                      },
-                    );
-                    }
+                    },
+                  );
+                }
               },
             ),
           ),

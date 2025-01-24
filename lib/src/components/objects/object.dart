@@ -28,7 +28,7 @@ class Object extends SpriteComponent
     position += velocity * dt;
   }
 
-// Fonction de respawn des objets selon les probas suivantes : 65% positif, 30% négatif, 5% question
+// Fonction de respawn des objets selon les probas suivantes : 80% positif, 15% négatif, 5% question
   void respawnObject() {
     double coordX = position
         .x; // récupère la position de l'objet actuel pour créer le nouvel objet

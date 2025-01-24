@@ -115,8 +115,6 @@ class TopTeckel extends FlameGame
     _user.scoreGame = (_user.scoreGame ?? 0) + score.value;
     _user.totalTicketsGame = (_user.totalTicketsGame ?? 0) + tickets.value;
     await Dao.updateUser(_user);
-    print(
-        "Stats mises à jour : Score = ${_user.scoreGame}, Tickets = ${_user.totalTicketsGame}");
   }
 
   void stopGameTasks() {
@@ -151,11 +149,10 @@ class TopTeckel extends FlameGame
 
   void pauseGame() {
     isPaused = true;
-    //Arrêter les timers ou les animations ici
   }
 
   void resumeGame() {
-    if(playState == PlayState.welcome){
+    if (playState == PlayState.welcome) {
       isPaused = false;
       return;
     }
@@ -169,7 +166,6 @@ class TopTeckel extends FlameGame
 
   @override
   void onRemove() {
-    // Optional based on your game needs.
     removeAll(children);
     processLifecycleEvents();
   }
@@ -180,7 +176,6 @@ class TopTeckel extends FlameGame
     if (users.isNotEmpty) {
       _user =
           users[0]; // Initialise l'utilisateur à partir de la base de données
-      print("Utilisateur chargé : $_user");
     }
   }
 
@@ -244,8 +239,6 @@ class TopTeckel extends FlameGame
         }
       });
     }
-    // Active le mode debug pour l'ensemble des composants
-    debugMode = true;
   }
 
 // Gestion de l'interaction d'Appui

@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:topteckel/models/database/dao.dart';
 import 'package:topteckel/models/user.dart';
 import 'package:topteckel/src/widgets/home_page.dart';
-import 'package:topteckel/src/widgets/game_app.dart';
 
 class SignUpPage extends StatefulWidget {
   // final User user;
@@ -42,15 +41,15 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
       setState(() {
         _isPseudoValid = false; // Afficher le message d'erreur
       });
-    // Afficher un message d'erreur si le champ est vide
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Le pseudo est obligatoire !'),
-        backgroundColor: Colors.red,
-      ),
-    );
-    return; // Arrêter la création si le pseudo est vide
-  }
+      // Afficher un message d'erreur si le champ est vide
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Le pseudo est obligatoire !'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return; // Arrêter la création si le pseudo est vide
+    }
 
     final newUser = User(
       pseudoUser: _pseudoController.text,
@@ -145,8 +144,8 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                           color: Color.fromARGB(255, 69, 26, 28),
                         ),
                         errorText: !_isPseudoValid
-                        ? 'Ce champ est obligatoire'
-                        : null, // Message d'erreur dynamique
+                            ? 'Ce champ est obligatoire'
+                            : null, // Message d'erreur dynamique
                         fillColor: Colors.white,
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
@@ -271,7 +270,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                     ),
                   ),
                   const SizedBox(height: 20),
-                
+
                   // Bouton rouge personnalisé
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -309,31 +308,31 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                           child: SizedBox(
                             // Ajout du conteneur avec fond
                             width: 240,
-                            child:Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 20),
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(
-                                  255, 179, 4, 0), // Couleur de fond
-                              borderRadius:
-                                  BorderRadius.circular(12), // Coins arrondis
-                              border: Border.all(
-                                // Bordure
-                                color: const Color.fromARGB(255, 69, 26, 28),
-                                width: 3,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 20),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(
+                                    255, 179, 4, 0), // Couleur de fond
+                                borderRadius:
+                                    BorderRadius.circular(12), // Coins arrondis
+                                border: Border.all(
+                                  // Bordure
+                                  color: const Color.fromARGB(255, 69, 26, 28),
+                                  width: 3,
+                                ),
+                              ),
+                              // Bouton stylisé
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Créer un profil',
+                                style: GoogleFonts.belanosima(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                            // Bouton stylisé
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Créer un profil',
-                              style: GoogleFonts.belanosima(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
                           ),
                         ),
                       ),

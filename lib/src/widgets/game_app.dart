@@ -8,13 +8,9 @@ import 'historical_page.dart';
 import 'player_profile_page.dart';
 import 'signup_page.dart';
 import 'waiting_page.dart';
-import 'splash_screen.dart';
-import 'package:topteckel/models/user.dart';
 
 class GameApp extends StatelessWidget {
-  // final bool userExists;
   final bool userExists;
-  // final User user;
   const GameApp({super.key, required this.userExists});
 
   @override
@@ -42,7 +38,6 @@ class GameApp extends StatelessWidget {
           ),
         ),
       ),
-      // initialRoute: userExists ? '/home' : '/signUp',
       initialRoute: '/loading',
       routes: {
         '/loading': (context) => WaitingPage(userExists: userExists),

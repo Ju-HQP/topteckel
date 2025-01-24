@@ -65,13 +65,6 @@ class DynamicBackground extends Component with HasGameReference<TopTeckel> {
 
   // Méthode pour mettre à jour la liste en fonction du score
   void updateBackgroundList() {
-    // if (game.score.value < 10) {
-    //   currentBackgrounds = backgroundsPalierSkyblue;
-    // } else if (game.score.value < 30) {
-    //   currentBackgrounds = backgroundsPalierSkyDark;
-    // } else if (game.score.value < 50) {
-    //   currentBackgrounds = backgroundsPalierSpace;
-    // }
     // Transition à SkyDark uniquement si isInTransition est false
     if (game.score.value < 20) {
       if (!isInTransition) {
@@ -87,16 +80,7 @@ class DynamicBackground extends Component with HasGameReference<TopTeckel> {
     } 
     // Transition avant de passer à SkyDark
     else if (game.score.value <= 50) {
-      // if (!isInTransition) {
-      //   currentBackgrounds = [
-      //     ...currentBackgrounds,
-      //     ...transitionPalierSkyBlueSkyDark,
-      //   ];
-      //   isInTransition = true;
-      // }
-      // else {
         currentBackgrounds = backgroundsPalierSkyDark;
-      // }
     } 
     else {
       currentBackgrounds = backgroundsPalierSpace;
