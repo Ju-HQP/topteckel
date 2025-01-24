@@ -42,7 +42,6 @@ class GoodObject
         add(RemoveEffect(
             delay: 0.0,
             onComplete: () {
-              // game.score.value--; // enlève un point au score
               respawnObject();
             }));
       }

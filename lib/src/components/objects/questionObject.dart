@@ -45,8 +45,7 @@ class QuestionObject
         // RemoveEffect permet de retirer l'objet du jeu, après l'avoir laissé quitter l'espace de jeu visible
         add(RemoveEffect(
             delay: 0.0,
-            onComplete: () {
-              game.score.value--; // enlève un point au score
+            onComplete: () { // enlève un point au score
               respawnObject();
             }));
       }

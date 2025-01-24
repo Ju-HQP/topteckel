@@ -74,7 +74,7 @@ Future<void> showQuestionModal(TopTeckel game) async {
                             // Bonne réponse
                             if (isCorrect) {
                               game.tickets.value++;
-                               game.increaseScore(25);
+                               game.increaseScore(20);
                             }
                           // Disparition de la fenêtre après l'appui
                             Future.delayed(const Duration(seconds: 3), () {
