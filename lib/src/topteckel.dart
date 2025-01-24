@@ -170,6 +170,10 @@ class TopTeckel extends FlameGame
   }
 
   void resumeGame() {
+    if(playState == PlayState.welcome){
+      isPaused = false;
+      return;
+    }
     playState = PlayState.countDown;
     Future.delayed(const Duration(milliseconds: 3000), () {
       playState = PlayState.playing;
@@ -251,7 +255,7 @@ class TopTeckel extends FlameGame
                   vitesseJeu),
             );
             break;
-          case < 0.35:
+          case < 0.20:
             world.add(
               BadObject(
                   Vector2(objectZoneSpawnGap + other * i, spawnHeightObjects),

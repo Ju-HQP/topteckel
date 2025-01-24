@@ -56,7 +56,7 @@ class Object extends SpriteComponent
             QuestionObject(Vector2(coordX, spawnHeightObjects), vitesseJeu),
           );
           break;
-        case < 0.35:
+        case < 0.20:
           game.world.add(
             BadObject(Vector2(coordX, spawnHeightObjects), vitesseJeu),
           );

@@ -75,9 +75,9 @@ final Map<String, AccessoryProperties> accessories = {
 final Map<String, AccessoryProperties> accessoriesGame = {
   'chapeau-TopTeckel': AccessoryProperties(
     imagePath: 'chapeau-TopTeckel.png',
-    width: 76.5,
-    height: 34,
-    offsetX: 8,
+    width: 63,
+    height: 28,
+    offsetX: 4,
     offsetY: -70,
   ),
   'noeud': AccessoryProperties(
