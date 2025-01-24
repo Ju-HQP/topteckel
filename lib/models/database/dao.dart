@@ -61,7 +61,6 @@ class Dao {
       )
       ''');
     print("Database tables created.");
-    
   }
 
   //Nettoie la base de données
@@ -112,19 +111,19 @@ class Dao {
 
   //Met à jour un utilisateur
   static Future<int> updateUser(User user) async {
-  final db = await database;
-  final data = Map<String, dynamic>.from(user.toJson())
-    ..remove("id_user")
-    ..update(
-      "accessory",
-      (_) => user.accessory,
-      ifAbsent: () => user.accessory,
-    )
-    ..update(
-      "accessoriesList",
-      (_) => jsonEncode(user.accessoriesList),
-      ifAbsent: () => jsonEncode(user.accessoriesList),
-    );
+    final db = await database;
+    final data = Map<String, dynamic>.from(user.toJson())
+      ..remove("id_user")
+      ..update(
+        "accessory",
+        (_) => user.accessory,
+        ifAbsent: () => user.accessory,
+      )
+      ..update(
+        "accessoriesList",
+        (_) => jsonEncode(user.accessoriesList),
+        ifAbsent: () => jsonEncode(user.accessoriesList),
+      );
 
   return await db.update(
     'user',
@@ -137,9 +136,9 @@ class Dao {
   static Future<User> createUser(User user) async {
     final db = await database;
     final idNew = await db.insert("user", {
-    ...user.toJson(),
-    'accessoriesList': jsonEncode(user.accessoriesList),
-  });
+      ...user.toJson(),
+      'accessoriesList': jsonEncode(user.accessoriesList),
+    });
     user.idUser = idNew;
     return user;
   }
@@ -282,18 +281,19 @@ class Dao {
       )
     ''');
 
-    // Copier les anciennes données dans la nouvelle table
-    await db.execute('''
+      // Copier les anciennes données dans la nouvelle table
+      await db.execute('''
       INSERT INTO user_new (id_user, pseudo_user, date_game, score_game, total_tickets_game, color_dog, accessory, accessoriesList)
       SELECT id_user, pseudo_user, date_game, score_game, total_tickets_game, color_dog, accessory, accessoriesList
       FROM user
     ''');
 
-    // Supprimer l'ancienne table
-    await db.execute('DROP TABLE user');
+      // Supprimer l'ancienne table
+      await db.execute('DROP TABLE user');
 
-    // Renommer la nouvelle table
-    await db.execute('ALTER TABLE user_new RENAME TO user');
+      // Renommer la nouvelle table
+      await db.execute('ALTER TABLE user_new RENAME TO user');
+      await db.execute("ALTER TABLE user ADD COLUMN accessoriesList TEXT;");
+    }
   }
-}
 }

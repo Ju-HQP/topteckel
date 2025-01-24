@@ -48,9 +48,7 @@ class Object extends SpriteComponent
       //   // Here you can write your code for open new view
       // });
 
-// voir si j'ai besoin de faire un autre chiffre random
       double newrand = rand.nextDouble();
-      print(newrand);
       // Créer un nouvel objet
       switch (newrand) {
         case < 0.05:
@@ -58,7 +56,7 @@ class Object extends SpriteComponent
             QuestionObject(Vector2(coordX, spawnHeightObjects), vitesseJeu),
           );
           break;
-        case < 0.35:
+        case < 0.20:
           game.world.add(
             BadObject(Vector2(coordX, spawnHeightObjects), vitesseJeu),
           );

@@ -36,17 +36,13 @@ class DogWithAccessory extends SpriteComponent with DragCallbacks, HasGameRefere
     print("Chien image loaded: $dogImage");
     sprite = Sprite(dogImage);
 
-// world.add(Dog(
-//         size: Vector2(dogWidth, dogHeight),
-//         position: Vector2(width / 2, height * 0.85)));
-    // Appliquer l'image du chien
     size = Vector2(dogWidth, dogHeight);
     // position = Vector2(width/2, height*0.85); 
   //   Future.delayed(Duration.zero, () {
   //   position = Vector2(width / 2, height * 0.85);
   //   print("Position initiale mise à jour : $position");
   // });
-    position = Vector2(gameWidth/2, gameHeight*0.78); 
+    position = Vector2(gameWidth/2, gameHeight*0.84); 
 
     // Charger l'accessoire si disponible
     final accessory = accessoriesGame[user.accessory];
