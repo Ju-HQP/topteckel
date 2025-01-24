@@ -25,7 +25,6 @@ class _CountdownOverlayState extends State<CountdownOverlay> {
     for (int i = 3; i > 0; i--) {
       setState(() {
         countdown = i;
-        print(countdown);
       });
       await Future.delayed(const Duration(seconds: 1));
     }

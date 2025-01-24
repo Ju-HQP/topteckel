@@ -71,8 +71,9 @@ Future<void> showQuestionModal(TopTeckel game) async {
                               selectedResponse = response;
                               isAnswered = true;
                             });
-
+                            // Bonne réponse
                             if (isCorrect) {
+                              game.tickets.value++;
                                game.increaseScore(25);
                             }
                           // Disparition de la fenêtre après l'appui

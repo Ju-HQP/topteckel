@@ -60,21 +60,20 @@ class TopTeckel extends FlameGame
     _playState = playState;
 
 // Permet de ne jamais superposer 2 overlays
-      overlays.clear();
+    overlays.clear();
 
     switch (playState) {
       case PlayState.welcome:
-      overlays.add(playState.name);
-      break;
+        overlays.add(playState.name);
+        break;
       case PlayState.gameOver:
-        overlays.add(
-            playState.name);
-            break; // Mettre à jour les stats à la fin de la partie
+        overlays.add(playState.name);
+        break; // Mettre à jour les stats à la fin de la partie
       case PlayState.countDown:
         overlays.add(playState.name);
         break;
       case PlayState.playing:
-      break;
+        break;
     }
   }
 
@@ -242,13 +241,31 @@ class TopTeckel extends FlameGame
       double aleaTime = (rand.nextDouble() * 2) *
           1000; // durée aléatoire pour le délai entre et 0 et 1 seconde
       Future.delayed(Duration(milliseconds: aleaTime.toInt()), () {
-        world.add(
-          QuestionObject(
-              Vector2(objectZoneSpawnGap + other * i,
-                  spawnHeightObjects), //écart de base + i *(largeur + ecart entre objets), hauteur de spawn de config
-              // vector et vitesse à revoir
-              Vector2(0, height * 0.2).normalized()..scale(height / 4)),
-        );
+        double newrand = rand.nextDouble();
+        // Créer un nouvel objet
+        switch (newrand) {
+          case < 0.05:
+            world.add(
+              QuestionObject(
+                  Vector2(objectZoneSpawnGap + other * i, spawnHeightObjects),
+                  vitesseJeu),
+            );
+            break;
+          case < 0.35:
+            world.add(
+              BadObject(
+                  Vector2(objectZoneSpawnGap + other * i, spawnHeightObjects),
+                  vitesseJeu),
+            );
+            break;
+          case <= 1:
+            world.add(
+              GoodObject(
+                  Vector2(objectZoneSpawnGap + other * i, spawnHeightObjects),
+                  vitesseJeu),
+            );
+            break;
+        }
       });
     }
 
@@ -260,9 +277,8 @@ class TopTeckel extends FlameGame
   @override
   void onTap() {
     super.onTap();
-    if (playState == PlayState.gameOver) {
-      // startGame(); // Redémarre le jeu si le joueur a perdu
-      playState = PlayState.gameOver;
+    if (playState == PlayState.countDown || playState == PlayState.gameOver) {
+      return;
     } else {
       startGame();
     }
@@ -290,12 +306,12 @@ class TopTeckel extends FlameGame
     if (isPaused) return;
     super.update(dt);
     //  _checkScore();
-    if (playState == PlayState.gameOver) {
+    if (playState == PlayState.gameOver || playState == PlayState.countDown) {
       return; // Empêche la mise à jour des objets et du score
     }
     // Boucle pour chaque objet positif
     if (playState == PlayState.playing) {
-      world.children.whereType<GoodObject>().forEach((objet) {
+      world.children.whereType<Object>().forEach((objet) {
         // Augmentation de la vitesse en fonction du palier passé
         for (int unPalier in paliersDeScore) {
           if (score.value >= unPalier && !paliersAtteints.contains(unPalier)) {
