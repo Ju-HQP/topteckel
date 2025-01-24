@@ -1,7 +1,5 @@
-import 'package:flame/components.dart';
 import 'package:topteckel/models/user.dart';
 import 'package:topteckel/src/components/accessoryProperties.dart';
-import '../topteckel.dart';
 import 'package:flutter/material.dart';
 
 

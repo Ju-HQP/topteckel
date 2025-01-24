@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:topteckel/models/user.dart';

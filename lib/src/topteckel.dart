@@ -5,13 +5,9 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
 import 'package:topteckel/models/database/dao.dart';
-import 'package:topteckel/models/question.dart';
 import 'package:topteckel/models/user.dart';
-import 'package:topteckel/src/components/dogWithAccessory.dart';
 import 'package:topteckel/src/widgets/questionWindow.dart';
-
 import 'components/components.dart';
 import 'config.dart';
 
@@ -49,8 +45,6 @@ class TopTeckel extends FlameGame
   double get height => 753;
 
   final rand = math.Random();
-// gestion du score
-  // final ValueNotifier<int> score = ValueNotifier(0);
 
 // Gestion des overlays en fonction de l'état du jeu
   late PlayState _playState;
@@ -116,15 +110,6 @@ class TopTeckel extends FlameGame
       gameOver();
     }
   }
-
-//   void _checkScore() {
-//   if (score.value == 10) {
-//     // Pause le jeu pour poser la question
-//     isPaused = true;
-//     // Notifier le widget parent via un callback ou un événement
-//     FlameGame.notifyGameStateChanged('question');
-//   }
-// }
 
   void updateUserStatsOnGameOver() async {
     _user.scoreGame = (_user.scoreGame ?? 0) + score.value;
@@ -206,7 +191,6 @@ class TopTeckel extends FlameGame
     stopGameTasks(); // Nettoie les objets restants
 
     world.removeAll(world.children.query<DogWithAccessory>());
-    // world.removeAll(world.children.query<Dog>());
     world.removeAll(world.children.query<GoodObject>());
     world.removeAll(world.children.query<BadObject>());
     world.removeAll(world.children.query<QuestionObject>());
@@ -224,22 +208,10 @@ class TopTeckel extends FlameGame
       width: width,
       height: height,
     );
-    // final dog = Dog(
-    //   size: Vector2(dogWidth, dogHeight),
-    //   position: Vector2(width / 2, height * 0.85),
-    // );
-    // dog.sprite = dogSprite;
 
     // Ajoute le chien personnalisé au monde
     world.add(dogSprite);
 
-    print("Dog size: $dogWidth x $dogHeight");
-    print("just size: $width x $dogHeight");
-
-// Pour les objets
-// Coordonnées objet spawn : 133.25 - 317.75 - 502.25 - 686.75s
-
-// Random().nextDouble() * 256; // Value is >= 0.0 and < 256.0.
     for (var i = 0; i < 4; i++) {
       var rand = math.Random();
       double aleaTime = (rand.nextDouble() * 2) *
@@ -272,7 +244,6 @@ class TopTeckel extends FlameGame
         }
       });
     }
-
     // Active le mode debug pour l'ensemble des composants
     debugMode = true;
   }
@@ -294,9 +265,9 @@ class TopTeckel extends FlameGame
     super.onKeyEvent(event, keysPressed);
     switch (event.logicalKey) {
       case LogicalKeyboardKey.arrowLeft:
-        world.children.query<Dog>().first.moveBy(-batStep);
+        world.children.query<DogWithAccessory>().first.moveBy(-batStep);
       case LogicalKeyboardKey.arrowRight:
-        world.children.query<Dog>().first.moveBy(batStep);
+        world.children.query<DogWithAccessory>().first.moveBy(batStep);
       // ajoute les entrées espace et entrée du clavier, avec entrée qui lance la fonction startGame()
       case LogicalKeyboardKey.space:
       case LogicalKeyboardKey.enter:
@@ -309,7 +280,6 @@ class TopTeckel extends FlameGame
   void update(double dt) {
     if (isPaused) return;
     super.update(dt);
-    //  _checkScore();
     if (playState == PlayState.gameOver || playState == PlayState.countDown) {
       return; // Empêche la mise à jour des objets et du score
     }

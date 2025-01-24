@@ -1,10 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:topteckel/src/topteckel.dart';
-
 import '../components.dart';
-import 'object.dart';
 
 class GoodObject
     extends Object // positionComponent affiche l'objet à l'écran (remplace render)
@@ -19,12 +16,10 @@ class GoodObject
     try {
       sprite = await game.loadSprite(
           'object_good.png'); //loadSprite va direct dans assets/images
-      // size = sprite!.srcSize;
       print("Sprite Objet Positif. Size: $size.");
     } catch (e) {
       print("Error loading Good Object sprite: $e");
     }
-// hitbox à tester
     add(CircleHitbox());
   }
 

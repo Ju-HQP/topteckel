@@ -1,11 +1,8 @@
 import 'dart:math';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-
 import '../components.dart';
 import '../../config.dart';
-
 import '../../topteckel.dart';
 
 // La classe Objet globale : regroupe les caractéristiques de vitesse (velocity), de dimensions et de positionnement de l'objet.
@@ -21,11 +18,7 @@ class Object extends SpriteComponent
   Vector2 velocity;
 
   void addSpeed() {
-    print("Vitesse avant");
-    print(velocity);
     velocity.y *= 1.5; // Augmente la vitesse de 50%, ajustez comme nécessaire
-    print("Vitesse après");
-    print(velocity);
   }
 
 // update est la méthode utilisée à chaque frame du jeu, on met à jour la position dans cette fonction
@@ -40,14 +33,9 @@ class Object extends SpriteComponent
     double coordX = position
         .x; // récupère la position de l'objet actuel pour créer le nouvel objet
     var rand = Random();
-    // Random().nextDouble() * 256; // Value is >= 0.0 and < 256.0.
     double aleaTime = (rand.nextDouble() * (delai + 1)) *
         1000; // durée aléatoire pour le délai >0 et <= 3
     Future.delayed(Duration(milliseconds: aleaTime.toInt()), () {
-      // setState(() {
-      //   // Here you can write your code for open new view
-      // });
-
       double newrand = rand.nextDouble();
       // Créer un nouvel objet
       switch (newrand) {

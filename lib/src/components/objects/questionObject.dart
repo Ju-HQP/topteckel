@@ -1,18 +1,10 @@
-import 'dart:math';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:topteckel/models/database/dao.dart';
-import 'package:topteckel/models/question.dart';
-import 'package:flutter/material.dart';
-import 'package:topteckel/src/widgets/questionWindow.dart';
-
 import '../components.dart';
-import 'object.dart';
 
 class QuestionObject
-    extends Object // positionComponent affiche l'objet à l'écran (remplace render)
+    extends Object // position Component affiche l'objet à l'écran (remplace render)
 {
   QuestionObject(position, velocity)
       : super(position: position, velocity: velocity);
@@ -24,12 +16,10 @@ class QuestionObject
     try {
       sprite = await game.loadSprite(
           'object_question.png'); //loadSprite va direct dans assets/images
-      // size = sprite!.srcSize;
       print("Sprite Objet Question. Size: $size.");
     } catch (e) {
       print("Error loading Question Object sprite: $e");
     }
-// hitbox à tester
     add(CircleHitbox());
   }
 

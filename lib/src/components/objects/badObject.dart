@@ -1,10 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:topteckel/src/topteckel.dart';
-
 import '../components.dart';
-import 'object.dart';
 
 class BadObject
     extends Object // positionComponent affiche l'objet à l'écran (remplace render)
@@ -17,12 +14,10 @@ class BadObject
 
     try {
       sprite = await game.loadSprite('object_bad.png'); //loadSprite va direct dans assets/images
-      // size = sprite!.srcSize;
       print("Sprite Objet Négatif. Size: $size.");
     } catch (e) {
       print("Error Bad Object: $e");
     }
-// hitbox à tester
     add(CircleHitbox());
   }
 
@@ -50,8 +45,7 @@ class BadObject
       add(RemoveEffect(
           delay: 0.0,
           onComplete: () {
-            // game.score.value -= 10; // à terme : enlève une vie
-            game.lostLife();
+            game.lostLife(); //On enlève une vie
             respawnObject();
           }));
     }

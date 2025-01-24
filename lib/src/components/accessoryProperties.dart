@@ -1,9 +1,3 @@
-import 'package:flame/components.dart';
-import 'package:topteckel/models/database/dao.dart';
-import 'package:topteckel/models/user.dart';
-import '../topteckel.dart';
-import 'package:flutter/material.dart';
-
 class AccessoryProperties {
   final String imagePath;
   final double width;
